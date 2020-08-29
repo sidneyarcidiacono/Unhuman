@@ -1,0 +1,15 @@
+/* TODO: Find better font for store */
+
+* {
+  font-family: sans-serif;
+}
+
+h1 {
+  font-size: 45px;
+  color: #838383;
+  margin: auto;
+}
+
+h2 {
+  color: #800020;
+}
