@@ -53,16 +53,6 @@ p {
   justify-items: center;
 }
 
-#Rectangle_1 {
-  fill: rgba(0,0,0,1);
-  stroke: rgba(112,112,112,1);
-  stroke-width: 1px;
-  stroke-linejoin: miter;
-  stroke-linecap: butt;
-  stroke-miterlimit: 4;
-  shape-rendering: auto;
-}
-
 #teeth_altar_img {
   position: absolute;
   width: 1080px;
@@ -100,7 +90,7 @@ p {
   overflow: visible;
   width: 458px;
   white-space: nowrap;
-  text-align: left;
+  text-align: center;
   font-family: Avenir;
   font-style: normal;
   font-weight: normal;
@@ -110,6 +100,7 @@ p {
 
 #welcome-header {
   color: rgba(255, 255, 255, 1);
+  text-align: center;
 }
 
 #Paintings_o {

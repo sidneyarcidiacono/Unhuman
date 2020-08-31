@@ -8,25 +8,30 @@ conn = sqlite3.connect('database.db')
 
 c = conn.cursor()
 
-# c.execute("""CREATE TABLE paintings (
+# c.execute("""CREATE TABLE artwork (
 #             title text,
 #             description text,
-#             price real
+#             price real,
+#             media text,
+#             size text
 #             )""")
- #TODO: add media and size to paintings TABLE
 
-# c.execute("INSERT INTO paintings VALUES ('Teeth', 'Sacred', 2000.00)")
+
 teeth = Product('Teeth', 'Sacred Change', 'Oil on Canvas', '30x40', 3000.00)
 redegeneration = Product('Redegeneration', 'Rebirth', 'Oil on Canvas', '24x36', 2300.00)
 
-c.execute("INSERT INTO paintings VALUES (:title, :description, :media, :size, :price)",
-          (teeth.title, teeth.description, teeth.price))
+c.execute("INSERT INTO artwork VALUES (:title, :description, :price, :media, :size)",
+          {'title': teeth.title,
+           'description': teeth.description,
+           'price': teeth.price,
+           'media': teeth.media, 'size': teeth.size,
+           })
 
 
 conn.commit()
 
-c.execute("SELECT * FROM paintings WHERE title='Teeth'")
+# c.execute("SELECT * FROM paintings WHERE title='Teeth'")
 
-print(c.fetchone())
+# print(c.fetchone())
 
 conn.commit()

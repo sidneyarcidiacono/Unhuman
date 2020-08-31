@@ -22,10 +22,10 @@ def shop_paintings():
 #     """Defines checkout functionality"""
 #     pass
 
-# @app.route('/contact')
-# def contact_me():
-#     """Provides contact form for user"""
-#     pass
+@app.route('/contact')
+def contact_me():
+    """Provides contact form for user"""
+    return render_template('contact.html')
 
 
 @app.teardown_appcontext
