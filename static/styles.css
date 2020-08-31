@@ -1,15 +1,182 @@
 /* TODO: Find better font for store */
 
 * {
-  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+}
+
+body {
+  background-color: black;
 }
 
 h1 {
   font-size: 45px;
   color: #838383;
   margin: auto;
+  background-color: transparent;
 }
 
 h2 {
   color: #800020;
+}
+
+p {
+  color: rgba(255, 255, 255, 1)
+}
+
+.flex-container {
+  display: flex;
+  margin: auto;
+  align-content: center;
+  justify-content: center;;
+  flex-wrap: wrap;
+}
+
+.Rectangle_1 {
+  position: absolute;
+  overflow: visible;
+  width: 1920px;
+  height: 1080px;
+  left: 0px;
+  top: 0px;
+}
+
+.nav-bar {
+  color: rgba(255, 255, 255, 1);
+  background-color: transparent;
+}
+
+.paintings-gallery {
+  align-items: center;
+  justify-items: center;
+}
+
+#Rectangle_1 {
+  fill: rgba(0,0,0,1);
+  stroke: rgba(112,112,112,1);
+  stroke-width: 1px;
+  stroke-linejoin: miter;
+  stroke-linecap: butt;
+  stroke-miterlimit: 4;
+  shape-rendering: auto;
+}
+
+#teeth_altar_img {
+  position: absolute;
+  width: 1080px;
+  height: 1080px;
+  left: 366px;
+  top: 0px;
+  overflow: visible;
+}
+
+#teeth_painting {
+  width: 100%;
+  max-width: 30vw;
+  margin: 5px;
+  overflow: scroll;
+}
+
+#re-degeneration {
+  width: 100%;
+  max-width: 30vw;
+  margin: 5px;
+  overflow: scroll;
+}
+
+#pain {
+  width: 100%;
+  max-width: 30vw;
+  margin: 5px;
+  overflow: scroll;
+}
+
+#Welcome_to_Unhuman {
+  left: 730px;
+  top: 149px;
+  position: absolute;
+  overflow: visible;
+  width: 458px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 45px;
+  color: rgba(112,112,112,1);
+}
+
+#welcome-header {
+  color: rgba(255, 255, 255, 1);
+}
+
+#Paintings_o {
+  left: 409px;
+  top: 275px;
+  position: absolute;
+  overflow: visible;
+  width: 131px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  color: rgba(112,112,112,1);
+}
+
+#paintings-header {
+  left: 730px;
+  top: 149px;
+  position: flex-start;
+  margin: auto;
+  overflow: visible;
+  white-space: nowrap;
+  text-align: center;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 45px;
+  color: rgba(255, 255, 255, 1);
+}
+
+#About {
+  left: 916px;
+  top: 275px;
+  position: absolute;
+  overflow: visible;
+  width: 90px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  color: rgba(112,112,112,1);
+}
+
+#Contact {
+  left: 1296px;
+  top: 275px;
+  position: absolute;
+  overflow: visible;
+  width: 114px;
+  white-space: nowrap;
+  text-align: left;
+  font-family: Avenir;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 32px;
+  color: rgba(112,112,112,1);
+}
+
+#Web_1920__1 {
+  position: absolute;
+  width: 1920px;
+  height: 1080px;
+  background-color: rgba(255,255,255,1);
+  overflow: hidden;
+  background-color: black;
 }
