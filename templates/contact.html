@@ -1,26 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Unhuman</title>
-        <link rel="stylesheet" type="text/css" href="../static/styles.css" />
-    </head>
-    <body class="flex-container">
+{% extends "base.html" %}
+{% block content %}
 
-        <div id="Web_1920__1">
-        	<img id="teeth_altar_img" src="./static/assets/teeth_altar.jpeg"/>
-        </div>
-        	<div id="Welcome_to_Unhuman">
-        		<h1 id="welcome-header">Contact the Creator</h1>
-        	</div>
-          <div>
-            <form action="/contact_redirect" method="POST">
-              <label for="name">Your Name:</label> </br>
-              <input type="text" name="name"> </br>
-              <label for="email">Email:</label> </br>
-              <input type="email" name="email"> </br>
-              <label for="message">Message</label> </br>
-              <input type="text" name="message"> </br>
-            </form>
-          </div>
-    </body>
-</html>
+<h1>Contact the Creator</h1>
+<form action="/contact_results" method="GET">
+  <label>Your Name</label>
+  <input type="text" name="name">
+  <label for="email">Email</label>
+  <input type="email" name="email">
+  <label for="message">Message</label>
+  <input type="text" name="message">
+  <input type="submit" name="submit" value="Submit">
+</form>
+
+{% endblock %}

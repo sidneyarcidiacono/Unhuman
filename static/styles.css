@@ -5,61 +5,101 @@
   padding: 0;
   box-sizing: border-box;
   border: none;
+  font-family: Avenir;
 }
 
 body {
-  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  background: url('assets/teeth_altar.jpeg') center center no-repeat,
+  rgb(0, 0, 0);
+  background-size: contain;
 }
 
 h1 {
-  font-size: 45px;
-  color: #838383;
-  margin: auto;
-  background-color: transparent;
+  font-size: 4rem;
+  color: #fff;
+  text-align: center;
 }
 
 h2 {
-  color: #800020;
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+}
+
+nav {
+  width: 800px;
+}
+
+nav ul {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul li {
+  font-size: 2rem;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+nav ul li a:hover {
+  color: #aaa;
 }
 
 p {
-  color: rgba(255, 255, 255, 1)
+  color: rgb(255, 255, 255)
 }
 
-.flex-container {
+label {
+  color: rgb(255, 255, 255);
+}
+
+form {
+  width: 300px;
+  height: 400px;
   display: flex;
-  margin: auto;
-  align-content: center;
-  justify-content: center;;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  background-color: #000;
+  padding: 1rem;
 }
 
-.Rectangle_1 {
-  position: absolute;
-  overflow: visible;
-  width: 1920px;
-  height: 1080px;
-  left: 0px;
-  top: 0px;
+input, button {
+  background-color: rgb(112, 112, 112);
+  color: #fff;
+  padding: 15px;
+  font-size: 14px;
 }
 
-.nav-bar {
-  color: rgba(255, 255, 255, 1);
-  background-color: transparent;
+input {
+  width: 100%;
+}
+
+input[type=submit], button {
+  cursor: pointer;
+}
+
+.contact-redirect {
+  background: url('assets/lucifer.jpeg') center center no-repeat,
+  rgb(0, 0, 0);
 }
 
 .paintings-gallery {
   align-items: center;
   justify-items: center;
-}
-
-#teeth_altar_img {
-  position: absolute;
-  width: 1080px;
-  height: 1080px;
-  left: 366px;
-  top: 0px;
-  overflow: visible;
 }
 
 #teeth_painting {
@@ -81,26 +121,6 @@ p {
   max-width: 30vw;
   margin: 5px;
   overflow: scroll;
-}
-
-#Welcome_to_Unhuman {
-  left: 730px;
-  top: 149px;
-  position: absolute;
-  overflow: visible;
-  width: 458px;
-  white-space: nowrap;
-  text-align: center;
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 45px;
-  color: rgba(112,112,112,1);
-}
-
-#welcome-header {
-  color: rgba(255, 255, 255, 1);
-  text-align: center;
 }
 
 #Paintings_o {
@@ -131,43 +151,4 @@ p {
   font-weight: normal;
   font-size: 45px;
   color: rgba(255, 255, 255, 1);
-}
-
-#About {
-  left: 916px;
-  top: 275px;
-  position: absolute;
-  overflow: visible;
-  width: 90px;
-  white-space: nowrap;
-  text-align: left;
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 32px;
-  color: rgba(112,112,112,1);
-}
-
-#Contact {
-  left: 1296px;
-  top: 275px;
-  position: absolute;
-  overflow: visible;
-  width: 114px;
-  white-space: nowrap;
-  text-align: left;
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 32px;
-  color: rgba(112,112,112,1);
-}
-
-#Web_1920__1 {
-  position: absolute;
-  width: 1920px;
-  height: 1080px;
-  background-color: rgba(255,255,255,1);
-  overflow: hidden;
-  background-color: black;
 }

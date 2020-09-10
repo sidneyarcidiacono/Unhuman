@@ -1,26 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Unhuman</title>
-        <link rel="stylesheet" type="text/css" href="../static/styles.css" />
-    </head>
-    <body class="flex-container">
+{% extends "base.html" %}
+{% block content %}
 
-        <div id="Web_1920__1">
-        	<img id="teeth_altar_img" src="./static/assets/teeth_altar.jpeg"/>
-        	<div id="Welcome_to_Unhuman">
-        		<h1 id="welcome-header">Welcome to Unhuman</h1>
-        	</div>
-        	<div id="Paintings_o">
-        		<span><nav><a href="/paintings" class="nav-bar">Paintings</nav></span>
-        	</div>
-        	<div id="About">
-        		<span><nav><a href="/about" class="nav-bar">About</nav></span>
-        	</div>
-        	<div id="Contact">
-        		<span><nav><a href="/contact" class="nav-bar">Contact</nav></span>
-        	</div>
-        </div>
+<h1>Welcome to Unhuman</h1>
+<nav>
+  <ul>
+    <li><a href="/paintings">Paintings</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
+</nav>
+<div class="spacer"></div>
 
-    </body>
-</html>
+{% endblock %}
