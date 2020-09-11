@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Contact the Creator</h1>
-<form action="/contact_results" method="GET">
-  <label>Your Name</label>
-  <input type="text" name="name">
-  <label for="email">Email</label>
-  <input type="email" name="email">
-  <label for="message">Message</label>
-  <input type="text" name="message">
-  <input type="submit" name="submit" value="Submit">
-</form>
+<body class="teeth">
+  <h1>Contact the Creator</h1>
+  <form action="/contact_results" method="GET">
+    <label>Your Name</label>
+    <input type="text" name="name">
+    <label for="email">Email</label>
+    <input type="email" name="email">
+    <label for="message">Message</label>
+    <input type="text" name="message">
+    <input type="submit" name="submit" value="Submit">
+  </form>
+</body>
 
 {% endblock %}

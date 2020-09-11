@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+
+<body class="teeth">
+  <h2>Add a New Product</h2>
+
+  <form action="/product_confirmation" method="POST" class="product-form">
+    <label>Title</label> </br>
+    <input type="text" name="title" id="title"></br>
+    <label for="price">Price</label></br>
+    <input type="text" name="price" id="price"></br>
+    <label for="description">Description</label></br>
+    <input type="text" name="description" id="description"></br>
+    <label for="media">Media</label></br>
+    <input type="text" name="media" id="media"></br>
+    <label for="size">Size (inches)</label></br>
+    <input type="text" name="size" id="size"></br>
+    <input type="submit" name="product-submit" id="product-submit">
+
+    <div class="spacer"></div>
+
+</body>
+
+{% endblock %}

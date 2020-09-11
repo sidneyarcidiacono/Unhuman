@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Unhuman | Paintings</title>
-        <link rel="stylesheet" type="text/css" href="../static/styles.css" />
-    </head>
-    <body class="flex-container">
 
-        <div id="Web_1920__1">
-        	<div>
-        		<h1 id="paintings-header">Paintings</h1>
-        	</div>
-          <div class="flex-container">
-            <div>
-              <img id="teeth_painting" class="paintings-gallery" src="./static/assets/teeth_painting.jpeg"/> </br>
-              <p class="price">$TestPrice</p> </br>
-              <p class="description">TestDescription</p>
-            </div>
-            <div>
-              <img id="re-degeneration" class="paintings-gallery" src="./static/assets/re-degeneration.jpeg"/> </br>
-              <p class="price">$TestPrice</p> </br>
-              <p class="description">TestDescription</p>
-            </div>
-            <div>
-              <img id="pain" class="paintings-gallery" src="./static/assets/pain.jpeg"/> </br>
-              <p class="price">$TestPrice</p> </br>
-              <p class="description">TestDescription</p>
-            </div>
-          </div>
+{% block head %}
+{% endblock %}
 
-    </body>
-</html>
+{% block content %}
+
+<body>
+
+  <h1>Paintings</h1>
+
+  <div class="gallery-item">
+    <img src="./static/assets/teeth_painting.jpeg" /> </br>
+    <p class="price">$TestPrice</p> </br>
+    <p class="description">TestDescription</p>
+  </div>
+
+  <div class="gallery-item">
+    <img src="./static/assets/re-degeneration.jpeg" /> </br>
+    <p class="price">$TestPrice</p> </br>
+    <p class="description">TestDescription</p>
+  </div>
+
+  <div class="gallery-item">
+    <img src="./static/assets/pain.jpeg" /> </br>
+    <p class="price">$TestPrice</p> </br>
+    <p class="description">TestDescription</p>
+  </div>
+
+</body>
+
+{% endblock %}

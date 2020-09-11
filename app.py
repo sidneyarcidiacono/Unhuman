@@ -35,6 +35,18 @@ def contact_results():
     return render_template('contact_results.html')
 
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    """Admin page where items can be added to db."""
+    return render_template('admin.html')
+
+
+@app.route('/product_confirmation', methods=['GET', 'POST'])
+def confirmation():
+    """Confirmation of product addition."""
+    return render_template('product_confirmation.html')
+
+
 @app.teardown_appcontext
 def close_connection(exception):
     """Close our connection to database.db."""

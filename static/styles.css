@@ -1,4 +1,4 @@
-/* TODO: Find better font for store */
+/* TODO: Find better font for store, fix large screen issue w images */
 
 * {
   margin: 0;
@@ -14,9 +14,7 @@ body {
   justify-content: space-around;
   flex-wrap: nowrap;
   flex-direction: column;
-  background: url('assets/teeth_altar.jpeg') center center no-repeat,
-  rgb(0, 0, 0);
-  background-size: contain;
+  background: #000;
 }
 
 h1 {
@@ -90,65 +88,37 @@ input {
 
 input[type=submit], button {
   cursor: pointer;
+  box-shadow: 4px 4px 2px rgb(0, 0, 0);
 }
 
-.contact-redirect {
+input[type=submit]:hover, button:hover {
+  background-color: rgb(87, 10, 10);
+}
+
+.product-form {
+  width: 450px;
+  height: 700px;
+}
+
+.teeth {
+  background: url('assets/teeth_altar.jpeg') center center no-repeat,
+  rgb(0, 0, 0);
+  background-size: contain;
+}
+
+.lucifer {
   background: url('assets/lucifer.jpeg') center center no-repeat,
   rgb(0, 0, 0);
+  background-size: contain;
 }
 
-.paintings-gallery {
+.gallery-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-items: center;
 }
 
-#teeth_painting {
-  width: 100%;
-  max-width: 30vw;
-  margin: 5px;
-  overflow: scroll;
-}
-
-#re-degeneration {
-  width: 100%;
-  max-width: 30vw;
-  margin: 5px;
-  overflow: scroll;
-}
-
-#pain {
-  width: 100%;
-  max-width: 30vw;
-  margin: 5px;
-  overflow: scroll;
-}
-
-#Paintings_o {
-  left: 409px;
-  top: 275px;
-  position: absolute;
-  overflow: visible;
-  width: 131px;
-  white-space: nowrap;
-  text-align: left;
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 32px;
-  color: rgba(112,112,112,1);
-}
-
-#paintings-header {
-  left: 730px;
-  top: 149px;
-  position: flex-start;
-  margin: auto;
-  overflow: visible;
-  white-space: nowrap;
-  text-align: center;
-  font-family: Avenir;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 45px;
-  color: rgba(255, 255, 255, 1);
+.gallery-item > img {
+  width: 30%;
 }
