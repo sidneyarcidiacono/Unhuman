@@ -1,12 +1,15 @@
 """Import sqlite3."""
 import sqlite3
-from products import Product
 
-DATABASE = './database.db'
 
-conn = sqlite3.connect('database.db')
+class Database:
+    """Define class Database."""
 
-c = conn.cursor()
+    def __init__(self):
+        """Initialize properties for db."""
+        self.DATABASE = './database.db'
+        self.conn = sqlite3.connect('database.db', check_same_thread=False)
+        self.c = self.conn.cursor()
 
 # c.execute("""CREATE TABLE artwork (
 #             title text,
@@ -16,22 +19,12 @@ c = conn.cursor()
 #             size text
 #             )""")
 
-
-teeth = Product('Teeth', 'Sacred Change', 'Oil on Canvas', '30x40', 3000.00)
-redegeneration = Product('Redegeneration', 'Rebirth', 'Oil on Canvas', '24x36', 2300.00)
-
-c.execute("INSERT INTO artwork VALUES (:title, :description, :price, :media, :size)",
-          {'title': teeth.title,
-           'description': teeth.description,
-           'price': teeth.price,
-           'media': teeth.media, 'size': teeth.size,
-           })
-
-
-conn.commit()
-
-# c.execute("SELECT * FROM paintings WHERE title='Teeth'")
-
-# print(c.fetchone())
-
-conn.commit()
+    def insert_product(self, title, description, price, media, size):
+        """Insert product dynamically into db."""
+        self.c.execute("INSERT INTO artwork VALUES (:title, :description, :price, :media, :size)",
+                       {'title': title,
+                        'description': description,
+                        'price': price,
+                        'media': media, 'size': size,
+                        })
+        self.conn.commit()

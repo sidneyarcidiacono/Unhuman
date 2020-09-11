@@ -1,10 +1,11 @@
 """import Flask things and sqlite3."""
 from flask import Flask, request, render_template, g
-import sqlite3
+from sqlite import Database
 
 
 app = Flask(__name__)
 
+db = Database()
 
 @app.route('/')
 def homepage():
@@ -44,6 +45,15 @@ def admin():
 @app.route('/product_confirmation', methods=['GET', 'POST'])
 def confirmation():
     """Confirmation of product addition."""
+    title = request.form.get('title')
+    description = request.form.get('description')
+    price = float(request.form.get('price'))
+    media = request.form.get('media')
+    size = request.form.get('size')
+
+    db.insert_product(title, description, price, media, size)
+
+    print(f"title:{title} description:{description} price:{price} media:{media} size:{size}")
     return render_template('product_confirmation.html')
 
 
@@ -56,4 +66,4 @@ def close_connection(exception):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
