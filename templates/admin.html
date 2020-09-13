@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% block head %}
+<script type="text/javascript" src="static/contact.js" defer></script>
+{% endblock %}
+
 <body class="teeth">
+  <button id="homeButton">Come Back To Us</button>
+
   <h2>Add a New Product</h2>
 
   <form action="/product_confirmation" method="POST" class="product-form">

@@ -1,6 +1,6 @@
 """import Flask things and sqlite3."""
 from flask import Flask, request, render_template, g
-from sqlite import Database
+from database import Database
 
 
 app = Flask(__name__)
@@ -17,6 +17,12 @@ def homepage():
 def shop_paintings():
     """Render template for paintings page."""
     return render_template('paintings.html')
+
+
+@app.route('/about')
+def about():
+    """Display about page."""
+    return render_template('about.html')
 
 # @app.route('/cart')
 # def checkout():
