@@ -73,7 +73,7 @@ def confirmation():
     if request.method == 'POST':
         title = request.form['title']
         description = request.form['description']
-        price = float(request.form['price'])
+        price = request.form['price']
         media = request.form['media']
         size = request.form['size']
         new_product = Product(title=title,
