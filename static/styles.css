@@ -133,11 +133,9 @@ input[type=submit]:hover, button:hover {
 }
 
 .modal {
-  position: fixed;
   z-index: 100;
   background: white;
   border-radius: 10px;
-  width: 80%;
   top: 30vh;
   left: 10%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
@@ -147,6 +145,12 @@ input[type=submit]:hover, button:hover {
 .modal.visible {
   display: block;
   animation: fade-slide-in 0.3s ease-out forwards;
+}
+
+.modal .modal__actions {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 #backdrop {
