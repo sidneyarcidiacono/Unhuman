@@ -1,9 +1,7 @@
 /* TODO: Find better font for store, fix large screen issue w images */
 
 * {
-  margin: 0;
   padding: 0;
-  box-sizing: border-box;
   border: none;
   font-family: sans-serif;
 }
@@ -34,10 +32,12 @@ header {
 
 footer {
   color: #fff;
+  margin-top: auto;
 }
 
 img {
   width: 75vw;
+  margin-bottom: 10vw;
 }
 
 nav {
@@ -162,7 +162,7 @@ input[type=submit]:hover, button:hover {
   top: 0;
   left: 0;
   background: rgba(0,0,0,0.75);
-  z-index: 10;
+  z-index: -1;
   pointer-events: none;
   display: none;
 }

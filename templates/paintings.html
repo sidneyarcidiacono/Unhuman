@@ -8,23 +8,16 @@
   <div class="spacer"></div>
 
   <div class="gallery">
-    <div class="gallery-item">
-      <img src="./static/assets/teeth_painting.jpeg" /> </br>
-      <p class="price">$TestPrice</p> </br>
-      <p class="description">TestDescription</p>
-    </div>
-
-    <div class="gallery-item">
-      <img src="./static/assets/re-degeneration.jpeg" /> </br>
-      <p class="price">$TestPrice</p> </br>
-      <p class="description">TestDescription</p>
-    </div>
-
-    <div class="gallery-item">
-      <img src="./static/assets/pain.jpeg" /> </br>
-      <p class="price">$TestPrice</p> </br>
-      <p class="description">TestDescription</p>
-    </div>
+    {% for painting in paintings %}
+      <div class="gallery-item">
+        <img src="./static/assets/teeth_painting.jpeg" /> </br>
+        <p>{{ painting.title }}</p> </br>
+        <p class="price">{{ painting.price }}</p> </br>
+        <p class="description">{{ painting.description }}</p> </br>
+        <p>{{ painting.media }}</p> </br>
+        <p>{{ painting.size }}</p> </br>
+      </div>
+    {% endfor %}
   </div>
 
 </section>

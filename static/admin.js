@@ -3,17 +3,18 @@ const startAddProductBtn = document.getElementById('start-add-product')
 const cancelAddProdBtn = document.getElementById('cancel-product')
 const backdrop = document.getElementById('backdrop')
 const submitProdBtn = document.getElementById('product-submit')
-const emptyDisplay = document.getElementById('entry-text')
-const userInputs = document.querySelectorAll('input')
+const homeButton = document.getElementById('home-button')
 const prodTitle = document.getElementById('title')
 const prodPrice = document.getElementById('price')
 const prodDescription = document.getElementById('description')
 const prodMedia = document.getElementById('media')
 const prodSize = document.getElementById('size')
 
+
 const products = []
 
 const updateUI = () => {
+  const emptyDisplay = document.getElementById('entry-text')
   if (products.length === 0) {
     emptyDisplay.style.display = 'block'
   } else {
@@ -22,6 +23,7 @@ const updateUI = () => {
 }
 
 const clearUserInput = () => {
+  const userInputs = document.querySelectorAll('input')
   for (const input of userInputs) {
     if (input !== prodPrice) {
       input.value = ''
@@ -43,10 +45,27 @@ const showAddProdForm = () => {
 const closeProdForm = () => {
   addProductModal.classList.remove('visible')
   toggleBackdropHandler()
-  clearUserInput()
 }
 
-const startAddProductHandler = () => {
+const renderNewProduct = (title, price, description, media, size) => {
+  const listRoot = document.getElementById('product-list')
+  const newProductElement = document.createElement('li')
+  newIdeaElement.className = 'idea-element'
+  newIdeaElement.innerHTML = `
+    <div class="idea-element__image"></div>
+    <div class="idea-element__info">
+      <h2>${title}</h2>
+        <p>$${price}</p>
+        <p>$${description}</p>
+        <p>${media}</p>
+        <p>${size}</p>
+    </div>`
+
+  // newIdeaElement.addEventListener('click', startDeleteProdHandler)
+  listRoot.appendChild(newProductElement)
+}
+
+const submitProductHandler = () => {
   const title = prodTitle.value
   const price = prodPrice.value
   const description = prodDescription.value
@@ -77,6 +96,7 @@ const startAddProductHandler = () => {
     size: size
   }
   products.push(newProduct)
+  renderNewProduct()
   console.log(products)
 }
 
@@ -84,5 +104,15 @@ const prodCancelBtnHandler = () => {
   closeProdForm()
 }
 
+const backdropClickHandler = () => {
+  closeProdForm()
+  clearUserInput()
+}
+
 startAddProductBtn.addEventListener('click', showAddProdForm)
+submitProdBtn.addEventListener('click', submitProductHandler)
 cancelAddProdBtn.addEventListener('click', prodCancelBtnHandler)
+backdrop.addEventListener('click', backdropClickHandler)
+homeButton.addEventListener('click', () => {
+  window.location.href = '/'
+})

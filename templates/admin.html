@@ -6,7 +6,7 @@
 {% endblock %}
 
 <section class="teeth">
-  
+
   <h2>Product Manager</h2>
   <section id="entry-text" class="card">
     <p>No Products Yet</p>
@@ -15,25 +15,40 @@
   <button id="start-add-product">Add Product</button>
 
   <div id="backdrop"></div>
-  <div class="modal">
-    <form action="/product_confirmation" method="POST" class="product-form">
-      <label>Title</label> </br>
-      <input type="text" name="title" id="title"></br>
-      <label for="price">Price</label></br>
-      <input type="text" name="price" id="price"></br>
-      <label for="description">Description</label></br>
-      <input type="text" name="description" id="description"></br>
-      <label for="media">Media</label></br>
-      <input type="text" name="media" id="media"></br>
-      <label for="size">Size (inches)</label></br>
-      <input type="text" name="size" id="size"></br>
-      <div class="modal-actions">
-        <input type="submit" name="product-submit" id="product-submit" value="Add">
-        <button id="cancel-product">Cancel</button>
+    <div class="modal">
+      <div class="modal__content">
+
+      <form action="/product_confirmation" method="POST" class="product-form">
+        <label>Title</label> </br>
+        <input type="text" name="title" id="title" required></br>
+        <label for="price">Price</label></br>
+        <input type="number" name="price" id="price" required></br>
+        <label for="description">Description</label></br>
+        <input type="text" name="description" id="description" required></br>
+        <label for="media">Media</label></br>
+        <input type="text" name="media" id="media" required></br>
+        <label for="size">Size (inches)</label></br>
+        <input type="text" name="size" id="size" required></br>
+        <label for="image">Image (.jpeg, .jpg, or .png)</label>
+        <input type="file" accept="image/*" name="image" id="image" required>
       </div>
+        <div class="modal__actions">
+          <input type="submit" name="product-submit" id="product-submit" value="Add">
+          <button id="cancel-product">Cancel</button>
+        </div>
+  </div>
+  <div class="modal" id="delete-modal">
+    <h2 class="modal__title">Are You Sure?</h2>
+    <p class="modal__content">
+      Are you sure you'd like to remove this product?
+    </p>
+    <div class="modal__actions">
+      <button class="btn btn--passive">Cancel</button>
+      <button class="btn btn--danger">Remove Product</button>
+    </div>
   </div>
   <div class="spacer"></div>
-  <button id="homeButton">Come Back To Us</button>
+  <button id="home-button">Come Back To Us</button>
 
 </section>
 

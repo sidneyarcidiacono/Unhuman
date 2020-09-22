@@ -1,4 +1,7 @@
 """import Flask things and sqlite3."""
+import os
+from imghdr import what
+from werkzeug.utils import secure_filename
 from flask import Flask, request, render_template, g
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -7,6 +10,10 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
+
+app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
+app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
+app.config['UPLOAD_PATH'] = 'static/assets'
 
 #TODO: Find a way to create separate Product module
 
@@ -20,11 +27,24 @@ class Product(db.Model):
     description = db.Column(db.String(200), nullable=False)
     media = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(30), nullable=False)
+    image = db.Column(db.String(30), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now)
 
     def __repr__(self):
         """Specify return val when printing Product."""
         return '<Product %r>' % self.id
+
+
+##Helper functions:
+
+def validate_image(string):
+    """Validate images to jpg."""
+    header = stream.read(512)
+    stream.seek(0)
+    img_format = what(None, header)
+    if not img_format:
+        return None
+    return '.' + (img_format if img_format != 'jpeg' else 'jpg')
 
 
 @app.route('/')
@@ -36,7 +56,12 @@ def homepage():
 @app.route('/paintings')
 def shop_paintings():
     """Render template for paintings page."""
-    return render_template('paintings.html')
+    paintings = Product.query.all()
+    print(paintings)
+    context = {
+        'paintings': paintings
+    }
+    return render_template('paintings.html', **context)
 
 
 @app.route('/about')
@@ -77,11 +102,25 @@ def confirmation():
         price = request.form['price']
         media = request.form['media']
         size = request.form['size']
+        uploaded_file = request.files['image']
+        filename = secure_filename(uploaded_file.filename)
+        if filename:
+            print("In filename")
+            file_ext = os.path.splitext(filename)[1]
+            if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+                    file_ext != validate_image(uploaded_file.stream):
+                print('Invalid image')
+                return "Invalid image", 400
+            file_path = os.path.join(
+               app.config['UPLOAD_PATH'], filename
+            )
+            uploaded_file.save(file_path)
         new_product = Product(title=title,
                               description=description,
                               price=price,
                               media=media,
-                              size=size
+                              size=size,
+                              image=file_path
                               )
         try:
             db.session.add(new_product)
