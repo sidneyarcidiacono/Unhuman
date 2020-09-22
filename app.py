@@ -2,10 +2,9 @@
 import os
 from imghdr import what
 from werkzeug.utils import secure_filename
-from flask import Flask, request, render_template, g
+from flask import Flask, request, render_template, g, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -37,7 +36,7 @@ class Product(db.Model):
 
 ##Helper functions:
 
-def validate_image(string):
+def validate_image(stream):
     """Validate images to jpg."""
     header = stream.read(512)
     stream.seek(0)
@@ -90,44 +89,56 @@ def contact_results():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     """Admin page where items can be added to db."""
+    if request.method == 'POST':
+        print('Posting from admin')
+    elif request.method == 'GET':
+        print('getting from admin')
     return render_template('admin.html')
 
 
-@app.route('/product_confirmation', methods=['GET', 'POST'])
+@app.route('/product_confirmation', methods=['POST'])
 def confirmation():
     """Confirm of product addition."""
     if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
-        price = request.form['price']
-        media = request.form['media']
-        size = request.form['size']
-        uploaded_file = request.files['image']
-        filename = secure_filename(uploaded_file.filename)
-        if filename:
-            print("In filename")
-            file_ext = os.path.splitext(filename)[1]
-            if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-                    file_ext != validate_image(uploaded_file.stream):
-                print('Invalid image')
-                return "Invalid image", 400
-            file_path = os.path.join(
-               app.config['UPLOAD_PATH'], filename
-            )
-            uploaded_file.save(file_path)
-        new_product = Product(title=title,
-                              description=description,
-                              price=price,
-                              media=media,
-                              size=size,
-                              image=file_path
-                              )
         try:
-            db.session.add(new_product)
-            db.session.commit()
-            return render_template('product_confirmation.html')
-        except ValueError:
-            return render_template('admin.html')
+            title = request.form['title']
+            description = request.form['description']
+            price = request.form['price']
+            media = request.form['media']
+            size = request.form['size']
+            print(request.files['image'])
+            uploaded_file = request.files['image']
+            filename = secure_filename(uploaded_file.filename)
+            if filename:
+                print("In filename")
+                file_ext = os.path.splitext(filename)[1]
+                print(file_ext)
+                if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+                        file_ext != validate_image(uploaded_file.stream):
+                    print('Invalid image')
+                    return "Invalid image", 400
+                file_path = os.path.join(
+                   app.config['UPLOAD_PATH'], filename
+                )
+                uploaded_file.save(file_path)
+                new_product = Product(title=title,
+                                      description=description,
+                                      price=price,
+                                      media=media,
+                                      size=size,
+                                      image=file_path)
+                try:
+                    db.session.add(new_product)
+                    db.session.commit()
+                    return redirect(url_for('shop_paintings'))
+                except ValueError:
+                    return render_template('admin.html')
+        except:
+            print("in the except")
+            return redirect(url_for('admin'))
+        # finally:
+        #     print("In finally")
+        #     return render_template('admin.html')
     else:
         products = Product.query.order_by(Product.date_created).all()
         return render_template('admin.html', products=products)

@@ -18,7 +18,7 @@
     <div class="modal">
       <div class="modal__content">
 
-      <form action="/product_confirmation" method="POST" class="product-form">
+      <form action="/product_confirmation" method="POST" class="product-form" enctype="multipart/form-data">
         <label>Title</label> </br>
         <input type="text" name="title" id="title" required></br>
         <label for="price">Price</label></br>
@@ -29,8 +29,8 @@
         <input type="text" name="media" id="media" required></br>
         <label for="size">Size (inches)</label></br>
         <input type="text" name="size" id="size" required></br>
-        <label for="image">Image (.jpeg, .jpg, or .png)</label>
-        <input type="file" accept="image/*" name="image" id="image" required>
+        <label for="image">Image (.jpg, or .png)</label>
+        <input type="file" name="image" id="image" accept="image/*" required>
       </div>
         <div class="modal__actions">
           <input type="submit" name="product-submit" id="product-submit" value="Add">
