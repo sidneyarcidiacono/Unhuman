@@ -8,13 +8,22 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-db = SQLAlchemy(app)
-
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
 app.config['UPLOAD_PATH'] = 'static/assets'
+db = SQLAlchemy(app)
 
-#TODO: Find a way to create separate Product module
+
+########################################################################
+#                   #TODO:                                             #
+########################################################################
+
+# Delete product functionality in Admin
+# Fix modal styling, other various styling
+# Add illustrations/prints page
+# Cart route, checkout
+# User authentication
+# User profiles
 
 
 class Product(db.Model):
@@ -38,11 +47,18 @@ class Product(db.Model):
 
 def validate_image(stream):
     """Validate images to jpg."""
+    print("IN FUNCTION")
     header = stream.read(512)
+    print(header)
     stream.seek(0)
+    print("LINE53")
     img_format = what(None, header)
+    print("LINE55")
+    print(img_format)
     if not img_format:
         return None
+    print("VALIDATE_IMAGE")
+    print(img_format)
     return '.' + (img_format if img_format != 'jpeg' else 'jpg')
 
 
@@ -96,7 +112,7 @@ def admin():
     return render_template('admin.html')
 
 
-@app.route('/product_confirmation', methods=['POST'])
+@app.route('/product_confirmation', methods=['GET', 'POST'])
 def confirmation():
     """Confirm of product addition."""
     if request.method == 'POST':
@@ -112,9 +128,9 @@ def confirmation():
             if filename:
                 print("In filename")
                 file_ext = os.path.splitext(filename)[1]
+                print("LINE 125")
                 print(file_ext)
-                if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-                        file_ext != validate_image(uploaded_file.stream):
+                if file_ext != validate_image(uploaded_file.stream):
                     print('Invalid image')
                     return "Invalid image", 400
                 file_path = os.path.join(
