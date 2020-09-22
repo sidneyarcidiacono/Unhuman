@@ -7,7 +7,19 @@
   <script type="text/javascript" src="static/script.js" defer></script>
   {% block head %}{% endblock %}
 </head>
-
-{% block content %}{% endblock %}
-
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/paintings">Paintings</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Copyright Sid 2020</footer>
+</body>
 </html>
