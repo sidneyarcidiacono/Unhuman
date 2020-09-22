@@ -26,6 +26,11 @@ db = SQLAlchemy(app)
 # User profiles
 
 
+########################################################################
+#                   #db.Model classes                                  #
+########################################################################
+
+
 class Product(db.Model):
     """Define product class."""
 
@@ -43,23 +48,25 @@ class Product(db.Model):
         return '<Product %r>' % self.id
 
 
-##Helper functions:
+########################################################################
+#                   #Helper Functions                                  #
+########################################################################
+
 
 def validate_image(stream):
     """Validate images to jpg."""
-    print("IN FUNCTION")
     header = stream.read(512)
-    print(header)
     stream.seek(0)
-    print("LINE53")
     img_format = what(None, header)
-    print("LINE55")
-    print(img_format)
     if not img_format:
         return None
     print("VALIDATE_IMAGE")
-    print(img_format)
     return '.' + (img_format if img_format != 'jpeg' else 'jpg')
+
+
+########################################################################
+#                   #Routes                                            #
+########################################################################
 
 
 @app.route('/')
@@ -92,7 +99,7 @@ def about():
 
 @app.route('/contact')
 def contact_me():
-    """Provides contact form for user"""
+    """Provide contact form for user."""
     return render_template('contact.html')
 
 
@@ -126,12 +133,8 @@ def confirmation():
             uploaded_file = request.files['image']
             filename = secure_filename(uploaded_file.filename)
             if filename:
-                print("In filename")
                 file_ext = os.path.splitext(filename)[1]
-                print("LINE 125")
-                print(file_ext)
                 if file_ext != validate_image(uploaded_file.stream):
-                    print('Invalid image')
                     return "Invalid image", 400
                 file_path = os.path.join(
                    app.config['UPLOAD_PATH'], filename
@@ -150,7 +153,6 @@ def confirmation():
                 except ValueError:
                     return render_template('admin.html')
         except:
-            print("in the except")
             return redirect(url_for('admin'))
         # finally:
         #     print("In finally")
