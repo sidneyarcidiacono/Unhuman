@@ -55,6 +55,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(30), nullable=False)
+    password = db.Column(db.String(60), nullable=False)
     orders = db.relationship("Product", backref='user', lazy=True)
 
 
@@ -82,7 +83,30 @@ def user_login():
 @app.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
     """Sign up users."""
-    return render_template('sign_up.html')
+    if request.method == 'GET':
+        return render_template('sign_up.html')
+    else:
+        name = request.form['name']
+        email = request.form['email']
+        pass_first = request.form['password']
+        pass_conf = request.form['password-conf']
+        user_password = ''
+        if pass_first == pass_conf:
+            user_password = pass_first
+            new_user = User(name=name,
+                            email=email,
+                            password=user_password)
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                message = 'Thank you for signing up!'
+                return redirect(url_for('homepage', message=message))
+            except ValueError:
+                message = 'Something went wrong.'
+                return redirect(url_for('sign_up', message=message))
+        else:
+            message = 'Please make sure passwords match.'
+            return redirect(url_for('sign_up', message=message))
 
 
 @app.route('/paintings')
