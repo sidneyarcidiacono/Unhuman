@@ -1,43 +1,9 @@
-/* TODO: Find better font for store, fix large screen issue w images */
+/* TODO: Center remove prod button, Find better font for store, fix large screen issue w images */
 
 * {
   padding: 0;
   border: none;
   font-family: sans-serif;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  background-color: rgb(0, 0, 0);
-}
-
-h1 {
-  font-size: 3rem;
-  color: #fff;
-  text-align: center;
-}
-
-h2 {
-  font-size: 2rem;
-  color: rgb(255, 255, 255);
-}
-
-header {
-  height: 100px;
-  margin: 15px;
-}
-
-footer {
-  color: #fff;
-  margin-top: auto;
-}
-
-img {
-  width: 75vw;
-  margin-bottom: 10vw;
 }
 
 nav {
@@ -69,8 +35,47 @@ nav ul li a:hover {
   color: #aaa;
 }
 
+body {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  background-color: rgb(0, 0, 0);
+}
+
+header {
+  height: 100px;
+  width: 100%;
+  margin: 15px;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #fff;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  width: 75vw;
+  height: auto;
+}
+
 p {
-  color: rgb(255, 255, 255)
+  color: rgb(255, 255, 255);
+  text-align: center;
 }
 
 label {
@@ -89,6 +94,10 @@ form {
   padding: 1rem;
 }
 
+input {
+  width: 100%;
+}
+
 input, button {
   background-color: rgb(112, 112, 112);
   color: #fff;
@@ -96,23 +105,20 @@ input, button {
   font-size: 14px;
 }
 
-input {
-  width: 100%;
-}
-
 input[type=submit], button {
   cursor: pointer;
-  box-shadow: 4px 4px 2px rgb(0, 0, 0);
 }
 
 input[type=submit]:hover, button:hover {
   background-color: rgb(87, 10, 10);
 }
 
-.product-form {
-  width: 450px;
-  height: 700px;
+footer {
+  color: #fff;
+  margin-top: auto;
+  padding: 10vw;
 }
+
 
 .gallery {
   display: flex;
@@ -134,9 +140,33 @@ input[type=submit]:hover, button:hover {
   width: 30vw;
 }
 
+.admin-prod-image {
+  width: 250px;
+  height: auto;
+  margin: 35px;
+}
+
+.product-manager {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-form {
+  width: 450px;
+  height: 700px;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .modal {
-  z-index: 100;
-  background: white;
+  z-index: 5;
   border-radius: 10px;
   top: 30vh;
   left: 10%;
@@ -150,19 +180,32 @@ input[type=submit]:hover, button:hover {
 }
 
 .modal .modal__actions {
-  padding: 1rem;
   display: flex;
-  justify-content: flex-end;
+}
+
+.modal__actions {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.modal__actions button, .modal__actions input[type=submit] {
+  width: 49%;
+}
+
+
+.invisible {
+  display: none;
 }
 
 #backdrop {
-  position: fixed;
+  position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   top: 0;
   left: 0;
   background: rgba(0,0,0,0.75);
-  z-index: -1;
+  z-index: 2;
   pointer-events: none;
   display: none;
 }
@@ -170,4 +213,8 @@ input[type=submit]:hover, button:hover {
 #backdrop.visible {
   display: block;
   pointer-events: all;
+}
+
+#product-list {
+  color: #fff;
 }

@@ -1,55 +1,52 @@
 {% extends "base.html" %}
-{% block content %}
 
+<!-- TODO: Have product image in Admin link to details modal. -->
 {% block head %}
 <script type="text/javascript" src="static/admin.js" defer></script>
 {% endblock %}
 
-<section class="teeth">
-
+{% block content %}
+<section class="product-manager">
   <h2>Product Manager</h2>
-  <section id="entry-text" class="card">
-    <p>No Products Yet</p>
-  </section>
-  <ul id="product-list"></ul>
-  <button id="start-add-product">Add Product</button>
-
-  <div id="backdrop"></div>
-    <div class="modal">
-      <div class="modal__content">
-
-      <form action="/product_confirmation" method="POST" class="product-form" enctype="multipart/form-data">
-        <label>Title</label> </br>
-        <input type="text" name="title" id="title" required></br>
-        <label for="price">Price</label></br>
-        <input type="number" name="price" id="price" required></br>
-        <label for="description">Description</label></br>
-        <input type="text" name="description" id="description" required></br>
-        <label for="media">Media</label></br>
-        <input type="text" name="media" id="media" required></br>
-        <label for="size">Size (inches)</label></br>
-        <input type="text" name="size" id="size" required></br>
-        <label for="image">Image (.jpg, or .png)</label>
-        <input type="file" name="image" id="image" accept="image/*" required>
-      </div>
-        <div class="modal__actions">
-          <input type="submit" name="product-submit" id="product-submit" value="Add">
-          <button id="cancel-product">Cancel</button>
-        </div>
-  </div>
-  <div class="modal" id="delete-modal">
-    <h2 class="modal__title">Are You Sure?</h2>
-    <p class="modal__content">
-      Are you sure you'd like to remove this product?
-    </p>
-    <div class="modal__actions">
-      <button class="btn btn--passive">Cancel</button>
-      <button class="btn btn--danger">Remove Product</button>
+  <div id="product-list">
+    {% for product in products %}
+    <div class="product-item">
+      <!-- <a href="/paintings/{{ product.id }}"> -->
+      <img src="../{{ product.image }}" alt={{ product.title }} class="admin-prod-image">
+      <!-- </a> -->
+      <p>{{ product.title }}</p>
+      <p>${{ product.price }}</p>
+      <p>{{ product.media }}</p>
+      <p>{{ product.size }}</p>
+      <button id="remove-button" onclick="window.location.href='admin-delete/{{ product.id }}'">Remove Product</button>
     </div>
+    {% endfor %}
   </div>
-  <div class="spacer"></div>
-  <button id="home-button">Come Back To Us</button>
-
+  <button id="start-add-product">Add Product</button>
 </section>
+
+<div id="backdrop"></div>
+<div class="modal">
+
+  <form action="/product_confirmation" method="POST" class="product-form" enctype="multipart/form-data">
+    <label>Title</label>
+    <input type="text" name="title" id="title" required>
+    <label for="price">Price</label>
+    <input type="number" name="price" id="price" required>
+    <label for="description">Description</label>
+    <input type="text" name="description" id="description" required>
+    <label for="media">Media</label>
+    <input type="text" name="media" id="media" required>
+    <label for="size">Size (inches)</label>
+    <input type="text" name="size" id="size" required>
+    <label for="image">Image (.jpg, or .png)</label>
+    <input type="file" name="image" id="image" accept="image/*" required>
+    <div class="modal__actions">
+      <input type="submit" name="product-submit" id="product-submit" value="Add">
+      <button id="cancel-product">Cancel</button>
+    </div>
+  </form>
+
+</div>
 
 {% endblock %}

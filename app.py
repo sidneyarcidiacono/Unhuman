@@ -2,7 +2,8 @@
 import os
 from imghdr import what
 from werkzeug.utils import secure_filename
-from flask import Flask, request, render_template, g, redirect, url_for
+from flask import Flask, request, render_template, g, redirect, url_for, session
+from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -18,7 +19,6 @@ db = SQLAlchemy(app)
 #                   #TODO:                                             #
 ########################################################################
 
-# Delete product functionality in Admin
 # Fix modal styling, other various styling
 # Add illustrations/prints page
 # Cart route, checkout
@@ -42,10 +42,20 @@ class Product(db.Model):
     size = db.Column(db.String(30), nullable=False)
     image = db.Column(db.String(30), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         """Specify return val when printing Product."""
         return '<Product %r>' % self.id
+
+
+class User(db.Model, UserMixin):
+    """Define user class."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), nullable=False)
+    email = db.Column(db.String(30), nullable=False)
+    orders = db.relationship("Product", backref='user', lazy=True)
 
 
 ########################################################################
@@ -53,26 +63,26 @@ class Product(db.Model):
 ########################################################################
 
 
-def validate_image(stream):
-    """Validate images to jpg."""
-    header = stream.read(512)
-    stream.seek(0)
-    img_format = what(None, header)
-    if not img_format:
-        return None
-    print("VALIDATE_IMAGE")
-    return '.' + (img_format if img_format != 'jpeg' else 'jpg')
-
-
 ########################################################################
 #                   #Routes                                            #
 ########################################################################
-
 
 @app.route('/')
 def homepage():
     """Display homepage."""
     return render_template('home.html')
+
+
+@app.route('/user_login', methods=['GET', 'POST'])
+def user_login():
+    """Login users."""
+    return render_template('user_login.html')
+
+
+@app.route('/sign_up', methods=['GET', 'POST'])
+def sign_up():
+    """Sign up users."""
+    return render_template('sign_up.html')
 
 
 @app.route('/paintings')
@@ -112,11 +122,24 @@ def contact_results():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     """Admin page where items can be added to db."""
-    if request.method == 'POST':
-        print('Posting from admin')
-    elif request.method == 'GET':
-        print('getting from admin')
-    return render_template('admin.html')
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products
+    }
+    return render_template('admin.html', **context)
+
+
+@app.route('/admin-delete/<product_id>')
+def delete_product(product_id):
+    """Delete products from database."""
+    try:
+        product_to_delete = Product.query.filter_by(id=product_id).first()
+        db.session.delete(product_to_delete)
+        db.session.commit()
+        return redirect(url_for('admin'))
+    except(TypeError, ValueError):
+        print("Something went wrong deleting this product.")
+        return redirect(url_for('admin'))
 
 
 @app.route('/product_confirmation', methods=['GET', 'POST'])
@@ -129,13 +152,10 @@ def confirmation():
             price = request.form['price']
             media = request.form['media']
             size = request.form['size']
-            print(request.files['image'])
             uploaded_file = request.files['image']
             filename = secure_filename(uploaded_file.filename)
             if filename:
                 file_ext = os.path.splitext(filename)[1]
-                if file_ext != validate_image(uploaded_file.stream):
-                    return "Invalid image", 400
                 file_path = os.path.join(
                    app.config['UPLOAD_PATH'], filename
                 )
@@ -149,17 +169,18 @@ def confirmation():
                 try:
                     db.session.add(new_product)
                     db.session.commit()
-                    return redirect(url_for('shop_paintings'))
+                    return redirect(url_for('confirmation'))
                 except ValueError:
                     return render_template('admin.html')
         except:
             return redirect(url_for('admin'))
-        # finally:
-        #     print("In finally")
-        #     return render_template('admin.html')
     else:
         products = Product.query.order_by(Product.date_created).all()
-        return render_template('admin.html', products=products)
+
+        context = {
+            'products': products
+        }
+        return render_template('admin.html', **context)
 
 
 @app.teardown_appcontext

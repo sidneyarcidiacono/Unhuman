@@ -5,15 +5,13 @@
 
   <h1>Paintings</h1>
 
-  <div class="spacer"></div>
-
   <div class="gallery">
     {% for painting in paintings %}
       <div class="gallery-item">
-        <img src="./static/assets/teeth_painting.jpeg" /> </br>
+        <img src="../{{ painting.image }}" /> </br>
         <p>{{ painting.title }}</p> </br>
-        <p class="price">{{ painting.price }}</p> </br>
-        <p class="description">{{ painting.description }}</p> </br>
+        <p>{{ painting.price }}</p> </br>
+        <p>{{ painting.description }}</p> </br>
         <p>{{ painting.media }}</p> </br>
         <p>{{ painting.size }}</p> </br>
       </div>
