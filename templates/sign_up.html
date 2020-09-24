@@ -1,22 +1,45 @@
 {% extends "base.html" %}
+
+{% block head %}
+<script type="text/javascript" src="static/user.js" defer></script>
+{% endblock %}
+
 {% block content %}
+<div class="sign-up invisible">
+  <h1>Sign Up</h1>
 
-<h1>Log In</h1>
+  {% if message %}
+    <p>{{ message }}</p>
+  {% endif %}
 
-{% if message %}
-  <p>{{ message }}</p>
-{% endif %}
+  <form method="POST">
+    <label for="name">Your Name</label>
+    <input type="text" name="name">
+    <label for="email">Email</label>
+    <input type="email" name="email">
+    <label for="password">Password</label>
+    <input type="password" name="password">
+    <label for="password-conf">Confirm Password</label>
+    <input type="password" name="password-conf">
+    <input type="submit" name="submit" value="Submit">
+  </form>
 
-<form method="POST">
-  <label for="name">Your Name</label>
-  <input type="text" name="name">
-  <label for="email">Email</label>
-  <input type="email" name="email">
-  <label for="password">Password</label>
-  <input type="password" name="password">
-  <label for="password-conf">Confirm Password</label>
-  <input type="password" name="password-conf">
-  <input type="submit" name="submit" value="Submit">
-</form>
+  <p class="under-form-text">Already have an account? <a id="log-in-switch" class="switch-link">Log In</a></p>
+
+</div>
+
+<div class="log-in invisible">
+  <h1>Log In</h1>
+  <form method="POST">
+    <label for="email">Email</label>
+    <input type="email" name="email">
+    <label for="password">Password</label>
+    <input type="password" name="password">
+    <input type="submit" name="submit" value="Submit">
+  </form>
+
+    <p class="under-form-text">Don't have an account? <a id="sign-up-switch" class="switch-link">Sign Up</a></p>
+</div>
+
 
 {% endblock %}

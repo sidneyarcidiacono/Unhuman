@@ -12,7 +12,24 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
 app.config['UPLOAD_PATH'] = 'static/assets'
+app.config['SECRET_KEY'] = 'SECRET_KEY'
 db = SQLAlchemy(app)
+
+# Define flask-login config variables & instantiate LoginManager
+login_manager = LoginManager(app)
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(id):
+    """Define user callback for user_loader function."""
+    return User.query.filter_by(id=id).first()
+
+
+# Define secret key in order to use flask-login
+app.config.update(
+    SECRET_KEY=os.urandom(24)
+)
 
 
 ########################################################################
@@ -74,18 +91,12 @@ def homepage():
     return render_template('home.html')
 
 
-@app.route('/user_login', methods=['GET', 'POST'])
-def user_login():
-    """Login users."""
-    return render_template('user_login.html')
-
-
-@app.route('/sign_up', methods=['GET', 'POST'])
-def sign_up():
+@app.route('/user', methods=['GET', 'POST'])
+def user():
     """Sign up users."""
     if request.method == 'GET':
         return render_template('sign_up.html')
-    else:
+    elif request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
         pass_first = request.form['password']
@@ -96,17 +107,26 @@ def sign_up():
             new_user = User(name=name,
                             email=email,
                             password=user_password)
+            login_user(new_user)
+            session['logged_in'] = True
             try:
                 db.session.add(new_user)
                 db.session.commit()
-                message = 'Thank you for signing up!'
-                return redirect(url_for('homepage', message=message))
+                context = {
+                    'message': 'Thank you for signing up!'
+                }
+                return render_template('home.html', **context)
             except ValueError:
-                message = 'Something went wrong.'
-                return redirect(url_for('sign_up', message=message))
+                context = {
+                    'message': 'Something went wrong.'
+                }
+                return render_template('sign_up.html', **context)
+        # elif request.method == 'POST '
         else:
-            message = 'Please make sure passwords match.'
-            return redirect(url_for('sign_up', message=message))
+            context = {
+                'message': 'Please make sure passwords match.'
+            }
+            return render_template('sign_up.html', **context)
 
 
 @app.route('/paintings')

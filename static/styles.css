@@ -57,8 +57,13 @@ h1 {
 
 h2 {
   font-size: 2rem;
-  color: rgb(255, 255, 255);
+  color: #fff
   text-align: center;
+}
+
+h3 {
+  text-align: center;
+  color: #fff
 }
 
 main {
@@ -196,6 +201,16 @@ footer {
 
 .invisible {
   display: none;
+}
+
+.switch-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.switch-link:hover{
+  text-decoration: none;
+  color: rgb(87, 10, 10);
 }
 
 #backdrop {
