@@ -8,6 +8,7 @@ from flask import Flask, request, render_template, g, redirect, url_for, session
 from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
 if app.config["ENV"] == "production":
@@ -34,9 +35,10 @@ def load_user(id):
 # Fix modal styling, other various styling
 # Add illustrations/prints page
 # Cart route, checkout
-# User authentication
 # User profiles
-# Create .env and .config files, separate secret_keys from main app file
+# Potentially refactor to use WTForms
+# Figure out how to better track users with flask_sqlalchemy
+# Look into "remember me" and "url_is_safe" functionality for UX/security
 
 
 ########################################################################
@@ -86,10 +88,19 @@ def create_user(pass_one, pass_conf, name, email):
                         password=user_password)
         return new_user
 
+########################################################################
+#                   #Error Handling                                    #
+########################################################################
+
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     print(e)
+#     return render_template('404.html')
 
 ########################################################################
 #                   #Routes                                            #
 ########################################################################
+
 
 @app.route('/')
 def homepage():
