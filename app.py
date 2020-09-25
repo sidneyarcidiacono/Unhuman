@@ -76,6 +76,16 @@ class User(db.Model, UserMixin):
 #                   #Helper Functions                                  #
 ########################################################################
 
+def create_user(pass_one, pass_conf, name, email):
+    """Return new user from User class."""
+    user_password = ''
+    if pass_one == pass_conf:
+        user_password = pass_one
+        new_user = User(name=name,
+                        email=email,
+                        password=user_password)
+        return new_user
+
 
 ########################################################################
 #                   #Routes                                            #
@@ -91,25 +101,21 @@ def homepage():
 def user():
     """Sign up users."""
     if request.method == 'GET':
-        return render_template('sign_up.html')
-    elif request.method == 'POST' and 'Sign Up!' in request.form:
-        name = request.form['name']
-        email = request.form['email']
-        pass_first = request.form['password']
-        pass_conf = request.form['password-conf']
-        user_password = ''
-        if pass_first == pass_conf:
-            user_password = pass_first
-            new_user = User(name=name,
-                            email=email,
-                            password=user_password)
+        return render_template('user.html')
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Sign Up!':
+            name = request.form['name']
+            email = request.form['email']
+            pass_first = request.form['password']
+            pass_conf = request.form['password-conf']
+            new_user = create_user(pass_first, pass_conf, name, email)
             login_user(new_user)
             session['logged_in'] = True
             try:
                 db.session.add(new_user)
                 db.session.commit()
                 context = {
-                    'message': 'Thank you for signing up!'
+                    'message': f'Thank you for signing up, {name}'
                 }
                 return render_template('home.html', **context)
             except ValueError:
@@ -117,14 +123,27 @@ def user():
                     'message': 'Something went wrong.'
                 }
                 return render_template('sign_up.html', **context)
-        elif request.method == 'POST' and 'Log In' in request.form:
-            print('Successfully got login form.')
+        elif request.form['submit'] == 'Log In':
+            email = request.form['email']
+            user = User.query.filter_by(email=email).first()
+            if request.form['password'] == user.password:
+                session_user = User(id=user.id,
+                                    name=user.name,
+                                    email=user.email,
+                                    password=user.password
+                                    )
+                login_user(session_user)
+                session['logged_in'] = True
+            print(f"Current user from login: {current_user}")
+            print(f"Current user from login auth: {current_user.is_authenticated}")
             return redirect(url_for('homepage'))
         else:
-            context = {
-                'message': 'Please make sure passwords match.'
-            }
-            return render_template('sign_up.html', **context)
+            return "There was a problem"
+    else:
+        context = {
+            'message': 'Please make sure passwords match.'
+        }
+        return render_template('user.html', **context)
 
 
 @app.route('/paintings')
@@ -164,11 +183,17 @@ def contact_results():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
     """Admin page where items can be added to db."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products
-    }
-    return render_template('admin.html', **context)
+    if current_user.is_authenticated:
+        print(f"Session logged in? {session['logged_in']}")
+        print(f"is anonymous?: {current_user.is_anonymous}")
+        products = Product.query.order_by(Product.date_created).all()
+        context = {
+            'products': products
+        }
+        return render_template('admin.html', **context)
+    else:
+        print(f"is authenticated?: {current_user.is_authenticated}")
+        return redirect(url_for('user'))
 
 
 @app.route('/admin-delete/<product_id>')
