@@ -1,5 +1,6 @@
 """import Flask things and sqlite3."""
 import os
+import config
 from dotenv import load_dotenv
 from imghdr import what
 from werkzeug.utils import secure_filename
@@ -9,11 +10,10 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
-app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
-app.config['UPLOAD_PATH'] = 'static/assets'
-app.config['SECRET_KEY'] = 'SECRET_KEY'
+if app.config["ENV"] == "production":
+    app.config.from_object("config.ProductionConfig")
+else:
+    app.config.from_object("config.DevelopmentConfig")
 db = SQLAlchemy(app)
 
 # Define flask-login config variables & instantiate LoginManager
@@ -25,12 +25,6 @@ login_manager.init_app(app)
 def load_user(id):
     """Define user callback for user_loader function."""
     return User.query.filter_by(id=id).first()
-
-
-# Define secret key in order to use flask-login
-app.config.update(
-    SECRET_KEY=os.urandom(24)
-)
 
 
 ########################################################################
