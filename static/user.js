@@ -3,19 +3,12 @@ const signUpSwitch = document.getElementById('sign-up-switch')
 const signUpForm = document.querySelector('.sign-up')
 const logInForm = document.querySelector('.log-in')
 
-const toggleHelper = () => {
-  logInForm.classList.remove('invisible')
-}
+logInSwitch.addEventListener('click', () => {
+  logInForm.style.display = 'none'
+  signUpForm.style.display = 'block'
+})
 
-const logInSwitchHandler = () => {
-  logInForm.classList.toggle('invisible')
-}
-
-const signUpSwitchHandler = () => {
-  signUpForm.classList.toggle('invisible')
-  logInForm.classList.add('invisible')
-}
-
-window.addEventListener('load', toggleHelper)
-logInSwitch.addEventListener('click', logInSwitchHandler)
-signUpSwitch.addEventListener('click', signUpSwitchHandler)
+signUpSwitch.addEventListener('click', () => {
+  signUpForm.style.display = 'none'
+  logInForm.style.display = 'block'
+})

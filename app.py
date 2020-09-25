@@ -1,5 +1,6 @@
 """import Flask things and sqlite3."""
 import os
+from dotenv import load_dotenv
 from imghdr import what
 from werkzeug.utils import secure_filename
 from flask import Flask, request, render_template, g, redirect, url_for, session
@@ -41,6 +42,7 @@ app.config.update(
 # Cart route, checkout
 # User authentication
 # User profiles
+# Create .env and .config files, separate secret_keys from main app file
 
 
 ########################################################################
@@ -96,7 +98,7 @@ def user():
     """Sign up users."""
     if request.method == 'GET':
         return render_template('sign_up.html')
-    elif request.method == 'POST':
+    elif request.method == 'POST' and 'Sign Up!' in request.form:
         name = request.form['name']
         email = request.form['email']
         pass_first = request.form['password']
@@ -121,7 +123,9 @@ def user():
                     'message': 'Something went wrong.'
                 }
                 return render_template('sign_up.html', **context)
-        # elif request.method == 'POST '
+        elif request.method == 'POST' and 'Log In' in request.form:
+            print('Successfully got login form.')
+            return redirect(url_for('homepage'))
         else:
             context = {
                 'message': 'Please make sure passwords match.'
