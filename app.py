@@ -27,8 +27,6 @@ login_manager.login_view = 'user'
 #                   #TODO:                                             #
 ########################################################################
 
-# Fix modal styling, other various styling
-# Add illustrations/prints page
 # Cart route, checkout
 # Edit profile functionality
 # Delete profile functionality
@@ -67,7 +65,6 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(60), nullable=False)
-    bio = db.Column(db.String(140), nullable=True)
     avatar = db.Column(db.String(30), nullable=True)
     orders = db.relationship("Product", backref='user', lazy=True)
     date_created = db.Column(db.DateTime, default=datetime.now)
@@ -127,15 +124,15 @@ def homepage():
     return render_template('home.html')
 
 
-@app.route('/paintings')
+@app.route('/work')
 def shop_paintings():
-    """Render template for paintings page."""
-    paintings = Product.query.all()
-    print(paintings)
+    """Render template for artwork/product page."""
+    products = Product.query.all()
+    print(products)
     context = {
-        'paintings': paintings
+        'products': products
     }
-    return render_template('paintings.html', **context)
+    return render_template('work.html', **context)
 
 
 @app.route('/about')
@@ -143,10 +140,11 @@ def about():
     """Display about page."""
     return render_template('about.html')
 
-# @app.route('/cart')
-# def checkout():
-#     """Defines checkout functionality"""
-#     pass
+
+@app.route('/cart')
+def checkout():
+    """Return cart display."""
+    return render_template('cart.html')
 
 
 @app.route('/contact')
@@ -205,12 +203,24 @@ def user():
         return render_template('user.html', message="Incorrect email or password.")
 
 
-@app.route('/user/edit_profile')
-@login_required
-def edit_profile():
-    # User.query.filter_by(id=current_user.id).\
-    # update()
-    pass
+# @app.route('/user/edit_profile', methods=['GET', 'POST'])
+# @login_required
+# def edit_profile():
+#     if request.method == 'GET':
+#         return render_template('edit_profile.html')
+#     name = request.form['name']
+#     email = request.form['email']
+#     bio = request.form['bio']
+#     avatar = request.form.get('avatar', None)
+#     try:
+#         # TODO: figure out what this doesn't like
+#         User.query.filter_by(id=current_user.id).\
+#         update(User.name=name,
+#                User.email=email,
+#                User.avatar=avatar)
+#         session.commit()
+#     except:
+#         return render_template('edit_profile.html')
 
 
 @app.route("/logout", methods=["GET"])

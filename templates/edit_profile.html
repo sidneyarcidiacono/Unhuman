@@ -4,11 +4,9 @@
 <h1>Edit Profile</h1>
 <form method="POST" enctype="multipart/form-data">
   <label>Your Name</label>
-  <input type="text" name="name">
+  <input type="text" name="name" value={{ current_user.name }}>
   <label for="email">Email</label>
-  <input type="email" name="email">
-  <label for="bio">Tell us about yourself</label>
-  <input type="text" name="message">
+  <input type="email" name="email" value={{ current_user.email }}>
   <label for="avatar">Profile Image</label>
   <input type="file" name="avatar" id="avatar" accept="image/*">
   <input type="submit" name="submit" value="Update Self">

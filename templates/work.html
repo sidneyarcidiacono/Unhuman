@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script type="text/javascript" src="static/work.js" defer></script>
+{% endblock %}
+
+
+{% block content %}
+<section>
+
+  <h1>Art</h1>
+
+  <div class="gallery">
+    {% for product in products %}
+      <div class="gallery-item">
+        <img src="../{{ product.image }}" /> </br>
+        <p>{{ product.title }}</p> </br>
+        <p>{{ product.price }}</p> </br>
+        <p>{{ product.description }}</p> </br>
+        <p>{{ product.media }}</p> </br>
+        <p>{{ product.size }}</p> </br>
+        <button>Add to Cart</button>
+      </div>
+    {% endfor %}
+  </div>
+
+</section>
+
+{% endblock %}
