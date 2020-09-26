@@ -32,7 +32,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: #aaa;
+  color: #570A0A;
 }
 
 body {
@@ -57,7 +57,7 @@ h1 {
 
 h2 {
   font-size: 2rem;
-  color: #fff
+  color: #fff;
   text-align: center;
 }
 
@@ -79,12 +79,12 @@ img {
 }
 
 p {
-  color: rgb(255, 255, 255);
+  color: #fff;
   text-align: center;
 }
 
 label {
-  color: rgb(255, 255, 255);
+  color: #fff;
 }
 
 form {
@@ -122,6 +122,12 @@ footer {
   color: #fff;
   margin-top: auto;
   padding: 10vw;
+}
+
+.avatar {
+  width: 25vw;
+  height: auto;
+  border-radius: 50%;
 }
 
 

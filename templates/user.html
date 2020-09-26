@@ -49,14 +49,13 @@
   </div>
 {% else %}
 
-  <div class="user-profile">
-    <h2>User Name</h2>
+    <h2>{{ current_user.name }}</h2>
 
     <img src="../static/assets/lucifer.jpeg" alt="default image" class="avatar">
     <p class="user_bio">Default bio text</p>
+    <button>Edit Profile</button>
     <button>Log Out</button>
 
-  </div>
 
 {% endif %}
 

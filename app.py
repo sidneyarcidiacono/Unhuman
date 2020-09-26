@@ -30,10 +30,10 @@ login_manager.login_view = 'user'
 # Fix modal styling, other various styling
 # Add illustrations/prints page
 # Cart route, checkout
-# Log out functionality
-# User profiles
-# Potentially refactor to use WTForms
-# Figure out how to better track users with flask_sqlalchemy
+# Edit profile functionality
+# Delete profile functionality
+# Refactor to use WTForms
+# Remember me functionality
 # Look into "remember me" and "url_is_safe" functionality for UX/security
 
 
@@ -67,7 +67,10 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(60), nullable=False)
+    bio = db.Column(db.String(140), nullable=True)
+    avatar = db.Column(db.String(30), nullable=True)
     orders = db.relationship("Product", backref='user', lazy=True)
+    date_created = db.Column(db.DateTime, default=datetime.now)
 
     def is_authenticated(self):
         """Return true when called after verifying login."""
@@ -183,29 +186,31 @@ def user():
                 context = {
                     'message': f'Thank you for signing up, {name}'
                 }
-                return render_template('home.html', **context)
+                return render_template('user.html', **context)
             except ValueError:
                 context = {
                     'message': 'Something went wrong.'
                 }
                 return render_template('user.html', **context)
         elif request.form['submit'] == 'Log In':
-            try:
-                email = request.form['email']
-                user = User.query.filter_by(email=email).first()
-                entered_pass = request.form['password']
-                if user.check_password(entered_pass):
-                    user.is_authenticated = True
-                    login_user(user, remember=True)
-                    db.session.add(user)
-                    db.session.commit()
-                return redirect(url_for('homepage'))
-            except ValueError:
-                context = {
-                    'message': 'Invalid username or password.'
-                }
-                return render_template('user.html', **context)
-        return "There was a problem"
+            email = request.form['email']
+            user = User.query.filter_by(email=email).first()
+            entered_pass = request.form['password']
+            if user.check_password(entered_pass):
+                user.is_authenticated = True
+                login_user(user, remember=True)
+                db.session.add(user)
+                db.session.commit()
+                return render_template('user.html')
+        return render_template('user.html', message="Incorrect email or password.")
+
+
+@app.route('/user/edit_profile')
+@login_required
+def edit_profile():
+    # User.query.filter_by(id=current_user.id).\
+    # update()
+    pass
 
 
 @app.route("/logout", methods=["GET"])
