@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from imghdr import what
 from werkzeug.utils import secure_filename
 from flask import Flask, request, render_template, g, redirect, url_for, session
-from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin
+from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin, login_required
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from passlib.hash import sha256_crypt
@@ -20,12 +20,7 @@ db = SQLAlchemy(app)
 # Define flask-login config variables & instantiate LoginManager
 login_manager = LoginManager(app)
 login_manager.init_app(app)
-
-
-@login_manager.user_loader
-def load_user(id):
-    """Define user callback for user_loader function."""
-    return User.query.filter_by(id=id).first()
+login_manager.login_view = 'user'
 
 
 ########################################################################
@@ -35,6 +30,7 @@ def load_user(id):
 # Fix modal styling, other various styling
 # Add illustrations/prints page
 # Cart route, checkout
+# Log out functionality
 # User profiles
 # Potentially refactor to use WTForms
 # Figure out how to better track users with flask_sqlalchemy
@@ -64,7 +60,7 @@ class Product(db.Model):
         return '<Product %r>' % self.id
 
 
-class User(db.Model, UserMixin):
+class User(UserMixin, db.Model):
     """Define user class."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -73,20 +69,40 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     orders = db.relationship("Product", backref='user', lazy=True)
 
+    def is_authenticated(self):
+        """Return true when called after verifying login."""
+        return True
+
+    def check_password(self, password):
+        """Verify hashed password and inputted password."""
+        return sha256_crypt.verify(password, self.password)
+
+
+@login_manager.user_loader
+def load_user(id):
+    """Define user callback for user_loader function."""
+    return User.query.get(id)
 
 ########################################################################
 #                   #Helper Functions                                  #
 ########################################################################
 
+
 def create_user(pass_one, pass_conf, name, email):
     """Return new user from User class."""
     user_password = ''
     if pass_one == pass_conf:
-        user_password = pass_one
+        user_password = sha256_crypt.hash(pass_one)
         new_user = User(name=name,
                         email=email,
-                        password=user_password)
+                        password=user_password
+                        )
         return new_user
+    else:
+        context = {
+            'message': 'Please make sure passwords match.'
+        }
+        return render_template('user.html', **context)
 
 ########################################################################
 #                   #Error Handling                                    #
@@ -98,7 +114,7 @@ def create_user(pass_one, pass_conf, name, email):
 #     return render_template('404.html')
 
 ########################################################################
-#                   #Routes                                            #
+#                   #Public Routes                                     #
 ########################################################################
 
 
@@ -106,55 +122,6 @@ def create_user(pass_one, pass_conf, name, email):
 def homepage():
     """Display homepage."""
     return render_template('home.html')
-
-
-@app.route('/user', methods=['GET', 'POST'])
-def user():
-    """Sign up users."""
-    if request.method == 'GET':
-        return render_template('user.html')
-    elif request.method == 'POST':
-        if request.form['submit'] == 'Sign Up!':
-            name = request.form['name']
-            email = request.form['email']
-            pass_first = request.form['password']
-            pass_conf = request.form['password-conf']
-            new_user = create_user(pass_first, pass_conf, name, email)
-            login_user(new_user)
-            session['logged_in'] = True
-            try:
-                db.session.add(new_user)
-                db.session.commit()
-                context = {
-                    'message': f'Thank you for signing up, {name}'
-                }
-                return render_template('home.html', **context)
-            except ValueError:
-                context = {
-                    'message': 'Something went wrong.'
-                }
-                return render_template('sign_up.html', **context)
-        elif request.form['submit'] == 'Log In':
-            email = request.form['email']
-            user = User.query.filter_by(email=email).first()
-            if request.form['password'] == user.password:
-                session_user = User(id=user.id,
-                                    name=user.name,
-                                    email=user.email,
-                                    password=user.password
-                                    )
-                login_user(session_user)
-                session['logged_in'] = True
-            print(f"Current user from login: {current_user}")
-            print(f"Current user from login auth: {current_user.is_authenticated}")
-            return redirect(url_for('homepage'))
-        else:
-            return "There was a problem"
-    else:
-        context = {
-            'message': 'Please make sure passwords match.'
-        }
-        return render_template('user.html', **context)
 
 
 @app.route('/paintings')
@@ -191,20 +158,86 @@ def contact_results():
     return render_template('contact_results.html')
 
 
+########################################################################
+#                   #User & Login routes                               #
+########################################################################
+
+
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+    """Sign up users."""
+    if request.method == 'GET':
+        return render_template('user.html')
+    elif request.method == 'POST':
+        if request.form['submit'] == 'Sign Up!':
+            name = request.form['name']
+            email = request.form['email']
+            pass_first = request.form['password']
+            pass_conf = request.form['password-conf']
+            new_user = create_user(pass_first, pass_conf, name, email)
+            login_user(new_user)
+            new_user.is_authenticated = True
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+                context = {
+                    'message': f'Thank you for signing up, {name}'
+                }
+                return render_template('home.html', **context)
+            except ValueError:
+                context = {
+                    'message': 'Something went wrong.'
+                }
+                return render_template('user.html', **context)
+        elif request.form['submit'] == 'Log In':
+            try:
+                email = request.form['email']
+                user = User.query.filter_by(email=email).first()
+                entered_pass = request.form['password']
+                if user.check_password(entered_pass):
+                    user.is_authenticated = True
+                    login_user(user, remember=True)
+                    db.session.add(user)
+                    db.session.commit()
+                return redirect(url_for('homepage'))
+            except ValueError:
+                context = {
+                    'message': 'Invalid username or password.'
+                }
+                return render_template('user.html', **context)
+        return "There was a problem"
+
+
+@app.route("/logout", methods=["GET"])
+@login_required
+def logout():
+    """Logout the current user."""
+    user = current_user
+    user.authenticated = False
+    db.session.add(user)
+    db.session.commit()
+    logout_user()
+    return redirect(url_for('user'))
+
+
+########################################################################
+#                   #Admin Routes                                      #
+########################################################################
+
+
 @app.route('/admin', methods=['GET', 'POST'])
+@login_required
 def admin():
     """Admin page where items can be added to db."""
     if current_user.is_authenticated:
-        print(f"Session logged in? {session['logged_in']}")
         print(f"is anonymous?: {current_user.is_anonymous}")
         products = Product.query.order_by(Product.date_created).all()
         context = {
             'products': products
         }
         return render_template('admin.html', **context)
-    else:
-        print(f"is authenticated?: {current_user.is_authenticated}")
-        return redirect(url_for('user'))
+    print(f"Is authenticated? from else {current_user.is_authenticated}")
+    return redirect(url_for('user'))
 
 
 @app.route('/admin-delete/<product_id>')
@@ -259,6 +292,11 @@ def confirmation():
             'products': products
         }
         return render_template('admin.html', **context)
+
+
+########################################################################
+#                   #Teardown & Run                                    #
+########################################################################
 
 
 @app.teardown_appcontext

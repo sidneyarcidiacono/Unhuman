@@ -2,44 +2,63 @@
 
 {% block head %}
 <script type="text/javascript" src="static/user.js" defer></script>
+<script type="text/javascript" src="static/logout.js" defer></script>
 {% endblock %}
 
 {% block content %}
-<div class="sign-up invisible">
-  <h1>Sign Up</h1>
 
-  {% if message %}
-    <p>{{ message }}</p>
-  {% endif %}
+{% if current_user.is_anonymous %}
+  <div class="sign-up invisible">
+    <h1>Sign Up</h1>
 
-  <form method="POST">
-    <label for="name">Your Name</label>
-    <input type="text" name="name">
-    <label for="email">Email</label>
-    <input type="email" name="email">
-    <label for="password">Password</label>
-    <input type="password" name="password">
-    <label for="password-conf">Confirm Password</label>
-    <input type="password" name="password-conf">
-    <input type="submit" name="submit" value="Sign Up!">
-  </form>
+    {% if message %}
+      <p>{{ message }}</p>
+    {% endif %}
 
-  <p class="under-form-text">Already have an account? <a id="sign-up-switch" class="switch-link">Log In</a></p>
+    <form method="POST">
+      <label for="name">Your Name</label>
+      <input type="text" name="name">
+      <label for="email">Email</label>
+      <input type="email" name="email">
+      <label for="password">Password</label>
+      <input type="password" name="password">
+      <label for="password-conf">Confirm Password</label>
+      <input type="password" name="password-conf">
+      <input type="submit" name="submit" value="Sign Up!">
+    </form>
 
-</div>
+    <p class="under-form-text">Already have an account? <a id="sign-up-switch" class="switch-link">Log In</a></p>
 
-<div class="log-in">
-  <h1>Log In</h1>
-  <form method="POST">
-    <label for="email">Email</label>
-    <input type="email" name="email">
-    <label for="password">Password</label>
-    <input type="password" name="password">
-    <input type="submit" name="submit" value="Log In">
-  </form>
+  </div>
 
-    <p class="under-form-text">Don't have an account? <a id="log-in-switch" class="switch-link">Sign Up</a></p>
-</div>
+  <div class="log-in">
+
+    <h1>Log In</h1>
+    {% if message %}
+      <p>{{ message }}
+    {% endif %}
+    <form method="POST">
+      <label for="email">Email</label>
+      <input type="email" name="email">
+      <label for="password">Password</label>
+      <input type="password" name="password">
+      <input type="submit" name="submit" value="Log In">
+    </form>
+
+      <p class="under-form-text">Don't have an account? <a id="log-in-switch" class="switch-link">Sign Up</a></p>
+  </div>
+{% else %}
+
+  <div class="user-profile">
+    <h2>User Name</h2>
+
+    <img src="../static/assets/lucifer.jpeg" alt="default image" class="avatar">
+    <p class="user_bio">Default bio text</p>
+    <button>Log Out</button>
+
+  </div>
+
+{% endif %}
 
 
 {% endblock %}
