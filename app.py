@@ -8,6 +8,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user,\
     UserMixin, login_required
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from forms import RegistrationForm, ProfileForm, LoginForm
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
@@ -28,6 +29,7 @@ login_manager.login_view = 'user'
 ########################################################################
 
 # Cart route, checkout
+# Contact route to actually submit to something
 # Edit profile functionality
 # Delete profile functionality
 # Refactor to use WTForms
@@ -131,7 +133,6 @@ def homepage():
 def shop_paintings():
     """Render template for artwork/product page."""
     products = Product.query.all()
-    print(products)
     context = {
         'products': products
     }
@@ -170,6 +171,9 @@ def contact_results():
 @app.route('/user', methods=['GET', 'POST'])
 def user():
     """Sign up users."""
+    sign_up_form = RegistrationForm(request.POST)
+    log_in_form = LoginForm(request.POST)
+    # FINISH IMPLEMENTING WTFORMS HERE IN THIS ROUTE
     if request.method == 'GET':
         return render_template('user.html')
     elif request.method == 'POST':
@@ -248,13 +252,11 @@ def logout():
 def admin():
     """Admin page where items can be added to db."""
     if current_user.is_authenticated:
-        print(f"is anonymous?: {current_user.is_anonymous}")
         products = Product.query.order_by(Product.date_created).all()
         context = {
             'products': products
         }
         return render_template('admin.html', **context)
-    print(f"Is authenticated? from else {current_user.is_authenticated}")
     return redirect(url_for('user'))
 
 
