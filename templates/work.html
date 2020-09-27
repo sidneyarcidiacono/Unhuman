@@ -14,11 +14,11 @@
     {% for product in products %}
       <div class="gallery-item">
         <img src="../{{ product.image }}" /> </br>
-        <p>{{ product.title }}</p> </br>
-        <p>{{ product.price }}</p> </br>
-        <p>{{ product.description }}</p> </br>
-        <p>{{ product.media }}</p> </br>
-        <p>{{ product.size }}</p> </br>
+        <p>{{ product.title }}</p> 
+        <p>{{ product.price }}</p>
+        <p>{{ product.description }}</p>
+        <p>{{ product.media }}</p>
+        <p>{{ product.size }}</p>
         <button>Add to Cart</button>
       </div>
     {% endfor %}
