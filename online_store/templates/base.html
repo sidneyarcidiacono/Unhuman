@@ -18,7 +18,7 @@
         <li><a href="/work">Art</a></li>
         <li><a href="/about">About</a></li>
         <li><a href="/contact">Contact</a></li>
-        <li>
+        <li class="user-icon">
             <a href="{{ url_for('user') }}"><img id="user-icon" src="../static/assets/user.svg"/></a>
         </li>
         <li><a href="{{ url_for('admin') }}">Admin</a></li>
@@ -26,6 +26,13 @@
     </nav>
   </header>
   <main>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
   </main>
   <footer>Copyright © Sid 2020</footer>
