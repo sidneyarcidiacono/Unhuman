@@ -115,7 +115,7 @@ input[type=submit], button {
 }
 
 input[type=submit]:hover, button:hover {
-  background-color: rgb(87, 10, 10);
+  background-color: #570A0A;
 }
 
 footer {
@@ -238,4 +238,13 @@ footer {
 
 #product-list {
   color: #fff;
+}
+
+#user-icon {
+  width: 28px;
+  height: 28px;
+}
+
+#user-icon:hover {
+  color: #570A0A;
 }
