@@ -1,11 +1,11 @@
 """import Flask things and sqlite3."""
 import os
-import config
-from dotenv import load_dotenv
-from imghdr import what
+# from dotenv import load_dotenv
+# from imghdr import what
 from werkzeug.utils import secure_filename
-from flask import Flask, request, render_template, g, redirect, url_for, session
-from flask_login import LoginManager, current_user, login_user, logout_user, UserMixin, login_required
+from flask import Flask, request, render_template, g, redirect, url_for
+from flask_login import LoginManager, current_user, login_user, logout_user,\
+    UserMixin, login_required
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from passlib.hash import sha256_crypt
