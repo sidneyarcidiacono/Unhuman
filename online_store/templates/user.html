@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script type="text/javascript" src="static/user.js" defer></script>
+<script type="text/javascript" src="static/logout.js" defer></script>
+{% endblock %}
+
+{% block content %}
+
+<img src="{{ url_for('static', filename='avatars/' + current_user.avatar) }}"
+     alt="{{ current_user.name }}">
+
+<h2>{{ current_user.name }}</h2>
+<h3>{{ current_user.username }}</h3>
+<p>{{ current_user.email }}</p>
+
+<form method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <fieldset>
+    <legend>Edit Profile</legend>
+    <div>
+      {{ form.username.label }}
+      {% if form.username.errors %}
+        {{ form.username(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.username.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.username }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.name.label }}
+      {% if form.name.errors %}
+        {{ form.name(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.name.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.name }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.email.label }}
+      {% if form.email.errors %}
+        {{ form.email(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.email.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.email }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.avatar.label }}
+      {% if form.avatar.errors %}
+        {{ form.avatar(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.avatar.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </fieldset>
+  <div>
+    {{ form.submit }}
+  </div>
+</form>
+{% endblock %}

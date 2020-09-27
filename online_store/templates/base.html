@@ -2,8 +2,12 @@
 <html>
 
 <head>
-  <title>Unhuman</title>
   <link rel="stylesheet" type="text/css" href="static/styles.css" />
+  {% if title %}
+    <title>Unhuman - {{ title }}</title>
+  {% else %}
+    <title>Unhuman</title>
+  {% endif %}
   {% block head %}{% endblock %}
 </head>
 <body>
@@ -14,8 +18,10 @@
         <li><a href="/work">Art</a></li>
         <li><a href="/about">About</a></li>
         <li><a href="/contact">Contact</a></li>
-        <li><a href="/user"><img id="user-icon" src="../static/assets/user.svg"/></a></li>
-        <li><a href="/admin">Admin</a></li>
+        <li>
+            <a href="{{ url_for('user') }}"><img id="user-icon" src="../static/assets/user.svg"/></a>
+        </li>
+        <li><a href="{{ url_for('admin') }}">Admin</a></li>
       </ul>
     </nav>
   </header>
