@@ -174,24 +174,27 @@ def logout():
 @login_required
 def admin():
     """Admin page where items can be added to db."""
-    form = AddProductForm()
-    if form.validate_on_submit():
-        image_file = save_image(form.image.data, 250, "assets")
-        new_product = Product(
-            title=form.title.data,
-            price=form.price.data,
-            description=form.description.data,
-            media=form.media.data,
-            size=form.size.data,
-            image=image_file,
-        )
-        db.session.add(new_product)
-        db.session.commit()
-        flash("Product added, thank you!")
-        return redirect(url_for("admin"))
-    products = Product.query.order_by(Product.date_created).all()
-    context = {"products": products, "title": "Admin", "form": form}
-    return render_template("admin.html", **context)
+    if current_user.is_admin():
+        form = AddProductForm()
+        if form.validate_on_submit():
+            image_file = save_image(form.image.data, 500, "assets")
+            new_product = Product(
+                title=form.title.data,
+                price=form.price.data,
+                description=form.description.data,
+                media=form.media.data,
+                size=form.size.data,
+                image=image_file,
+            )
+            db.session.add(new_product)
+            db.session.commit()
+            flash("Product added, thank you!")
+            return redirect(url_for("admin"))
+        products = Product.query.order_by(Product.date_created).all()
+        context = {"products": products, "title": "Admin", "form": form}
+        return render_template("admin.html", **context)
+    flash("You are not authorized to access this route.")
+    return redirect(url_for("login"))
 
 
 @app.route("/admin-delete/<product_id>")
