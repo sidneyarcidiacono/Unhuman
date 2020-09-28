@@ -118,6 +118,7 @@ def register():
         return redirect(url_for("homepage"))
     form = RegistrationForm()
     if form.validate_on_submit():
+        print("Form validated")
         user = User(
             username=form.username.data,
             name=form.name.data,
@@ -128,6 +129,7 @@ def register():
         db.session.commit()
         flash("Your account has been created, you are now able to log in.")
         return redirect(url_for("login"))
+    print("in else")
     return render_template("register.html", title="Register", form=form)
 
 

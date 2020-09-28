@@ -209,14 +209,12 @@ footer {
   display: none;
 }
 
-.switch-link {
-  text-decoration: underline;
-  cursor: pointer;
+.is-invalid {
+  color: #fff;
 }
 
-.switch-link:hover{
-  text-decoration: none;
-  color: rgb(87, 10, 10);
+.invalid-feedback {
+  color: #fff;
 }
 
 #backdrop {
