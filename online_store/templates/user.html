@@ -1,14 +1,21 @@
 {% extends "base.html" %}
+
+{% block head %}
+<script type="text/javascript" src="static/editUser.js" defer></script>
+{% endblock %}
+
 {% block content %}
 
 <img src="{{ url_for('static', filename='avatars/' + current_user.avatar) }}"
-     alt="{{ current_user.name }}">
+     alt="{{ current_user.name }}" class="avatar-img">
 
 <h2>{{ current_user.name }}</h2>
 <h3>{{ current_user.username }}</h3>
 <p>{{ current_user.email }}</p>
 
-<form method="POST" enctype="multipart/form-data">
+<button id="edit-user">Edit Profile</button>
+
+<form method="POST" enctype="multipart/form-data" class='invisible'>
   {{ form.hidden_tag() }}
   <fieldset>
     <legend>Edit Profile</legend>
@@ -68,4 +75,5 @@
     {{ form.submit }}
   </div>
 </form>
+<button id="log-out">Log Out</button>
 {% endblock %}

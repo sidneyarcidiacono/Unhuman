@@ -123,7 +123,6 @@ def register():
         return redirect(url_for("homepage"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        print("Form validated")
         user = User(
             username=form.username.data,
             name=form.name.data,
@@ -134,7 +133,6 @@ def register():
         db.session.commit()
         flash("Your account has been created, you are now able to log in.")
         return redirect(url_for("login"))
-    print("in else")
     return render_template("register.html", title="Register", form=form)
 
 
@@ -177,12 +175,8 @@ def logout():
 def admin():
     """Admin page where items can be added to db."""
     form = AddProductForm()
-    print(f"Request method: {request.method}")
-    print(form.validate_on_submit())
     if form.validate_on_submit():
-        print("In POST if")
         image_file = save_image(form.image.data, 250, "assets")
-        print(f"Image saved: {image_file}")
         new_product = Product(
             title=form.title.data,
             price=form.price.data,

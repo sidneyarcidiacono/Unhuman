@@ -161,6 +161,12 @@ footer {
   border-radius: 50%;
 }
 
+.avatar-img {
+  width: 125px;
+  height: auto;
+  border-radius: 50%;
+}
+
 
 .gallery {
   display: flex;
