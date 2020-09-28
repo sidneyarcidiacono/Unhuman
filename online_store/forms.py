@@ -23,7 +23,7 @@ class RegistrationForm(FlaskForm):
     """Create class registration form for user sign-up."""
 
     username = StringField(
-        "Username", validators=[DataRequired(), Length(min=2, max=20)]
+        "Username", validators=[DataRequired(), Length(max=20)]
     )
     name = StringField("Name", validators=[DataRequired(), Length(max=30)])
     email = StringField("Email", validators=[DataRequired(), Email()])

@@ -53,9 +53,9 @@ class User(UserMixin, db.Model):
         """Return true when called after verifying login."""
         return True
 
-    def set_password(self, pass_one, pass_conf, name, email):
+    def set_password(self, password):
         """Return new user from User class."""
-        self.password = sha256_crypt.hash(pass_one)
+        self.password = sha256_crypt.hash(password)
 
     def check_password(self, password):
         """Verify hashed password and inputted password."""

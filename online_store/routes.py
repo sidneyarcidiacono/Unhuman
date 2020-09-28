@@ -138,7 +138,7 @@ def register():
 def user():
     """Show user account information."""
     form = UpdateAccountForm()
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         if form.avatar.data:
             avatar_file = save_image(form.avatar.data, 125, "avatars")
             current_user.avatar = avatar_file
@@ -149,7 +149,8 @@ def user():
     elif request.method == "GET":
         form.username.data = current_user.username
         form.email.data = current_user.email
-        return render_template("user.html", title="User", form=form)
+        context = {"title": "User", "form": form}
+        return render_template("user.html", **context)
 
 
 @app.route("/logout")

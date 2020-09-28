@@ -9,7 +9,6 @@ db = SQLAlchemy(app)
 
 app.config["SECRET_KEY"] = "cxEKMBqEUmXAMu9qLKg6dbps2zKCfM78UQYc"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SESSION_COOKIE_SECURE"] = True
 
 # Define flask-login config variables & instantiate LoginManager
 login_manager = LoginManager(app)
