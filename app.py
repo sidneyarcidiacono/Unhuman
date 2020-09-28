@@ -13,7 +13,7 @@ from online_store import app
 # Potentially improve redirect on 404 page to be server-side or JS
 # Design custom icon to display when logged in, nav link title for when not ?
 # Button in user route not working now for some reason, figure out why
-# Clean up styling
+# Clean up styling (checkboxes, links in sign up/login forms, buttons, etc.)
 
 ########################################################################
 #                   #Run                                               #
