@@ -46,7 +46,9 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(60), nullable=True)
     avatar = db.Column(
-        db.String(30), nullable=False, default="../static/assets/lucifer.jpg"
+        db.String(30),
+        nullable=False,
+        default="lucifer.jpeg",
     )
     orders = db.relationship("Product", backref="user", lazy=True)
     date_created = db.Column(db.DateTime, default=datetime.now)
