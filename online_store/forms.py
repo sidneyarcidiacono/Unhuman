@@ -8,6 +8,7 @@ from wtforms import (
     SubmitField,
     TextAreaField,
     BooleanField,
+    DecimalField,
 )
 from wtforms.validators import (
     DataRequired,
@@ -99,14 +100,15 @@ class AddProductForm(FlaskForm):
     title = StringField(
         "Title", validators=[DataRequired(), Length(min=2, max=30)]
     )
-    price = StringField("Price", validators=[DataRequired(), Length(max=8)])
+    price = DecimalField("Price", validators=[DataRequired()])
     description = TextAreaField(
         "Description", validators=[DataRequired(), Length(max=140)]
     )
     media = StringField(
-        "Media", validators=[DataRequired(), Length(min=8, max=30)]
+        "Media", validators=[DataRequired(), Length(min=4, max=30)]
     )
     size = StringField(
         "Size", validators=[DataRequired(), Length(min=3, max=7)]
     )
     image = FileField("Image", validators=[FileAllowed(["jpg", "png"])])
+    submit = SubmitField("Add Product")

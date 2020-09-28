@@ -149,13 +149,14 @@ def user():
             current_user.avatar = avatar_file
         current_user.username = form.username.data
         current_user.email = form.email.data
+        db.session.commit()
         flash("Your account has been updated.")
         return redirect(url_for("user"))
-    elif request.method == "GET":
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-        context = {"title": "User", "form": form}
-        return render_template("user.html", **context)
+    print(current_user.avatar)
+    form.username.data = current_user.username
+    form.email.data = current_user.email
+    context = {"title": "User", "form": form}
+    return render_template("user.html", **context)
 
 
 @app.route("/logout")
@@ -176,12 +177,12 @@ def logout():
 def admin():
     """Admin page where items can be added to db."""
     form = AddProductForm()
-    if request.method == "GET":
-        products = Product.query.order_by(Product.date_created).all()
-        context = {"products": products, "title": "Admin", "form": form}
-        return render_template("admin.html", **context)
+    print(f"Request method: {request.method}")
+    print(form.validate_on_submit())
     if form.validate_on_submit():
+        print("In POST if")
         image_file = save_image(form.image.data, 250, "assets")
+        print(f"Image saved: {image_file}")
         new_product = Product(
             title=form.title.data,
             price=form.price.data,
@@ -194,6 +195,9 @@ def admin():
         db.session.commit()
         flash("Product added, thank you!")
         return redirect(url_for("admin"))
+    products = Product.query.order_by(Product.date_created).all()
+    context = {"products": products, "title": "Admin", "form": form}
+    return render_template("admin.html", **context)
 
 
 @app.route("/admin-delete/<product_id>")

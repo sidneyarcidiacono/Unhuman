@@ -99,6 +99,7 @@
       </div>
       <div>
         {{ form.image.label }}
+        {{ form.image }}
         {% if form.image.errors %}
           {{ form.image(class="is-invalid") }}
           <div class="invalid-feedback">
@@ -106,8 +107,6 @@
               {{ error }}
             {% endfor %}
           </div>
-        {% else %}
-          {{ form.image }}
         {% endif %}
       </div>
     </fieldset>
@@ -115,8 +114,5 @@
       {{ form.submit }}
     </div>
   </form>
-  <div>
-
-</div>
 
 {% endblock %}
