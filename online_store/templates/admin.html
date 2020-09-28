@@ -28,24 +28,94 @@
 <div id="backdrop"></div>
 <div class="modal">
 
-  <form action="/product_confirmation" method="POST" class="product-form" enctype="multipart/form-data">
-    <label>Title</label>
-    <input type="text" name="title" id="title" required>
-    <label for="price">Price</label>
-    <input type="number" name="price" id="price" required>
-    <label for="description">Description</label>
-    <input type="text" name="description" id="description" required>
-    <label for="media">Media</label>
-    <input type="text" name="media" id="media" required>
-    <label for="size">Size (inches)</label>
-    <input type="text" name="size" id="size" required>
-    <label for="image">Image (.jpg, or .png)</label>
-    <input type="file" name="image" id="image" accept="image/*" required>
-    <div class="modal__actions">
-      <input type="submit" name="product-submit" id="product-submit" value="Add">
-      <button id="cancel-product">Cancel</button>
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <fieldset>
+      <legend>Add New Product</legend>
+      <div>
+        {{ form.title.label }}
+        {% if form.title.errors %}
+          {{ form.title(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.title.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.title }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.price.label }}
+        {% if form.price.errors %}
+          {{ form.price(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.price.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.price }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.description.label }}
+        {% if form.description.errors %}
+          {{ form.description(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.description.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.description }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.media.label }}
+        {% if form.media.errors %}
+          {{ form.media(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.media.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.media }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.size.label }}
+        {% if form.size.errors %}
+          {{ form.size(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.size.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.size }}
+        {% endif %}
+      </div>
+      <div>
+        {{ form.image.label }}
+        {% if form.image.errors %}
+          {{ form.image(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.image.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.image }}
+        {% endif %}
+      </div>
+    </fieldset>
+    <div>
+      {{ form.submit }}
     </div>
   </form>
+  <div>
 
 </div>
 

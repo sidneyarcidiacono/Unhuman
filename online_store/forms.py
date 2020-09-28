@@ -61,7 +61,7 @@ class UpdateAccountForm(FlaskForm):
     avatar = FileField(
         "Update Avatar", validators=[FileAllowed(["jpg", "png"])]
     )
-    submit = SubmitField("Sign Up")
+    submit = SubmitField("Update Account")
 
     def validate_username(self, username):
         """Validate that username is not already in use."""
@@ -91,3 +91,22 @@ class LoginForm(FlaskForm):
     )
     remember = BooleanField("Remember Me")
     submit = SubmitField("Log In")
+
+
+class AddProductForm(FlaskForm):
+    """Create add product form."""
+
+    title = StringField(
+        "Title", validators=[DataRequired(), Length(min=2, max=30)]
+    )
+    price = StringField("Price", validators=[DataRequired(), Length(max=8)])
+    description = TextAreaField(
+        "Description", validators=[DataRequired(), Length(max=140)]
+    )
+    media = StringField(
+        "Media", validators=[DataRequired(), Length(min=8, max=30)]
+    )
+    size = StringField(
+        "Size", validators=[DataRequired(), Length(min=3, max=7)]
+    )
+    image = FileField("Image", validators=[FileAllowed(["jpg", "png"])])

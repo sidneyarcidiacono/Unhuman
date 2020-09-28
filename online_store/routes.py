@@ -6,7 +6,12 @@ from flask import render_template, flash, redirect, url_for, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from online_store import app, db
 from online_store.models import User, Product
-from online_store.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from online_store.forms import (
+    RegistrationForm,
+    LoginForm,
+    UpdateAccountForm,
+    AddProductForm,
+)
 
 
 ########################################################################
@@ -170,11 +175,25 @@ def logout():
 @login_required
 def admin():
     """Admin page where items can be added to db."""
-    if current_user.is_authenticated:
+    form = AddProductForm()
+    if request.method == "GET":
         products = Product.query.order_by(Product.date_created).all()
-        context = {"products": products}
+        context = {"products": products, "title": "Admin", "form": form}
         return render_template("admin.html", **context)
-    return redirect(url_for("user"))
+    if form.validate_on_submit():
+        image_file = save_image(form.image.data, 250, "assets")
+        new_product = Product(
+            title=form.title.data,
+            price=form.price.data,
+            description=form.description.data,
+            media=form.media.data,
+            size=form.size.data,
+            image=image_file,
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        flash("Product added, thank you!")
+        return redirect(url_for("admin"))
 
 
 @app.route("/admin-delete/<product_id>")
@@ -188,42 +207,3 @@ def delete_product(product_id):
     except (TypeError, ValueError):
         print("Something went wrong deleting this product.")
         return redirect(url_for("admin"))
-
-
-@app.route("/product_confirmation", methods=["GET", "POST"])
-def confirmation():
-    """Confirm of product addition."""
-    if request.method == "POST":
-        try:
-            title = request.form["title"]
-            description = request.form["description"]
-            price = request.form["price"]
-            media = request.form["media"]
-            size = request.form["size"]
-            uploaded_file = request.files["image"]
-            filename = secure_filename(uploaded_file.filename)
-            if filename:
-                file_ext = os.path.splitext(filename)[1]
-                file_path = os.path.join(app.config["UPLOAD_PATH"], filename)
-                uploaded_file.save(file_path)
-                new_product = Product(
-                    title=title,
-                    description=description,
-                    price=price,
-                    media=media,
-                    size=size,
-                    image=file_path,
-                )
-                try:
-                    db.session.add(new_product)
-                    db.session.commit()
-                    return redirect(url_for("confirmation"))
-                except ValueError:
-                    return render_template("admin.html")
-        except:
-            return redirect(url_for("admin"))
-    else:
-        products = Product.query.order_by(Product.date_created).all()
-
-        context = {"products": products}
-        return render_template("admin.html", **context)
