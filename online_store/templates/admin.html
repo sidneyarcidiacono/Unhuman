@@ -12,7 +12,7 @@
     {% for product in products %}
     <div class="product-item">
       <!-- <a href="/paintings/{{ product.id }}"> -->
-      <img src="../{{ product.image }}" alt={{ product.title }} class="admin-prod-image">
+      <img src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }} class="admin-prod-image">
       <!-- </a> -->
       <p>{{ product.title }}</p>
       <p>${{ product.price }}</p>

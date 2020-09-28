@@ -13,7 +13,7 @@
   <div class="gallery">
     {% for product in products %}
       <div class="gallery-item">
-        <img src="{{ product.image }}" /> </br>
+        <img src="{{ url_for('static', filename='assets/' + product.image) }}" /> </br>
         <p>{{ product.title }}</p>
         <p>{{ product.price }}</p>
         <p>{{ product.description }}</p>
