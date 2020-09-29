@@ -29,6 +29,7 @@ class Product(db.Model):
     media = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(30), nullable=False)
     image = db.Column(db.String(30), nullable=False)
+    quantity = db.Column(db.Integer, default=1)
     date_created = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
@@ -39,6 +40,13 @@ class Product(db.Model):
     def __str__(self):
         """Specify return when showing Product."""
         return self.title
+
+    def set_quantity(self):
+        """Set quantity when product is purchased, handle OOS."""
+        while self.quantity > 0:
+            self.quantity -= 1
+        if self.quantity == 0:
+            self.title = self.title + " - " + "SOLD"
 
 
 class User(UserMixin, db.Model):

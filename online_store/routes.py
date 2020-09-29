@@ -89,6 +89,7 @@ def cart(product_id):
     if current_user.is_authenticated:
         product = Product.query.get(product_id)
         product.user_id = current_user.id
+        product.set_quantity()
         db.session.commit()
         flash("Added successfully")
         return redirect(url_for("user_cart"))

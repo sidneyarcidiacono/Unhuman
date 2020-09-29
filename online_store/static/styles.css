@@ -183,10 +183,9 @@ small {
 footer {
   color: #fff;
   margin-top: auto;
-  position: absolute;
   bottom: 0;
-  height: 100px
-  font-family: SawarabiGothic;
+  height: 200px;
+  font-family: "SawarabiGothic";
 }
 
 .alien-font {
