@@ -19,6 +19,15 @@
   box-sizing: border-box;
 }
 
+a {
+  color: #fff;
+  padding: 10px;
+}
+
+a:hover {
+  color: #E31919;
+}
+
 nav {
   width: 800px;
   height: 50px;
@@ -163,10 +172,20 @@ input[type=submit]:hover, button:hover {
   background-color: #E31919;
 }
 
+small {
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 footer {
   color: #fff;
   margin-top: auto;
-  padding: 10vw;
+  position: absolute;
+  bottom: 0;
+  height: 100px
   font-family: SawarabiGothic;
 }
 
@@ -198,6 +217,24 @@ footer {
 .cart-img {
   width: 175px;
   height: auto;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
+.small-div {
+  position: relative;
+  margin: 215px;
 }
 
 .gallery {
