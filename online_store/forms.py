@@ -112,3 +112,9 @@ class AddProductForm(FlaskForm):
     )
     image = FileField("Image", validators=[FileAllowed(["jpg", "png"])])
     submit = SubmitField("Add Product")
+
+
+class AddToCartForm(FlaskForm):
+    """Create add to cart button."""
+
+    submit = SubmitField("Add to Cart")

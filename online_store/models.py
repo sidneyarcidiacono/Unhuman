@@ -34,7 +34,11 @@ class Product(db.Model):
 
     def __repr__(self):
         """Specify return val when printing Product."""
-        return "<Product %r>" % self.id
+        return self.title
+
+    def __str__(self):
+        """Specify return when showing Product."""
+        return self.title
 
 
 class User(UserMixin, db.Model):

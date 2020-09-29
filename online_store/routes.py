@@ -11,6 +11,7 @@ from online_store.forms import (
     LoginForm,
     UpdateAccountForm,
     AddProductForm,
+    AddToCartForm,
 )
 
 
@@ -63,7 +64,8 @@ def homepage():
 def shop_paintings():
     """Render template for artwork/product page."""
     products = Product.query.all()
-    context = {"products": products}
+    form = AddToCartForm()
+    context = {"products": products, "form": form}
     return render_template("work.html", **context)
 
 
@@ -74,9 +76,21 @@ def about():
 
 
 @app.route("/cart")
-def checkout():
-    """Return cart display."""
-    return render_template("cart.html")
+@login_required
+def user_cart():
+    """Show user cart even after they've switched pages."""
+    products = Product.query.filter_by(user_id=current_user.id).all()
+    return render_template("cart.html", products=products)
+
+
+@app.route("/cart/<int:product_id>", methods=["GET", "POST"])
+def cart(product_id):
+    """Show user's cart."""
+    product = Product.query.get(product_id)
+    product.user_id = current_user.id
+    db.session.commit()
+    flash("Added successfully")
+    return redirect(url_for("user_cart"))
 
 
 @app.route("/contact")

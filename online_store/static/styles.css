@@ -167,6 +167,10 @@ footer {
   border-radius: 50%;
 }
 
+.cart-img {
+  width: 175px;
+  height: auto;
+}
 
 .gallery {
   display: flex;

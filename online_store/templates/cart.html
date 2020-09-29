@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 
-<section>
-  <h1>Your Cart</h1>
-
-  <p>These are items in your cart.</p>
-</section>
+<div>
+  <h1>{{ current_user.name }}'s Cart</h1>
+  {% for product in products %}
+    <img class="cart-img" src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }}/>
+    <h3>{{ product.title }}</h3>
+    <p>${{ product.price }}</p>
+  {% endfor %}
+</div>
 
 {% endblock %}

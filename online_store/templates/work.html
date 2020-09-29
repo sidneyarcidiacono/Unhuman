@@ -1,10 +1,5 @@
 {% extends 'base.html' %}
 
-{% block head %}
-<script type="text/javascript" src="static/work.js" defer></script>
-{% endblock %}
-
-
 {% block content %}
 <section>
 
@@ -19,7 +14,13 @@
         <p>{{ product.description }}</p>
         <p>{{ product.media }}</p>
         <p>{{ product.size }}</p>
-        <button>Add to Cart</button>
+        <div>
+          <form method="POST" action="/cart/{{product.id}}">
+            {{ form.hidden_tag() }}
+            {{ form.submit }}
+          </form>
+        </div>
+        <!-- <button onclick="AddToCart({{ product.id }})">Purchase</button> -->
       </div>
     {% endfor %}
   </div>
