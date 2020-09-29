@@ -1,9 +1,21 @@
-/* TODO: Center remove prod button, Find better font for store, fix large screen issue w images */
+@font-face {
+  font-family: "SawarabiGothic";
+  src: url('./assets/fonts/sawarabigothic-regular.otf');
+  src: url('./assets/fonts/sawarabigothic-regular.ttf');
+  src: url('./assets/fonts/sawarabigothic-regular.woff');
+}
+
+@font-face {
+  font-family: "Alien";
+  src: url('./assets/fonts/alien.otf');
+  src: url('./assets/fonts/alien.woff');
+  src: url('./assets/fonts/alien.ttf');
+}
 
 * {
   padding: 0;
   border: none;
-  font-family: sans-serif;
+  font-family: "SawarabiGothic";
   box-sizing: border-box;
 }
 
@@ -30,10 +42,12 @@ nav ul li {
 nav ul li a {
   text-decoration: none;
   color: #fff;
+  font-family: "Alien";
 }
 
 nav ul li a:hover {
-  color: #570A0A;
+  color: #E31919;
+  font-family: "SawarabiGothic";
 }
 
 body {
@@ -146,13 +160,22 @@ input[type=submit], button {
 }
 
 input[type=submit]:hover, button:hover {
-  background-color: #570A0A;
+  background-color: #E31919;
 }
 
 footer {
   color: #fff;
   margin-top: auto;
   padding: 10vw;
+  font-family: SawarabiGothic;
+}
+
+.alien-font {
+  font-family: "Alien";
+}
+
+.reg-font {
+  font-family: "SawarabiGothic";
 }
 
 .avatar {
