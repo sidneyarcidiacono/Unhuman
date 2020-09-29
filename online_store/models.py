@@ -28,8 +28,8 @@ class Product(db.Model):
     description = db.Column(db.String(200), nullable=False)
     media = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(30), nullable=False)
-    image = db.Column(db.String(30), nullable=False)
     quantity = db.Column(db.Integer, default=1)
+    image = db.Column(db.String(30), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
@@ -43,9 +43,10 @@ class Product(db.Model):
 
     def set_quantity(self):
         """Set quantity when product is purchased, handle OOS."""
-        while self.quantity > 0:
+        if self.quantity > 0:
             self.quantity -= 1
-        if self.quantity == 0:
+            print(self.quantity)
+        else:
             self.title = self.title + " - " + "SOLD"
 
 

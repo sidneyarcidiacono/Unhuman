@@ -10,16 +10,18 @@
       <div class="gallery-item">
         <img src="{{ url_for('static', filename='assets/' + product.image) }}" /> </br>
         <p>{{ product.title }}</p>
-        <p>{{ product.price }}</p>
         <p>{{ product.description }}</p>
-        <p>{{ product.media }}</p>
-        <p>{{ product.size }}</p>
-        <div>
-          <form method="POST" action="/cart/{{product.id}}">
-            {{ form.hidden_tag() }}
-            {{ form.submit }}
-          </form>
-        </div>
+        {% if product.quantity > 0 %}
+          <p>{{ product.price }}</p>
+          <p>{{ product.media }}</p>
+          <p>{{ product.size }}</p>
+          <div>
+            <form method="POST" action="/cart/{{product.id}}">
+              {{ form.hidden_tag() }}
+              {{ form.submit }}
+            </form>
+          </div>
+        {% endif %}
       </div>
     {% endfor %}
   </div>

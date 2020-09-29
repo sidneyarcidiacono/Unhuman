@@ -9,6 +9,7 @@ from wtforms import (
     TextAreaField,
     BooleanField,
     DecimalField,
+    IntegerField,
 )
 from wtforms.validators import (
     DataRequired,
@@ -16,6 +17,7 @@ from wtforms.validators import (
     Email,
     EqualTo,
     ValidationError,
+    NumberRange,
 )
 from online_store.models import User
 
@@ -110,6 +112,7 @@ class AddProductForm(FlaskForm):
     size = StringField(
         "Size", validators=[DataRequired(), Length(min=3, max=7)]
     )
+    quantity = IntegerField("Quantity", validators=[NumberRange(max=150)])
     image = FileField("Image", validators=[FileAllowed(["jpg", "png"])])
     submit = SubmitField("Add Product")
 

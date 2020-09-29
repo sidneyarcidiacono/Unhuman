@@ -202,8 +202,10 @@ def admin():
                 description=form.description.data,
                 media=form.media.data,
                 size=form.size.data,
+                quantity=form.quantity.data,
                 image=image_file,
             )
+            print(f"New product quan: {new_product.quantity}")
             db.session.add(new_product)
             db.session.commit()
             flash("Product added, thank you!")
