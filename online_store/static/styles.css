@@ -190,6 +190,11 @@ footer {
   border-radius: 50%;
 }
 
+.banner-img {
+  width: 95vw;
+  height: auto;
+}
+
 .cart-img {
   width: 175px;
   height: auto;
