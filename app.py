@@ -6,14 +6,18 @@ from online_store import app
 #                   #TODO:                                             #
 ########################################################################
 
-# Cart route, checkout
+# Inventory of item
+# Checkout & payment integration
+# Item switches to SOLD when purchased
 # Contact route to actually submit to something
+# Forgot password
+# Different pages/sections on products page for different sections (prints, paintings)
 # Delete profile functionality
-# Look into "remember me" and "url_is_safe" functionality for UX/security
+# Look into "url_is_safe" functionality for security
 # Potentially improve redirect on 404 page to be server-side or JS
 # Design custom icon to display when logged in, nav link title for when not ?
-# Button in user route not working now for some reason, figure out why
 # Clean up styling (checkboxes, links in sign up/login forms, buttons, etc.)
+# Add content & go live!!!!
 
 ########################################################################
 #                   #Run                                               #

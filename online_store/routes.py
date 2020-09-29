@@ -86,11 +86,14 @@ def user_cart():
 @app.route("/cart/<int:product_id>", methods=["GET", "POST"])
 def cart(product_id):
     """Show user's cart."""
-    product = Product.query.get(product_id)
-    product.user_id = current_user.id
-    db.session.commit()
-    flash("Added successfully")
-    return redirect(url_for("user_cart"))
+    if current_user.is_authenticated:
+        product = Product.query.get(product_id)
+        product.user_id = current_user.id
+        db.session.commit()
+        flash("Added successfully")
+        return redirect(url_for("user_cart"))
+    flash("You must be logged in to add items.")
+    return redirect(url_for("login"))
 
 
 @app.route("/contact")
