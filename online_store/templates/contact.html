@@ -1,15 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Contact the Creator</h1>
-<form action="/contact_results" method="GET" class="flex-container">
-  <label>Your Name</label>
-  <input type="text" name="name">
-  <label for="email">Email</label>
-  <input type="email" name="email">
-  <label for="message">Message</label>
-  <input type="text" name="message">
-  <input type="submit" name="submit" value="Submit">
+<form method="POST" action="/contact_results">
+  {{ form.hidden_tag() }}
+  <fieldset>
+    <legend>Contact the Artist</legend>
+    <div>
+      {{ form.name.label }}
+      {% if form.name.errors %}
+        {{ form.name(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.name.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.name }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.email.label }}
+      {% if form.email.errors %}
+        {{ form.email(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.email.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.email }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.message.label }}
+      {% if form.message.errors %}
+        {{ form.message(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.message.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.message }}
+      {% endif %}
+    </div>
+  </fieldset>
+  <div>
+    {{ form.submit }}
+  </div>
 </form>
 
 {% endblock %}

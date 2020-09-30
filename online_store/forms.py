@@ -148,3 +148,16 @@ class AddToCartForm(FlaskForm):
     """Create add to cart button."""
 
     submit = SubmitField("Add to Cart")
+
+
+class ContactForm(FlaskForm):
+    """Create form for sending contact email to admin."""
+
+    name = StringField(
+        "Your Name", validators=[DataRequired(), Length(min=2, max=40)]
+    )
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    message = TextAreaField(
+        "Message", validators=[DataRequired(), Length(min=2, max=140)]
+    )
+    submit = SubmitField("Send Message")

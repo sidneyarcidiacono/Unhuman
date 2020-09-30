@@ -14,6 +14,7 @@ from online_store.forms import (
     AddToCartForm,
     RequestPassReset,
     ResetPasswordForm,
+    ContactForm,
 )
 from flask_mail import Message
 from online_store import mail
@@ -45,7 +46,18 @@ def send_reset_email(user):
     """Send password reset email."""
     token = user.get_reset_token()
     msg = Message("Password Reset", recipients=[user.email])
-    msg.body = f"To reset your password, please click the following link: {url_for('reset_token', token=token, _external=True)} If you did not make this request, please ignore this email."
+    msg.body = f"""
+                To reset your password, please click the following link:
+                {url_for('reset_token', token=token, _external=True)}
+                If you did not make this request, please ignore this email."""
+    mail.send(msg)
+
+
+def send_contact_email(message):
+    """Send email to my address when someone submits the contact form."""
+    admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
+    msg = Message("Contact Form Submission", recipients=[admin.email])
+    msg.body = message
     mail.send(msg)
 
 
@@ -112,12 +124,17 @@ def cart(product_id):
 @app.route("/contact")
 def contact_me():
     """Provide contact form for user."""
-    return render_template("contact.html")
+    form = ContactForm()
+    return render_template("contact.html", form=form)
 
 
-@app.route("/contact_results")
+@app.route("/contact_results", methods=["GET", "POST"])
 def contact_results():
     """Redirects user to submission confirmation."""
+    form = ContactForm()
+    if form.validate_on_submit():
+        message = form.message.data
+        send_contact_email(message)
     return render_template("contact_results.html")
 
 

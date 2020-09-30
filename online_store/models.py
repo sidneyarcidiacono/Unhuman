@@ -80,7 +80,7 @@ class User(UserMixin, db.Model):
 
     def is_admin(self):
         """Check if user is admin."""
-        if self.email != "sidneyarci@gmail.com":
+        if self.email != "unhumanartist@gmail.com":
             return False
         return True
 
