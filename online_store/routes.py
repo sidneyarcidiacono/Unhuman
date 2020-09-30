@@ -53,11 +53,11 @@ def send_reset_email(user):
     mail.send(msg)
 
 
-def send_contact_email(message):
+def send_contact_email(message, email):
     """Send email to my address when someone submits the contact form."""
     admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
     msg = Message("Contact Form Submission", recipients=[admin.email])
-    msg.body = message
+    msg.body = message + email
     mail.send(msg)
 
 
@@ -134,7 +134,8 @@ def contact_results():
     form = ContactForm()
     if form.validate_on_submit():
         message = form.message.data
-        send_contact_email(message)
+        email = form.email.data
+        send_contact_email(message, email)
     return render_template("contact_results.html")
 
 
