@@ -12,7 +12,11 @@ from online_store.forms import (
     UpdateAccountForm,
     AddProductForm,
     AddToCartForm,
+    RequestPassReset,
+    ResetPasswordForm,
 )
+from flask_mail import Message
+from online_store import mail
 
 
 ########################################################################
@@ -35,6 +39,14 @@ def save_image(form_image, size, folder):
     i.thumbnail(output_size)
     i.save(image_path)
     return image_filename
+
+
+def send_reset_email(user):
+    """Send password reset email."""
+    token = user.get_reset_token()
+    msg = Message("Password Reset", recipients=[user.email])
+    msg.body = f"To reset your password, please click the following link: {url_for('reset_token', token=token, _external=True)} If you did not make this request, please ignore this email."
+    mail.send(msg)
 
 
 ########################################################################
@@ -173,6 +185,40 @@ def user():
     form.email.data = current_user.email
     context = {"title": "User", "form": form}
     return render_template("user.html", **context)
+
+
+@app.route("/reset_password", methods=["GET", "POST"])
+def reset_request():
+    """Show route for requesting user password reset."""
+    if current_user.is_authenticated:
+        return redirect(url_for("homepage"))
+    form = RequestPassReset()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash("An email has been sent to reset your password.")
+        return redirect(url_for("login"))
+    context = {"title": "Request Password Reset", "form": form}
+    return render_template("reset_request.html", **context)
+
+
+@app.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_token(token):
+    """Reset user password."""
+    if current_user.is_authenticated:
+        return redirect(url_for("homepage"))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash("Token is invalid or expired")
+        return redirect(url_for("reset_request"))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash("Your password has been resett. You are now able to log in.")
+        return redirect(url_for("login"))
+    context = {"title": "Reset Password", "form": form}
+    return render_template("reset_token.html", **context)
 
 
 @app.route("/logout")

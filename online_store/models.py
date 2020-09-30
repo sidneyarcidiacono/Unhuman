@@ -84,15 +84,15 @@ class User(UserMixin, db.Model):
             return False
         return True
 
-    def get_user_token(self, expires_sec=900):
+    def get_reset_token(self, expires_sec=900):
         """Enable 'forgot password' functionality."""
         s = Serializer(app.config["SECRET_KEY"], expires_sec)
-        return s.dumps({"user_id", self.id}).decode("utf-8")
+        return s.dumps({"user_id": self.id}).decode("utf-8")
 
     @staticmethod
     def verify_reset_token(token):
         """Verify that the user enters the correct pass reset token."""
-        s = Serializer(app.confic["SECRET_KEY"])
+        s = Serializer(app.config["SECRET_KEY"])
         try:
             user_id = s.loads(token)["user_id"]
         except:

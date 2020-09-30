@@ -96,6 +96,33 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Log In")
 
 
+class RequestPassReset(FlaskForm):
+    """Create password reset request form."""
+
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Request Password Reset")
+
+    def validate_email(self, email):
+        """Validate that the email is associated with a user."""
+        user = User.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError(
+                "There is no account associated with this email, please sign up for an account."
+            )
+
+
+class ResetPasswordForm(FlaskForm):
+    """Allow validated user to reset their password."""
+
+    password = PasswordField(
+        "Password", validators=[DataRequired(), Length(min=8, max=20)]
+    )
+    confirm_password = PasswordField(
+        "Confirm Password", validators=[DataRequired(), EqualTo("password")]
+    )
+    submit = SubmitField("Reset Password")
+
+
 class AddProductForm(FlaskForm):
     """Create add product form."""
 
