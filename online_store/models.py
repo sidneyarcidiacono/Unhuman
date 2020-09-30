@@ -58,6 +58,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(60), nullable=True)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
     avatar = db.Column(
         db.String(30),
         nullable=False,
@@ -78,11 +79,10 @@ class User(UserMixin, db.Model):
         """Verify hashed password and inputted password."""
         return sha256_crypt.verify(password, self.password)
 
-    def is_admin(self):
-        """Check if user is admin."""
-        if self.email != "unhumanartist@gmail.com":
-            return False
-        return True
+    def set_is_admin(self):
+        """Set user to admin."""
+        if self.email == "unhumanartist@gmail.com":
+            self.is_admin = True
 
     def get_reset_token(self, expires_sec=900):
         """Enable 'forgot password' functionality."""

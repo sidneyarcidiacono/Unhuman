@@ -4,7 +4,7 @@ import secrets
 from PIL import Image
 from flask import render_template, flash, redirect, url_for, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
-from online_store import app, db
+from online_store import app, db, login_manager
 from online_store.models import User, Product
 from online_store.forms import (
     RegistrationForm,
@@ -18,6 +18,7 @@ from online_store.forms import (
 )
 from flask_mail import Message
 from online_store import mail
+from functools import wraps
 
 
 ########################################################################
@@ -59,6 +60,19 @@ def send_contact_email(message, email):
     msg = Message("Contact Form Submission", recipients=[admin.email])
     msg.body = message + email
     mail.send(msg)
+
+
+def admin_required(func):
+    """Decorate route function to check is user isadmin."""
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if current_user.is_admin:
+            return func(*args, **kwargs)
+        else:
+            return login_manager.unauthorized()
+
+    return wrapper
 
 
 ########################################################################
@@ -177,6 +191,7 @@ def register():
             email=form.email.data,
         )
         user.set_password(form.password.data)
+        user.set_is_admin()
         db.session.add(user)
         db.session.commit()
         flash("Your account has been created, you are now able to log in.")
@@ -254,31 +269,28 @@ def logout():
 
 @app.route("/admin", methods=["GET", "POST"])
 @login_required
+@admin_required
 def admin():
     """Admin page where items can be added to db."""
-    if current_user.is_admin():
-        form = AddProductForm()
-        if form.validate_on_submit():
-            image_file = save_image(form.image.data, 500, "assets")
-            new_product = Product(
-                title=form.title.data,
-                price=form.price.data,
-                description=form.description.data,
-                media=form.media.data,
-                size=form.size.data,
-                quantity=form.quantity.data,
-                image=image_file,
-            )
-            print(f"New product quan: {new_product.quantity}")
-            db.session.add(new_product)
-            db.session.commit()
-            flash("Product added, thank you!")
-            return redirect(url_for("admin"))
-        products = Product.query.order_by(Product.date_created).all()
-        context = {"products": products, "title": "Admin", "form": form}
-        return render_template("admin.html", **context)
-    flash("You are not authorized to access this route.")
-    return redirect(url_for("login"))
+    form = AddProductForm()
+    if form.validate_on_submit():
+        image_file = save_image(form.image.data, 500, "assets")
+        new_product = Product(
+            title=form.title.data,
+            price=form.price.data,
+            description=form.description.data,
+            media=form.media.data,
+            size=form.size.data,
+            quantity=form.quantity.data,
+            image=image_file,
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        flash("Product added, thank you!")
+        return redirect(url_for("admin"))
+    products = Product.query.order_by(Product.date_created).all()
+    context = {"products": products, "title": "Admin", "form": form}
+    return render_template("admin.html", **context)
 
 
 @app.route("/admin-delete/<product_id>")

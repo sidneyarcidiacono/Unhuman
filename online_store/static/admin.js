@@ -74,6 +74,3 @@ startAddProductBtn.addEventListener('click', showAddProdForm)
 submitProdBtn.addEventListener('click', submitProductHandler)
 cancelAddProdBtn.addEventListener('click', prodCancelBtnHandler)
 backdrop.addEventListener('click', backdropClickHandler)
-// homeButton.addEventListener('click', () => {
-//   window.location.href = '/'
-// })

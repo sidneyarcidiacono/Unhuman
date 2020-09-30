@@ -9,8 +9,6 @@ from online_store import app
 # Inventory of item
 # Checkout & payment integration
 # Item switches to SOLD when purchased
-# Contact route to actually submit to something
-# Forgot password
 # Different pages/sections on products page for different sections (prints, paintings)
 # Delete profile functionality
 # Look into "url_is_safe" functionality for security
