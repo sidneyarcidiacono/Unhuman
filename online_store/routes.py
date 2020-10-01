@@ -28,8 +28,7 @@ from flask_mail import Message
 from online_store import mail
 from functools import wraps
 
-stripe.api_key = os.getenv("stripe_api")
-
+stripe.api_key = "sk_test_51HX7VpGoBx998m4uHnYbtKpebbOWtoozFgBmDBsZNDbcESO2PPmHiRGp6dM6bNcP20EieYquzu6n7o3m3hz1a1vP00gwomt3G1"
 
 ########################################################################
 #                   #Helper functions                                  #
@@ -128,6 +127,10 @@ def about():
 def user_cart():
     """Show user cart even after they've switched pages."""
     products = Product.query.filter_by(user_id=current_user.id).all()
+    # print(f"Products: {products}")
+    # for product in products:
+    #     print(f"Products' users: {product.user_id}")
+    # print(f"Current user orders: {current_user.orders}")
     return render_template("cart.html", products=products)
 
 
@@ -172,15 +175,20 @@ def contact_results():
 def create_checkout_session():
     """Send user to stripe checkout."""
     try:
+        product = None
+        for order in current_user.orders:
+            product = Product.query.filter_by(id=order.id).first()
+        name = product.title
+        price = product.price
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[
                 {
                     "price_data": {
                         "currency": "usd",
-                        "unit_amount": 2000,
+                        "unit_amount": int(price * 100),
                         "product_data": {
-                            "name": "temp_name",
+                            "name": f"{name}",
                         },
                     },
                     "quantity": 1,
@@ -190,8 +198,6 @@ def create_checkout_session():
             success_url="http://localhost:5000/checkout_success",
             cancel_url="http://localhost:5000/checkout_cancel",
         )
-        print(checkout_session)
-        print(checkout_session.id)
         return jsonify(id=checkout_session.id)
     except Exception as e:
         return jsonify(error=str(e)), 403
