@@ -1,8 +1,16 @@
 """Import packages."""
 import os
 import secrets
+import stripe
 from PIL import Image
-from flask import render_template, flash, redirect, url_for, request, abort
+from flask import (
+    render_template,
+    flash,
+    redirect,
+    url_for,
+    request,
+    jsonify,
+)
 from flask_login import login_user, current_user, logout_user, login_required
 from online_store import app, db, login_manager
 from online_store.models import User, Product
@@ -19,6 +27,8 @@ from online_store.forms import (
 from flask_mail import Message
 from online_store import mail
 from functools import wraps
+
+stripe.api_key = os.getenv("stripe_api")
 
 
 ########################################################################
@@ -151,6 +161,52 @@ def contact_results():
         email = form.email.data
         send_contact_email(message, email)
     return render_template("contact_results.html")
+
+
+########################################################################
+#                   #Checkout Routes                                   #
+########################################################################
+
+
+@app.route("/create_session", methods=["POST"])
+def create_checkout_session():
+    """Send user to stripe checkout."""
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "usd",
+                        "unit_amount": 2000,
+                        "product_data": {
+                            "name": "temp_name",
+                        },
+                    },
+                    "quantity": 1,
+                },
+            ],
+            mode="payment",
+            success_url="http://localhost:5000/checkout_success",
+            cancel_url="http://localhost:5000/checkout_cancel",
+        )
+        print(checkout_session)
+        print(checkout_session.id)
+        return jsonify(id=checkout_session.id)
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+
+@app.route("/checkout_success")
+def success():
+    """Return success page after user checkout."""
+    return render_template("success.html")
+
+
+@app.route("/checkout_cancel")
+def cancel():
+    """Return cancel page if user cancels checkout."""
+    return render_template("cancel.html")
 
 
 ########################################################################

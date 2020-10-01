@@ -6,9 +6,11 @@ from online_store import app
 #                   #TODO:                                             #
 ########################################################################
 
-# Inventory of item
+# Fix - "SOLD" on artworks
+# Quantity to show in cart
 # Checkout & payment integration
 # Item switches to SOLD when purchased
+# Automation email when someone purchases an item
 # Different pages/sections on products page for different sections (prints, paintings)
 # Delete profile functionality
 # Look into "url_is_safe" functionality for security

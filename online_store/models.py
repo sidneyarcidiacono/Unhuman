@@ -5,7 +5,7 @@ from online_store import db, login_manager, app
 from flask_login import UserMixin
 from passlib.hash import sha256_crypt
 
-# Set load user function that flask_login expects
+# Set load user function to use flask-login
 
 
 @login_manager.user_loader
@@ -24,7 +24,7 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(40), nullable=False)
-    price = db.Column(db.Float, default=1)
+    price = db.Column(db.Numeric(10, 2))
     description = db.Column(db.String(200), nullable=False)
     media = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(30), nullable=False)
@@ -45,7 +45,6 @@ class Product(db.Model):
         """Set quantity when product is purchased, handle OOS."""
         if self.quantity > 0:
             self.quantity -= 1
-            print(self.quantity)
         else:
             self.title = self.title + " - " + "SOLD"
 
