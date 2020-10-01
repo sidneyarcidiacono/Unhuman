@@ -28,8 +28,6 @@ from flask_mail import Message
 from online_store import mail
 from functools import wraps
 
-stripe.api_key = "sk_test_51HX7VpGoBx998m4uHnYbtKpebbOWtoozFgBmDBsZNDbcESO2PPmHiRGp6dM6bNcP20EieYquzu6n7o3m3hz1a1vP00gwomt3G1"
-
 ########################################################################
 #                   #Helper functions                                  #
 ########################################################################

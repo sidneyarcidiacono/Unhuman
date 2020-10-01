@@ -12,6 +12,8 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 mail = Mail(app)
 
+stripe.api_key = app.config["STRIPE_PUBLIC_KEY"]
+
 # Define flask-login config variables & instantiate LoginManager
 login_manager = LoginManager(app)
 login_manager.init_app(app)
