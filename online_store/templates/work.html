@@ -9,7 +9,11 @@
     {% for product in products %}
       <div class="gallery-item">
         <img src="{{ url_for('static', filename='assets/' + product.image) }}" /> </br>
-        <p>{{ product.title }}</p>
+        {% if product.quantity > 0 %}
+          <p>{{ product.title }}</p>
+        {% else %}
+          <p>{{ product.title }} - SOLD</p>
+        {% endif %}
         <p>{{ product.description }}</p>
         {% if product.quantity > 0 %}
           <p>{{ product.price }}</p>

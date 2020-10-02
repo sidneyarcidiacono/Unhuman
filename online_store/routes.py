@@ -50,6 +50,9 @@ def save_image(form_image, size, folder):
     return image_filename
 
 
+# Define a function that sends password reset email
+
+
 def send_reset_email(user):
     """Send password reset email."""
     token = user.get_reset_token()
@@ -61,12 +64,18 @@ def send_reset_email(user):
     mail.send(msg)
 
 
+# Define function that sends email to admin from contact form
+
+
 def send_contact_email(message, email):
     """Send email to my address when someone submits the contact form."""
     admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
     msg = Message("Contact Form Submission", recipients=[admin.email])
     msg.body = message + email
     mail.send(msg)
+
+
+# Create decorator for routes that require admin role
 
 
 def admin_required(func):
@@ -80,6 +89,15 @@ def admin_required(func):
             return login_manager.unauthorized()
 
     return wrapper
+
+
+def set_product_quantity(product):
+    """Set quantity and make adj. to title when out of stock."""
+    print("In function")
+    if product.quantity > 0:
+        product.quantity -= 1
+        return product.quantity
+    return product.quantity
 
 
 ########################################################################
@@ -125,10 +143,6 @@ def about():
 def user_cart():
     """Show user cart even after they've switched pages."""
     products = Product.query.filter_by(user_id=current_user.id).all()
-    # print(f"Products: {products}")
-    # for product in products:
-    #     print(f"Products' users: {product.user_id}")
-    # print(f"Current user orders: {current_user.orders}")
     return render_template("cart.html", products=products)
 
 
@@ -137,8 +151,9 @@ def cart(product_id):
     """Show user's cart."""
     if current_user.is_authenticated:
         product = Product.query.get(product_id)
+        print(f"Product from cart add: {product}")
         product.user_id = current_user.id
-        product.set_quantity()
+        print(set_product_quantity(product))
         db.session.commit()
         flash("Added successfully")
         return redirect(url_for("user_cart"))

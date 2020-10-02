@@ -41,13 +41,6 @@ class Product(db.Model):
         """Specify return when showing Product."""
         return self.title
 
-    def set_quantity(self):
-        """Set quantity when product is purchased, handle OOS."""
-        if self.quantity > 0:
-            self.quantity -= 1
-        else:
-            self.title = self.title + " - " + "SOLD"
-
 
 class User(UserMixin, db.Model):
     """Define user class."""
