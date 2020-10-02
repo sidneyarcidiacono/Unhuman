@@ -5,7 +5,6 @@
   {{ form.hidden_tag() }}
   <fieldset>
     <legend>Contact the Artist</legend>
-    <div>
       {{ form.name.label }}
       {% if form.name.errors %}
         {{ form.name(class="is-invalid") }}
@@ -17,8 +16,6 @@
       {% else %}
         {{ form.name }}
       {% endif %}
-    </div>
-    <div>
       {{ form.email.label }}
       {% if form.email.errors %}
         {{ form.email(class="is-invalid") }}
@@ -30,8 +27,6 @@
       {% else %}
         {{ form.email }}
       {% endif %}
-    </div>
-    <div>
       {{ form.message.label }}
       {% if form.message.errors %}
         {{ form.message(class="is-invalid") }}
@@ -43,7 +38,6 @@
       {% else %}
         {{ form.message }}
       {% endif %}
-    </div>
   </fieldset>
   {{ form.submit }}
 </form>

@@ -22,6 +22,23 @@
           <div>
             <form method="POST" action="/cart/{{product.id}}">
               {{ form.hidden_tag() }}
+              {% for product in products %}
+                {% if product.quantity > 1 %}
+                <div>
+                  {{ form.quantity.label }}
+                  {% if form.quantity.errors %}
+                    {{ form.quantity(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                      {% for error in form.quantity.errors %}
+                        {{ error }}
+                      {% endfor %}
+                    </div>
+                    {% else %}
+                      {{ form.quantity }}
+                    {% endif %}
+                  </div>
+                  {% endif %}
+              {% endfor %}
               {{ form.submit }}
             </form>
           </div>
