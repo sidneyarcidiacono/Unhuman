@@ -7,6 +7,7 @@ from online_store import app
 ########################################################################
 
 # Quantity to show in cart
+# Ability to remove items from cart
 # Fix cart session so that it totals and checks out for all items in cart
 # Webhooks
 # Automation email when someone purchases an item (later)

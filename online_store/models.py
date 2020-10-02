@@ -4,6 +4,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from online_store import db, login_manager, app
 from flask_login import UserMixin
 from passlib.hash import sha256_crypt
+from sqlalchemy.orm import backref
 
 # Set load user function to use flask-login
 
@@ -31,7 +32,7 @@ class Product(db.Model):
     quantity = db.Column(db.Integer, default=1)
     image = db.Column(db.String(30), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    carts = db.relationship("Cart", secondary="product_cart_link")
 
     def __repr__(self):
         """Specify return val when printing Product."""
@@ -40,6 +41,36 @@ class Product(db.Model):
     def __str__(self):
         """Specify return when showing Product."""
         return self.title
+
+
+class ProductCartLink(db.Model):
+    """Joining table for product and cart."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id"))
+    cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"))
+    product = db.relationship(
+        "Product", backref=backref("link", cascade="all, delete-orphan")
+    )
+    cart = db.relationship(
+        "Cart", backref=backref("link", cascade="all, delete-orphan")
+    )
+
+
+class Cart(db.Model):
+    """Create class Cart that holds items."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    product = db.relationship("Product", secondary="product_cart_link")
+    products_quantity = db.Column(db.Integer, default=1, nullable=False)
+    subtotal = db.Column(db.Integer, default=0, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def set_subtotal(self):
+        """Set cart subtotal based on products and quantities in cart."""
+        for product in self.products:
+            if self.products_quantity:
+                self.subtotal += product.price * self.products_quantity
 
 
 class User(UserMixin, db.Model):
@@ -56,7 +87,9 @@ class User(UserMixin, db.Model):
         nullable=False,
         default="lucifer.jpeg",
     )
-    orders = db.relationship("Product", backref="user", lazy=True)
+    cart = db.relationship(
+        "Cart", cascade="all, delete", backref="user", lazy=True
+    )
     date_created = db.Column(db.DateTime, default=datetime.now)
 
     def is_authenticated(self):

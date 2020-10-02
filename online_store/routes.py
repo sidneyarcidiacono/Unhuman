@@ -13,7 +13,7 @@ from flask import (
 )
 from flask_login import login_user, current_user, logout_user, login_required
 from online_store import app, db, login_manager
-from online_store.models import User, Product
+from online_store.models import User, Product, Cart
 from online_store.forms import (
     RegistrationForm,
     LoginForm,
@@ -91,11 +91,10 @@ def admin_required(func):
     return wrapper
 
 
-def set_product_quantity(product):
+def set_product_quantity(product, quant_added):
     """Set quantity and make adj. to title when out of stock."""
-    print("In function")
     if product.quantity > 0:
-        product.quantity -= 1
+        product.quantity -= int(quant_added)
         return product.quantity
     return product.quantity
 
@@ -141,19 +140,37 @@ def about():
 @app.route("/cart")
 @login_required
 def user_cart():
-    """Show user cart even after they've switched pages."""
-    products = Product.query.filter_by(user_id=current_user.id).all()
-    return render_template("cart.html", products=products)
+    """Show user their cart."""
+    cart = Cart.query.filter_by(user=current_user.id).first()
+    print(f"Cart from cart route: {cart}")
+    # print(f"Cart products: {cart.products}")
+    # context = {"products": cart.products}
+    return render_template("cart.html")
 
 
 @app.route("/cart/<int:product_id>", methods=["GET", "POST"])
 def cart(product_id):
     """Show user's cart."""
     if current_user.is_authenticated:
+        form = AddToCartForm()
+        if form.quantity.data:
+            quantity = form.quantity.data
+            product = Product.query.get(product_id)
+            cart = Cart(product=[product], products_quantity=quantity)
+            # cart.subtotal = cart.set_subtotal()
+            set_product_quantity(product, quantity)
+            print(f"Cart: {cart}")
+            db.session.add(cart)
+            db.session.commit()
+            flash("Added successfully")
+            return redirect(url_for("user_cart"))
         product = Product.query.get(product_id)
-        print(f"Product from cart add: {product}")
-        product.user_id = current_user.id
-        print(set_product_quantity(product))
+        cart = Cart(product=[product], products_quantity=1)
+        # cart.products = [product]
+        cart.products_quantity = quantity
+        # cart.subtotal = cart.set_subtotal()
+        set_product_quantity(product, 1)
+        db.session.add(cart)
         db.session.commit()
         flash("Added successfully")
         return redirect(url_for("user_cart"))
