@@ -25,11 +25,12 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(40), nullable=False)
-    price = db.Column(db.Numeric(10, 2))
+    price = db.Column(db.Float, default=0, nullable=False)
     description = db.Column(db.String(200), nullable=False)
     media = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(30), nullable=False)
     quantity = db.Column(db.Integer, default=1)
+    quant_in_cart = db.Column(db.Integer, default=0)
     image = db.Column(db.String(30), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now)
     carts = db.relationship("Cart", secondary="product_cart_link")
@@ -63,14 +64,8 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     products = db.relationship("Product", secondary="product_cart_link")
     products_quantity = db.Column(db.Integer, default=1, nullable=False)
-    subtotal = db.Column(db.Integer, default=0, nullable=False)
+    subtotal = db.Column(db.Float, default=0, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-
-    def set_subtotal(self):
-        """Set cart subtotal based on products and quantities in cart."""
-        for product in self.products:
-            if self.products_quantity:
-                self.subtotal += product.price * self.products_quantity
 
 
 class User(UserMixin, db.Model):
