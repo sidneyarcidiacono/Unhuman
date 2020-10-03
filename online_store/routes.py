@@ -206,7 +206,6 @@ def cart(product_id):
         cart = Cart.query.filter_by(user_id=current_user.id).first()
         if cart is not None:
             add_to_cart_helper(quantity, product, cart)
-            print(f"Cart subtotal after helper in if: {cart.subtotal}")
             db.session.commit()
             flash("Added successfully")
             return redirect(url_for("user_cart"))
@@ -218,7 +217,6 @@ def cart(product_id):
                 user_id=current_user.id,
             )
             add_to_cart_helper(quantity, product, cart)
-            print(f"Cart subtotal after helper: {cart.subtotal}")
             db.session.add(cart)
             db.session.commit()
             flash("Added successfully")
@@ -243,7 +241,6 @@ def remove_item_from_cart(product_id):
     if form.validate_on_submit():
         cart = Cart.query.filter_by(user_id=current_user.id).first()
         product = Product.query.get(product_id)
-        print(cart.products)
         cart.products.pop(cart.products.index(product))
         db.session.commit()
         return redirect(url_for("user_cart"))
@@ -375,7 +372,6 @@ def user():
         db.session.commit()
         flash("Your account has been updated.")
         return redirect(url_for("user"))
-    print(current_user.avatar)
     form.username.data = current_user.username
     form.email.data = current_user.email
     context = {"title": "User", "form": form}

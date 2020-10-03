@@ -171,6 +171,10 @@ input[type=checkbox] {
   width: 20px;
 }
 
+input[type=number] {
+  width: 40px;
+}
+
 input[type=submit] {
   margin: 0;
 }
