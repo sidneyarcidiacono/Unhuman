@@ -9,16 +9,26 @@
 {% block content %}
 
 <div>
-  <h1>{{ current_user.name }}'s Cart</h1>
-  {% for product in products %}
-    <img class="cart-img" src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }}/>
-    <h3>{{ product.title }}</h3>
-    <p>${{ product.price }}</p>
-    <p>{{ product.quant_in_cart }}</p>
-  {% endfor %}
-  <p>Total items: {{ quantity }}</p>
-  <p>Subtotal: ${{ subtotal }}0</p>
-  <button id="checkout-button">Checkout</button>
+  {% if products %}
+    <h1>{{ current_user.name }}'s Cart</h1>
+    {% for product in products %}
+      <img class="cart-img" src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }}/>
+      <h3>{{ product.title }}</h3>
+      <p>${{ product.price }}</p>
+      <p>{{ product.quant_in_cart }}</p>
+      <form method="POST" action="/cart/remove-item/{{product.id}}">
+        {{ form.hidden_tag() }}
+        {{ form.submit }}
+      </form>
+    {% endfor %}
+    <p>Total items: {{ quantity }}</p>
+    <p>Subtotal: ${{ subtotal }}0</p>
+    <button id="checkout-button">Checkout</button>
+    <button id="remove-all-items">Clear Cart</button>
+  {% else %}
+    <h3>Your cart is empty.</h3>
+  {% endif %}
+
 </div>
 
 {% endblock %}

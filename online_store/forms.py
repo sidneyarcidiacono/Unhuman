@@ -155,6 +155,12 @@ class AddToCartForm(FlaskForm):
     submit = SubmitField("Add to Cart")
 
 
+class RemoveFromCart(FlaskForm):
+    """Remove item from cart."""
+
+    submit = SubmitField("Remove Item")
+
+
 class ContactForm(FlaskForm):
     """Create form for sending contact email to admin."""
 

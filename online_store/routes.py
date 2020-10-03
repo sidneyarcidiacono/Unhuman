@@ -23,6 +23,7 @@ from online_store.forms import (
     RequestPassReset,
     ResetPasswordForm,
     ContactForm,
+    RemoveFromCart,
 )
 from flask_mail import Message
 from online_store import mail
@@ -102,7 +103,7 @@ def set_product_quantity(product, quant_added):
     return product.quantity
 
 
-# Helper function for executing adding items to cart
+# Helper function for executing adding items to cart & totalling prices
 
 
 def update_cart_subtotal(cart):
@@ -131,6 +132,13 @@ def add_to_cart_helper(quantity, product, cart):
     set_product_quantity(product, quantity)
     update_cart_subtotal(cart)
     return cart, product
+
+
+def clear_cart_helper(cart):
+    """Clear cart on checkout or when empty cart button is pushed."""
+    db.session.delete(cart)
+    db.session.commit()
+    return
 
 
 ########################################################################
@@ -175,13 +183,17 @@ def about():
 @login_required
 def user_cart():
     """Show user their cart."""
+    form = RemoveFromCart()
     cart = Cart.query.filter_by(user_id=current_user.id).first()
-    context = {
-        "products": cart.products,
-        "quantity": cart.products_quantity,
-        "subtotal": cart.subtotal,
-    }
-    return render_template("cart.html", **context)
+    if cart is not None:
+        context = {
+            "products": cart.products,
+            "quantity": cart.products_quantity,
+            "subtotal": cart.subtotal,
+            "form": form,
+        }
+        return render_template("cart.html", **context)
+    return render_template("cart.html")
 
 
 @app.route("/cart/<int:product_id>", methods=["GET", "POST"])
@@ -215,10 +227,27 @@ def cart(product_id):
     return redirect(url_for("login"))
 
 
-# @app.route('/cart-clear')
-# def clear_cart():
-#     """Clear user's cart once checked out or if they click delete all."""
-#
+@app.route("/clear-cart")
+def clear_cart():
+    """Clear user's cart."""
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    clear_cart_helper(cart)
+    flash("Nothing to see here.")
+    return redirect(url_for("user_cart"))
+
+
+@app.route("/cart/remove-item/<int:product_id>", methods=["GET", "POST"])
+def remove_item_from_cart(product_id):
+    """Remove individual product from cart."""
+    form = RemoveFromCart()
+    if form.validate_on_submit():
+        cart = Cart.query.filter_by(user_id=current_user.id).first()
+        product = Product.query.get(product_id)
+        print(cart.products)
+        cart.products.pop(cart.products.index(product))
+        db.session.commit()
+        return redirect(url_for("user_cart"))
+    return redirect(url_for("user_cart"))
 
 
 @app.route("/contact")
@@ -248,11 +277,9 @@ def contact_results():
 def create_checkout_session():
     """Send user to stripe checkout."""
     try:
-        product = None
-        for order in current_user.orders:
-            product = Product.query.filter_by(id=order.id).first()
-        name = product.title
-        price = product.price
+        cart = Cart.query.filter_by(user_id=current_user.id).first()
+        name = [product.title for product in cart.products]
+        price = cart.subtotal
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[
