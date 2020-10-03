@@ -228,6 +228,12 @@ footer {
   height: auto;
 }
 
+.portrait-img {
+  width: 25vw;
+  height: auto;
+  align-self: flex-start;
+}
+
 .cart-img {
   width: 175px;
   height: auto;
@@ -331,12 +337,12 @@ footer {
   display: none;
 }
 
-.is-invalid {
+.invalid-feedback {
   color: #fff;
 }
 
-.invalid-feedback {
-  color: #fff;
+.spacer {
+  height: 30vw;
 }
 
 #backdrop {

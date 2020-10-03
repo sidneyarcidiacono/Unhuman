@@ -18,9 +18,7 @@
         <li><a href="{{ url_for('shop_paintings') }}">ART</a></li>
         <li><a href="{{ url_for('about') }}">ABOUT</a></li>
         <li><a href="{{ url_for('contact_me') }}">CONTACT</a></li>
-        <li class="user-icon">
-            <a href="{{ url_for('user') }}">ACCOUNT</a>
-        </li>
+        <li><a href="{{ url_for('user') }}">ACCOUNT</a></li>
         <li><a href="{{ url_for('admin') }}">ADMIN</a></li>
         <li><a href="{{ url_for('user_cart') }}">CART</a><li>
       </ul>
@@ -36,6 +34,7 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </main>
-  <footer>Copyright © Sid Arcidiacono 2020</footer>
+  <div class="spacer"></div>
+    <footer>Copyright © Sid Arcidiacono 2020</footer>
 </body>
 </html>

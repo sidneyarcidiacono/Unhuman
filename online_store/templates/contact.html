@@ -1,45 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
 
-<form method="POST" action="/contact_results">
-  {{ form.hidden_tag() }}
-  <fieldset>
-    <legend>Contact the Artist</legend>
-      {{ form.name.label }}
-      {% if form.name.errors %}
-        {{ form.name(class="is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.name.errors %}
-            {{ error }}
-          {% endfor %}
-        </div>
-      {% else %}
-        {{ form.name }}
-      {% endif %}
-      {{ form.email.label }}
-      {% if form.email.errors %}
-        {{ form.email(class="is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.email.errors %}
-            {{ error }}
-          {% endfor %}
-        </div>
-      {% else %}
-        {{ form.email }}
-      {% endif %}
-      {{ form.message.label }}
-      {% if form.message.errors %}
-        {{ form.message(class="is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.message.errors %}
-            {{ error }}
-          {% endfor %}
-        </div>
-      {% else %}
-        {{ form.message }}
-      {% endif %}
-  </fieldset>
-  {{ form.submit }}
-</form>
+<h2>Contact Unhuman</h2>
+
+<div class="flex-row">
+  <img class="portrait-img" src="{{ url_for('static', filename='/assets/redegeneration_red.jpg') }}"/>
+
+  <form method="POST" action="/contact_results">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        {{ form.name.label }}
+        {% if form.name.errors %}
+          {{ form.name(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.name.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.name }}
+        {% endif %}
+        {{ form.email.label }}
+        {% if form.email.errors %}
+          {{ form.email(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.email }}
+        {% endif %}
+        {{ form.message.label }}
+        {% if form.message.errors %}
+          {{ form.message(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.message.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.message }}
+        {% endif %}
+    </fieldset>
+    {{ form.submit }}
+  </form>
+
+</div>
 
 {% endblock %}

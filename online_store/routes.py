@@ -179,6 +179,29 @@ def about():
     return render_template("about.html")
 
 
+@app.route("/contact")
+def contact_me():
+    """Provide contact form for user."""
+    form = ContactForm()
+    return render_template("contact.html", form=form)
+
+
+@app.route("/contact_results", methods=["GET", "POST"])
+def contact_results():
+    """Redirects user to submission confirmation."""
+    form = ContactForm()
+    if form.validate_on_submit():
+        message = form.message.data
+        email = form.email.data
+        send_contact_email(message, email)
+    return render_template("contact_results.html")
+
+
+########################################################################
+#                   #Cart Routes                                       #
+########################################################################
+
+
 @app.route("/cart")
 @login_required
 def user_cart():
@@ -245,24 +268,6 @@ def remove_item_from_cart(product_id):
         db.session.commit()
         return redirect(url_for("user_cart"))
     return redirect(url_for("user_cart"))
-
-
-@app.route("/contact")
-def contact_me():
-    """Provide contact form for user."""
-    form = ContactForm()
-    return render_template("contact.html", form=form)
-
-
-@app.route("/contact_results", methods=["GET", "POST"])
-def contact_results():
-    """Redirects user to submission confirmation."""
-    form = ContactForm()
-    if form.validate_on_submit():
-        message = form.message.data
-        email = form.email.data
-        send_contact_email(message, email)
-    return render_template("contact_results.html")
 
 
 ########################################################################
@@ -376,6 +381,17 @@ def user():
     form.email.data = current_user.email
     context = {"title": "User", "form": form}
     return render_template("user.html", **context)
+
+
+@app.route("/user/delete-profile")
+@login_required
+def delete_user():
+    """Allow user to delete their profile."""
+    user = User.query.filter_by(id=current_user.id)
+    db.session.delete(user)
+    db.session.commit()
+    flash("Profile deleted successfully, we're sad to see you go!")
+    return redirect(url_for("homepage"))
 
 
 @app.route("/reset_password", methods=["GET", "POST"])
