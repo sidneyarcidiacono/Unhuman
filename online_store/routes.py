@@ -141,39 +141,45 @@ def about():
 @login_required
 def user_cart():
     """Show user their cart."""
-    cart = Cart.query.filter_by(user=current_user.id).first()
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
     print(f"Cart from cart route: {cart}")
-    # print(f"Cart products: {cart.products}")
-    # context = {"products": cart.products}
-    return render_template("cart.html")
+    print(f"Cart products: {cart.products}")
+    print(f"Cart products quantity: {cart.products_quantity}")
+    context = {"products": cart.products, "quantity": cart.products_quantity}
+    return render_template("cart.html", **context)
 
 
 @app.route("/cart/<int:product_id>", methods=["GET", "POST"])
 def cart(product_id):
     """Show user's cart."""
-    if current_user.is_authenticated:
-        form = AddToCartForm()
-        if form.quantity.data:
-            quantity = form.quantity.data
-            product = Product.query.get(product_id)
-            cart = Cart(product=[product], products_quantity=quantity)
+    form = AddToCartForm()
+    if current_user.is_authenticated and form.validate_on_submit():
+        quantity = form.quantity.data
+        product = Product.query.get(product_id)
+        cart = Cart.query.filter_by(user_id=current_user.id).first()
+        print(f"Cart before if: {cart}")
+        if cart is not None:
+            for n in range(quantity):
+                cart.products.append(product)
+                cart.products_quantity += 1
+            print(f"Cart products have been added: {cart.products}")
             # cart.subtotal = cart.set_subtotal()
             set_product_quantity(product, quantity)
-            print(f"Cart: {cart}")
+            db.session.commit()
+            flash("Added successfully")
+            return redirect(url_for("user_cart"))
+        else:
+            cart = Cart(
+                products=[product],
+                products_quantity=quantity,
+                user_id=current_user.id,
+            )
+            print(f"Cart created: {cart}")
+            set_product_quantity(product, quantity)
             db.session.add(cart)
             db.session.commit()
             flash("Added successfully")
             return redirect(url_for("user_cart"))
-        product = Product.query.get(product_id)
-        cart = Cart(product=[product], products_quantity=1)
-        # cart.products = [product]
-        cart.products_quantity = quantity
-        # cart.subtotal = cart.set_subtotal()
-        set_product_quantity(product, 1)
-        db.session.add(cart)
-        db.session.commit()
-        flash("Added successfully")
-        return redirect(url_for("user_cart"))
     flash("You must be logged in to add items.")
     return redirect(url_for("login"))
 

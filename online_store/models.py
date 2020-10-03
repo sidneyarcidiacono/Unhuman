@@ -61,7 +61,7 @@ class Cart(db.Model):
     """Create class Cart that holds items."""
 
     id = db.Column(db.Integer, primary_key=True)
-    product = db.relationship("Product", secondary="product_cart_link")
+    products = db.relationship("Product", secondary="product_cart_link")
     products_quantity = db.Column(db.Integer, default=1, nullable=False)
     subtotal = db.Column(db.Integer, default=0, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))

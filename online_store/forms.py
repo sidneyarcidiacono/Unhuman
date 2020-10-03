@@ -147,7 +147,11 @@ class AddProductForm(FlaskForm):
 class AddToCartForm(FlaskForm):
     """Create add to cart button."""
 
-    quantity = IntegerField("Quantity", validators=[NumberRange(max=15)])
+    quantity = IntegerField(
+        "Quantity",
+        default=1,
+        validators=[DataRequired(), NumberRange(max=15)],
+    )
     submit = SubmitField("Add to Cart")
 
 

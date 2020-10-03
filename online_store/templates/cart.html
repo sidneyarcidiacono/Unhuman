@@ -14,8 +14,8 @@
     <img class="cart-img" src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }}/>
     <h3>{{ product.title }}</h3>
     <p>${{ product.price }}</p>
-    <p>{{ quantity }}
   {% endfor %}
+  <p>Total items: {{ quantity }}</p>
   <button id="checkout-button">Checkout</button>
 </div>
 
