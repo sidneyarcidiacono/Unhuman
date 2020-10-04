@@ -87,7 +87,8 @@ h2 {
 
 h3 {
   text-align: center;
-  color: #fff
+  color: #fff;
+  margin: 15px;
 }
 
 main {
@@ -105,6 +106,7 @@ img {
 p {
   color: #fff;
   text-align: center;
+  margin: 10px;
 }
 
 label {
@@ -171,12 +173,9 @@ input[type=checkbox] {
   width: 20px;
 }
 
-input[type=number] {
-  width: 40px;
-}
-
 input[type=submit] {
   margin: 0;
+  width: 30%;
 }
 
 input[type=submit], button {
@@ -277,6 +276,7 @@ footer {
 
 .gallery-item img {
   width: 30vw;
+  height: auto;
 }
 
 .admin-prod-image {

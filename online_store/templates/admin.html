@@ -26,6 +26,7 @@
 </section>
 
 <div id="backdrop"></div>
+<div class="modal">
 
   <form method="POST" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
@@ -109,6 +110,8 @@
         {% endif %}
     </fieldset>
       {{ form.submit }}
+      <button id="cancel-product">Cancel</button>
   </form>
+</div>
 
 {% endblock %}
