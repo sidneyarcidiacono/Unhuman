@@ -207,10 +207,6 @@ footer {
   font-family: "Alien";
 }
 
-.reg-font {
-  font-family: "SawarabiGothic";
-}
-
 .avatar {
   width: 25vw;
   height: auto;
@@ -357,6 +353,12 @@ footer {
 
 .icon-button {
   background-color: transparent;
+}
+
+.homepage-link img {
+  width: 45vw;
+  height: auto;
+  margin: 15px;
 }
 
 #backdrop {
