@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-<!-- TODO: Have product image in Admin link to details modal. -->
 {% block head %}
 <script type="text/javascript" src="static/admin.js" defer></script>
 {% endblock %}
@@ -8,12 +7,10 @@
 {% block content %}
 <section class="product-manager">
   <h2>Product Manager</h2>
-  <div id="product-list">
+  <div id="product-list" class="flex-row">
     {% for product in products %}
-    <div class="product-item">
-      <!-- <a href="/paintings/{{ product.id }}"> -->
+    <div class="product-item" class="flex-container">
       <img src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }} class="admin-prod-image">
-      <!-- </a> -->
       <p>{{ product.title }}</p>
       <p>${{ product.price }}</p>
       <p>{{ product.media }}</p>

@@ -17,6 +17,7 @@
   border: none;
   font-family: "SawarabiGothic";
   box-sizing: border-box;
+  color: #fff
 }
 
 a {
@@ -267,7 +268,6 @@ footer {
 }
 
 .gallery-item {
-  width: 240px
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -275,8 +275,9 @@ footer {
 }
 
 .gallery-item img {
-  width: 30vw;
+  width: 25vw;
   height: auto;
+  margin: 15px;
 }
 
 .admin-prod-image {
@@ -318,6 +319,12 @@ footer {
   animation: fade-slide-in 0.3s ease-out forwards;
 }
 
+.modal-image {
+  width: 45vw;
+  height: auto;
+  margin-right: 25px;
+}
+
 .modal .modal__actions {
   display: flex;
 }
@@ -337,12 +344,19 @@ footer {
   display: none;
 }
 
-.invalid-feedback {
-  color: #fff;
-}
-
 .spacer {
   height: 30vw;
+}
+
+.icon {
+  max-width: 24px;
+  max-height: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.icon-button {
+  background-color: transparent;
 }
 
 #backdrop {
@@ -362,15 +376,7 @@ footer {
   pointer-events: all;
 }
 
-#product-list {
-  color: #fff;
-}
-
-#user-icon {
-  width: 28px;
-  height: 28px;
-}
-
-#user-icon:hover {
-  color: #570A0A;
+#start-add-product {
+  width: 30vw;
+  margin: 35px;
 }
