@@ -14,6 +14,11 @@ from online_store import app
 # Design custom icon to display when logged in, nav link title for when not ?
 # Add content & go live!!!!
 
+# Production todos:
+# Change Stripe to live API keys
+# Webpack static assets
+# Blueprints for python files
+
 ########################################################################
 #                   #Run                                               #
 ########################################################################
