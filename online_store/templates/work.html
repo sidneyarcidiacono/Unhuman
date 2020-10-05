@@ -24,38 +24,38 @@
       <button onclick="showProductModalHandler({{ product.id }})" class="icon-button"><img src="{{ url_for('static', filename='/assets/plus.png')}}" class="icon see-more-icon" /></button>
     </div>
     {% endfor %}
+  </div>
 
-    <div id="backdrop"></div>
+  <!-- <div id="backdrop"></div> -->
 
-    {% for product in products %}
-    <div id="{{ product.id }}" class="modal">
-      <div class="flex-container">
-        <img src="{{ url_for('static', filename='assets/' + product.image) }}" class="modal-image" />
-        <p>{{ product.description }}</p>
-        <p>{{ product.media }}</p>
-        <p>{{ product.size }}</p>
-        <div>
-          <form method="POST" action="/cart/{{product.id}}">
-            {{ form.hidden_tag() }}
-            {% if product.quantity > 1 %}
-            <div>
-              {{ form.quantity.label }}
-              {% if form.quantity.errors %}
-              {{ form.quantity(class="is-invalid") }}
-              <div class="invalid-feedback">
-                {% for error in form.quantity.errors %}
-                {{ error }}
-                {% endfor %}
-              </div>
-              {% else %}
-              {{ form.quantity }}
-              {% endif %}
+  {% for product in products %}
+  <div id="{{ product.id }}" class="modal">
+    <div class="flex-container">
+      <img src="{{ url_for('static', filename='assets/' + product.image) }}" class="modal-image" />
+      <p>{{ product.description }}</p>
+      <p>{{ product.media }}</p>
+      <p>{{ product.size }}</p>
+      <div>
+        <form method="POST" action="/cart/{{product.id}}">
+          {{ form.hidden_tag() }}
+          {% if product.quantity > 1 %}
+          <div>
+            {{ form.quantity.label }}
+            {% if form.quantity.errors %}
+            {{ form.quantity(class="is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.quantity.errors %}
+              {{ error }}
+              {% endfor %}
             </div>
+            {% else %}
+            {{ form.quantity }}
             {% endif %}
-            {{ form.submit }}
-          </form>
-          <button onclick="closeProductModal({{ product.id }})" class="icon-button"><img src="{{ url_for('static', filename='assets/x.png') }}" class="icon" id="cancel-add-icon" /></button>
-        </div>
+          </div>
+          {% endif %}
+          {{ form.submit }}
+        </form>
+        <button onclick="closeProductModal({{ product.id }})" class="icon-button"><img src="{{ url_for('static', filename='assets/x.png') }}" class="icon" id="cancel-add-icon" /></button>
       </div>
     </div>
   </div>

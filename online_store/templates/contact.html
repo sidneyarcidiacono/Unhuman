@@ -2,9 +2,10 @@
 {% block content %}
 
 <h2>Contact Unhuman</h2>
+<p>For commissions, collaboration or inquiries.</p>
 
 <div class="flex-row">
-  <img class="portrait-img" src="{{ url_for('static', filename='/assets/redegeneration_red.jpg') }}"/>
+  <img class="portrait-img" src="{{ url_for('static', filename='/assets/unhuman.jpg') }}"/>
 
   <form method="POST" action="/contact_results">
     {{ form.hidden_tag() }}
