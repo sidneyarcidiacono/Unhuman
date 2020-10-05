@@ -25,7 +25,9 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(40), nullable=False)
-    price = db.Column(db.Float, default=0, nullable=False)
+    price = db.Column(
+        db.Numeric(precision=2, scale=2), default=0, nullable=False
+    )
     description = db.Column(db.String(200), nullable=False)
     media = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(30), nullable=False)
@@ -37,11 +39,11 @@ class Product(db.Model):
 
     def __repr__(self):
         """Specify return val when printing Product."""
-        return self.title
+        return f"{self.title}, ${self.price}"
 
     def __str__(self):
         """Specify return when showing Product."""
-        return self.title
+        return f"{self.title}, ${self.price}"
 
 
 class ProductCartLink(db.Model):

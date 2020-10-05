@@ -141,6 +141,15 @@ def clear_cart_helper(cart):
     return
 
 
+def remove_from_cart_helper(cart, product):
+    """Adjust quantities when item is removed from cart."""
+    cart.products.pop(cart.products.index(product))
+    product.quantity += product.quant_in_cart
+    product.quant_in_cart = 0
+    cart.products_quantity -= 1
+    return cart
+
+
 ########################################################################
 #                   #Error Handling                                    #
 ########################################################################
@@ -168,6 +177,8 @@ def homepage():
 def shop_paintings():
     """Render template for artwork/product page."""
     products = Product.query.all()
+    for prod in products:
+        print(prod)
     form = AddToCartForm()
     context = {"products": products, "form": form}
     return render_template("work.html", **context)
@@ -264,7 +275,7 @@ def remove_item_from_cart(product_id):
     if form.validate_on_submit():
         cart = Cart.query.filter_by(user_id=current_user.id).first()
         product = Product.query.get(product_id)
-        cart.products.pop(cart.products.index(product))
+        remove_from_cart_helper(cart, product)
         db.session.commit()
         return redirect(url_for("user_cart"))
     return redirect(url_for("user_cart"))
@@ -280,7 +291,7 @@ def create_checkout_session():
     """Send user to stripe checkout."""
     try:
         cart = Cart.query.filter_by(user_id=current_user.id).first()
-        name = [product.title for product in cart.products]
+        name = "".join([product.title for product in cart.products])
         price = cart.subtotal
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
@@ -300,6 +311,8 @@ def create_checkout_session():
             success_url="http://localhost:5000/checkout_success",
             cancel_url="http://localhost:5000/checkout_cancel",
         )
+        clear_cart_helper(cart)
+        db.session.commit()
         return jsonify(id=checkout_session.id)
     except Exception as e:
         return jsonify(error=str(e)), 403

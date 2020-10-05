@@ -8,7 +8,6 @@ from wtforms import (
     SubmitField,
     TextAreaField,
     BooleanField,
-    DecimalField,
     IntegerField,
 )
 from wtforms.validators import (
@@ -19,6 +18,7 @@ from wtforms.validators import (
     ValidationError,
     NumberRange,
 )
+from wtforms.fields.html5 import DecimalField
 from online_store.models import User
 
 
@@ -129,7 +129,7 @@ class AddProductForm(FlaskForm):
     title = StringField(
         "Title", validators=[DataRequired(), Length(min=2, max=30)]
     )
-    price = DecimalField("Price", validators=[DataRequired()])
+    price = DecimalField("Price", places=2, validators=[DataRequired()])
     description = TextAreaField(
         "Description", validators=[DataRequired(), Length(max=140)]
     )
