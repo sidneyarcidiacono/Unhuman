@@ -9,9 +9,17 @@
 
   <h1>Art</h1>
 
+  <div class="flex-container">
+    <select name="media" id="media">
+      <option value="Full Gallery">Full Gallery</option>
+      <option value="Paintings">Paintings</option>
+      <option value="Prints">Prints</option>
+    </select>
+  </div>
+
   <div class="gallery">
     {% for product in products %}
-    <div class="gallery-item">
+    <div class="gallery-item" data-media="{{ product.media }}">
       <img src="{{ url_for('static', filename='assets/' + product.image) }}" id="product-image" /> </br>
       {% if product.quantity > 0 %}
       <h3>{{ product.title }}</h3>
@@ -19,7 +27,7 @@
       <p>{{ product.title }} - SOLD</p>
       {% endif %}
       {% if product.quantity > 0 %}
-      <p>{{ product.price }}</p>
+      <p>${{ product.price }}</p>
       {% endif %}
       <button onclick="showProductModalHandler({{ product.id }})" class="icon-button"><img src="{{ url_for('static', filename='/assets/plus.png')}}" class="icon see-more-icon" /></button>
     </div>

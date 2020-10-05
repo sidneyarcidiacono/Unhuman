@@ -180,6 +180,12 @@ input[type=submit]:hover, button:hover {
   background-color: #E31919;
 }
 
+select {
+  width: 100px;
+  background-color: #000;
+  color: #fff;
+}
+
 small {
   color: #fff;
   display: flex;
