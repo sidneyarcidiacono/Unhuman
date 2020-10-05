@@ -149,6 +149,7 @@ def remove_from_cart_helper(cart, product):
     product.quantity += product.quant_in_cart
     product.quant_in_cart = 0
     cart.products_quantity -= 1
+    update_cart_subtotal(cart)
     return cart
 
 
