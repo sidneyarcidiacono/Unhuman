@@ -25,9 +25,7 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(40), nullable=False)
-    price = db.Column(
-        db.Numeric(precision=2, scale=2), default=0, nullable=False
-    )
+    price = db.Column(db.Numeric(scale=2), default=0, nullable=False)
     description = db.Column(db.String(200), nullable=False)
     media = db.Column(db.String(50), nullable=False)
     size = db.Column(db.String(30), nullable=False)
@@ -77,7 +75,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(40), nullable=False)
     username = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(30), nullable=False)
-    password = db.Column(db.String(60), nullable=True)
+    password = db.Column(db.String(120), nullable=True)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     avatar = db.Column(
         db.String(30),
