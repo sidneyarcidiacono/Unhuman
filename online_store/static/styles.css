@@ -255,6 +255,14 @@ footer img {
   justify-content: center;
 }
 
+.wrap-row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .small-div {
   position: relative;
   margin: 215px;

@@ -464,7 +464,7 @@ def admin():
     """Admin page where items can be added to db."""
     form = AddProductForm()
     if form.validate_on_submit():
-        image_file = save_image(form.image.data, 500, "assets")
+        image_file = save_image(form.image.data, 1200, "assets")
         new_product = Product(
             title=form.title.data,
             price=form.price.data,

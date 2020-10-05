@@ -28,8 +28,8 @@
       {% endif %}
       {% if product.quantity > 0 %}
       <p>${{ product.price }}</p>
-      {% endif %}
       <button onclick="showProductModalHandler({{ product.id }})" class="icon-button"><img src="{{ url_for('static', filename='/assets/plus.png')}}" class="icon see-more-icon" /></button>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
