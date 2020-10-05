@@ -6,12 +6,6 @@ const gallery = document.querySelector('.gallery')
 const galleryItems = document.querySelectorAll('.gallery-item')
 const filter = document.getElementById('media')
 
-console.log(`Filter: ${filter}`)
-
-// const toggleBackdropHandler = () => {
-//   backdrop.classList.toggle('visible')
-// }
-
 const filterGallery = () => {
   for (galleryItem of galleryItems) {
     const itemMedia = galleryItem.dataset.media
@@ -53,11 +47,5 @@ const backdropClickHandler = () => {
   closeProductModal()
   // toggleBackdropHandler()
 }
-
-// window.addEventListener('click', () => {
-//   if (backdrop.classList.contains('visible')) {
-//     backdropClickHandler
-//   }
-// })
 
 filter.addEventListener('change', filterGallery)
