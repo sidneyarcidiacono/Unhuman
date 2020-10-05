@@ -41,7 +41,10 @@
     {% block content %}{% endblock %}
   </main>
   <div class="spacer"></div>
-  <footer>Copyright © Sid Arcidiacono 2020</footer>
+  <footer>
+    <img src="{{ url_for('static', filename='assets/cemetary.jpg') }}" alt="Old cemetary with trees and statues." class="banner-img">
+    Copyright © Sid Arcidiacono 2020
+  </footer>
 </body>
 
 </html>

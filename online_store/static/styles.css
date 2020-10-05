@@ -200,6 +200,12 @@ footer {
   bottom: 0;
   height: 200px;
   font-family: "SawarabiGothic";
+  text-align: center;
+}
+
+footer img {
+  -webkit-mask-image:-webkit-gradient(linear, left bottom, left top, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
+      mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
 }
 
 .alien-font {
@@ -340,7 +346,7 @@ footer {
 }
 
 .spacer {
-  height: 30vw;
+  height: 100px;
 }
 
 .icon {

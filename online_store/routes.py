@@ -136,6 +136,8 @@ def add_to_cart_helper(quantity, product, cart):
 
 def clear_cart_helper(cart):
     """Clear cart on checkout or when empty cart button is pushed."""
+    for product in cart.products:
+        product.quant_in_cart = 0
     db.session.delete(cart)
     db.session.commit()
     return
