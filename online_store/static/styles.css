@@ -1,15 +1,15 @@
 @font-face {
   font-family: "SawarabiGothic";
-  src: url('../.fonts/sawarabigothic-regular.otf');
-  src: url('../.fonts/sawarabigothic-regular.woff');
-  src: url('../.fonts/sawarabigothic-regular.ttf');
+  src: url('./assets/fonts/sawarabigothic-regular.otf');
+  src: url('./assets/fonts/sawarabigothic-regular.woff');
+  src: url('./assets/fonts/sawarabigothic-regular.ttf');
 }
 
 @font-face {
   font-family: "Alien";
-  src: url('../.fonts/alien.otf');
-  src: url('../.fonts/alien.woff');
-  src: url('../.fonts/alien.ttf');
+  src: url('./assets/fonts/alien.otf');
+  src: url('./assets/fonts/alien.woff');
+  src: url('./assets/fonts/alien.ttf');
 }
 
 * {
