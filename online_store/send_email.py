@@ -25,24 +25,24 @@ class SendMail:
         except Exception as e:
             print("FAILED TO LOGIN, CHECK YOUR CREDENTIALS")
 
-        def send(self, receiver, message, subject=""):
-            """Send email in the format
+    def send(self, receiver, message, subject=""):
+        """Send email in the format
 
-            {subject}
-            Hi {receiver},
-            {message}
-            Returns False if any mail raises error"""
+        {subject}
+        Hi {receiver},
+        {message}
+        Returns False if any mail raises error"""
 
-            is_fail = False
+        is_fail = False
 
-            message = f"""\
-            Subject: {subject}
+        message = f"""\
+        Subject: {subject}
 
-            Hi {receiver},
+        Hi {receiver},
 
-            {message}
-            """
-            if self.s.sendmail(self.username, receiver, message) != {}:
-                is_fail = True
+        {message}
+        """
+        if self.s.sendmail(self.username, receiver, message) != {}:
+            is_fail = True
 
-            return is_fail
+        return is_fail
