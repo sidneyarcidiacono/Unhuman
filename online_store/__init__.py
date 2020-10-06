@@ -9,7 +9,7 @@ import boto3
 
 s3 = boto3.resource("s3")
 
-from boto3.s3.connection import S3Connection
+from boto3 import S3Connection
 
 s3 = S3Connection(
     os.environ["SECRET_KEY"],
