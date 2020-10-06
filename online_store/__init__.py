@@ -5,23 +5,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
-from boto.s3.connection import S3Connection
-
-s3 = S3Connection(
-    os.environ["SECRET_KEY"],
-    os.environ["SQLALCHEMY_DATABASE_URI"],
-    os.environ["MAIL_DEFAULT_SENDER"],
-    os.environ["MAIL_PASSWORD"],
-    os.environ["MAIL_USERNAME"],
-    os.environ["STRIPE_SECRET"],
-)
-
+from online_store.config import Config
 
 app = Flask(__name__)
+app.config.from_object(Config)
 db = SQLAlchemy(app)
 mail = Mail(app)
 
-stripe.api_key = S3Connection(os.environ["STRIPE_PUBLIC_KEY"])
+stripe.api_key = app.config["STRIPE_PUBLIC_KEY"]
 
 # Define flask-login config variables & instantiate LoginManager
 login_manager = LoginManager(app)

@@ -10,7 +10,6 @@ __pycache__/
 .aws
 env/
 .env
-config.py
 build/
 develop-eggs/
 dist/
