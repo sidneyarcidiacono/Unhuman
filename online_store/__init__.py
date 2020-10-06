@@ -9,10 +9,11 @@ from online_store.config import Config
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
+
 db = SQLAlchemy(app)
 mail = Mail(app)
 
-app.config.from_object(Config)
 
 stripe.api_key = os.environ["STRIPE_PUBLISHABLE"]
 
