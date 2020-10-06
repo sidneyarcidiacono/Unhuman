@@ -4,6 +4,9 @@ import smtplib
 username = os.environ["MAIL_USERNAME"]
 password = os.environ["MAIL_PASSWORD"]
 
+print(f"Username: {username}")
+print(f"Password: {password}")
+
 
 class SendMail:
     """Sends email to admin or user."""

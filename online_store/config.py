@@ -9,8 +9,8 @@ class Config(object):
     SECRET_KEY = os.environ["SECRET_KEY"]
     SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
 
-    MAIL_SERVER = "smtp.zoho.com"
-    MAIL_PORT = 465
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 587
     MAIL_USE_TTL = True
     MAIL_USE_SSL = True
     MAIL_DEBUG = True
