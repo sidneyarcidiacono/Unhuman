@@ -20,9 +20,7 @@ db = SQLAlchemy(app)
 mail = Mail(app)
 
 app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
-app.config["SQLALCHEMY_DATABASE_URI"] = (
-    os.environ["SQLALCHEMY_DATABASE_URI"],
-)
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["SQLALCHEMY_DATABASE_URI"]
 app.config["MAIL_DEFAULT_SENDER"] = os.environ["MAIL_DEFAULT_SENDER"]
 app.config["MAIL_PASSWORD"] = os.environ["MAIL_PASSWORD"]
 app.config["MAIL_USERNAME"] = os.environ["MAIL_USERNAME"]
