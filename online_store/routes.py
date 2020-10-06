@@ -28,7 +28,7 @@ from online_store.forms import (
 from flask_mail import Message
 from online_store import mail
 from functools import wraps
-from send_email import SendMail
+from online_store.send_email import SendMail
 
 ########################################################################
 #                   #Helper functions                                  #
