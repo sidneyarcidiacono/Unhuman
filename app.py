@@ -12,7 +12,6 @@ from online_store import app
 # Look into "url_is_safe" functionality for security
 # Potentially improve redirect on 404 page to be server-side or JS
 # Design custom icon to display when logged in, nav link title for when not ?
-# Add content & go live!!!!
 
 # Production todos:
 # Change Stripe to live API keys

@@ -6,22 +6,22 @@ from dotenv import load_dotenv
 class Config(object):
     DEBUG = False
     TESTING = False
-    SECRET_KEY = os.getenv("SECRET_KEY")
-    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+    SECRET_KEY = os.environ["SECRET_KEY"]
+    SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
 
     MAIL_SERVER = "smtp.zoho.com"
     MAIL_PORT = 465
     MAIL_USE_TTL = True
     MAIL_USE_SSL = True
     MAIL_DEBUG = True
-    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
-    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
-    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
+    MAIL_USERNAME = os.environ["MAIL_USERNAME"]
+    MAIL_PASSWORD = os.environ["MAIL_PASSWORD"]
+    MAIL_DEFAULT_SENDER = os.environ["MAIL_DEFAULT_SENDER"]
     MAIL_SUPPRESS_SEND = False
     MAIL_ASCII_ATTACHMENTS = False
 
-    STRIPE_PUBLIC_KEY = os.getenv("stripe_api")
-    STRIPE_SECRET_KEY = os.getenv("stripe_secret_key")
+    STRIPE_PUBLIC_KEY = os.environ["STRIPE_PUBLISHABLE"]
+    STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET"]
 
 
 class ProductionConfig(Config):
