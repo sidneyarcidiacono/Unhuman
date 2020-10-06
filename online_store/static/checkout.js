@@ -1,4 +1,4 @@
-const stripe = Stripe("pk_test_51HX7VpGoBx998m4uTzM1HqKlMxzsmTznqYcinrOt5ZmMjny9i6WWE5cGlwSFRuioBBq32YRDgjOXD0nuEMGFcxUS00jEe5QOaz")
+const stripe = Stripe("pk_live_51HX7VpGoBx998m4u1vDJjCNCUvk66y51WuXRNLOO76sFwT2oPNo0PiLRit103LfyUHcVuRBdwN9OjW9vUiYXDphG00DS8qetWJ")
 const checkoutBtn = document.getElementById('checkout-button')
 const clearCartBtn = document.getElementById('remove-all-items')
 
