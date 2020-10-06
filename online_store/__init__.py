@@ -5,6 +5,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_mail import Mail
+import boto3
+
+s3 = boto3.resource("s3")
+
 from boto3.s3.connection import S3Connection
 
 s3 = S3Connection(
