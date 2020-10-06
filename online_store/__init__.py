@@ -29,7 +29,7 @@ app.config["MAIL_USERNAME"] = os.environ["MAIL_USERNAME"]
 app.config["STRIPE_SECRET"] = os.environ["STRIPE_SECRET"]
 # )
 
-stripe.api_key = os.environ["STRIPE_PUBLIC_KEY"]
+stripe.api_key = os.environ["STRIPE_PUBLISHABLE"]
 
 # Define flask-login config variables & instantiate LoginManager
 login_manager = LoginManager(app)
