@@ -28,6 +28,7 @@ from online_store.forms import (
 from flask_mail import Message
 from online_store import mail
 from functools import wraps
+from send_email import SendMail
 
 ########################################################################
 #                   #Helper functions                                  #
@@ -56,13 +57,13 @@ def save_image(form_image, size, folder):
 
 def send_reset_email(user):
     """Send password reset email."""
+    send_mail = SendMail()
     token = user.get_reset_token()
-    msg = Message("Password Reset", recipients=[user.email])
-    msg.body = f"""
+    msg = f"""
                 To reset your password, please click the following link:
                 {url_for('reset_token', token=token, _external=True)}
                 If you did not make this request, please ignore this email."""
-    mail.send(msg)
+    send_mail.send(user.email, msg, "Password Reset")
 
 
 # Define function that sends email to admin from contact form
@@ -70,10 +71,10 @@ def send_reset_email(user):
 
 def send_contact_email(message, email):
     """Send email to my address when someone submits the contact form."""
+    send_mail = SendMail()
     admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
-    msg = Message("Contact Form Submission", recipients=[admin.email])
-    msg.body = message + email
-    mail.send(msg)
+    msg = message + f"Sender email: {email}"
+    send_mail.send(admin.email, msg, "Contact form submission")
 
 
 # Create decorator for routes that require admin role
