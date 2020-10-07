@@ -14,8 +14,8 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 mail = Mail(app)
 
-a = os.environ.get("MAIL_USERNAME")
-b = os.environ.get("MAIL_PASSWORD")
+a = os.getenv("MAIL_USERNAME")
+b = os.getenv("MAIL_PASSWORD")
 print(a, b)
 
 
