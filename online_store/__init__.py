@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 mail = Mail(app)
 
 
-stripe.api_key = os.environ["STRIPE_SECRET"]
+stripe.api_key = os.getenv("STRIPE_SECRET")
 
 # Define flask-login config variables & instantiate LoginManager
 login_manager = LoginManager(app)
