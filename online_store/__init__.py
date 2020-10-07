@@ -14,6 +14,10 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 mail = Mail(app)
 
+a = os.environ.get("MAIL_USERNAME")
+b = os.environ.get("MAIL_PASSWORD")
+print(a, b)
+
 
 stripe.api_key = os.getenv("STRIPE_SECRET")
 
