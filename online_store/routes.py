@@ -62,7 +62,7 @@ def send_reset_email(user):
                 To reset your password, please click the following link:
                 {url_for('reset_token', token=token, _external=True)}
                 If you did not make this request, please ignore this email."""
-    send_email_trustifi(user.email, msg, "Password Reset")
+    send_email_trustifi(user.email, msg, user.name, "Password Reset")
 
 
 # Define function that sends email to admin from contact form
@@ -73,7 +73,7 @@ def send_contact_email(message, email, name):
     admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
     recipient_email = admin.email
     msg = message + f"Sender email: {email}"
-    send_email_trustifi(recipient_email, msg, name)
+    send_email_trustifi(recipient_email, msg, name, "Contact Form Submission")
 
 
 # Create decorator for routes that require admin role

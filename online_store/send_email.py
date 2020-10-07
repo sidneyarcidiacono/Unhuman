@@ -56,12 +56,12 @@ class SendMail:
 # Send email using Trustifi for use with Heroku deployment
 
 
-def send_email_trustifi(recipient_email, message, name):
+def send_email_trustifi(recipient_email, message, name, title):
 
     url = os.getenv("TRUSTIFI_URL") + "/api/i/v1/email"
     conn = http.client.HTTPSConnection("be.trustifi.com")
 
-    payload = '{\n  "template": {\n  \t"fields": {\n  \t\t"first_field": "Hello",\n  \t\t"second_field": {{message}}{{email}}\n  \t}\n  },\n  "recipients": [{"email": {{recipient_email}}, "name": {{name}}}],\n  "lists": [],\n  "contacts": [],\n  "methods": { \n    "postmark": false,\n    "secureSend": false,\n    "encryptContent": false,\n    "secureReply": false \n  }\n}'
+    payload = '{\n"from": {"email": "unhumanartist@gmail.com"},\n  "recipients": [{"email": "{{ recipient_email }}", "name": "{{ test }}"}}],\n  "lists": [],\n  "contacts": [],\n  "attachments": [],\n  "title": "{{title}}",\n  "html": "{{ message }}",\n  "methods": { \n    "postmark": false,\n    "secureSend": false,\n    "encryptContent": false,\n    "secureReply": false \n  }\n}'
     headers = {
         "x-trustifi-key": os.getenv("TRUSTIFI_KEY"),
         "x-trustifi-secret": os.getenv("TRUSTIFI_SECRET"),
