@@ -1,6 +1,7 @@
 """Import packages."""
 import os
 import stripe
+import requests
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -13,11 +14,6 @@ app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
-
-a = os.getenv("MAIL_USERNAME")
-b = os.getenv("MAIL_PASSWORD")
-print(a, b)
-
 
 stripe.api_key = os.getenv("STRIPE_SECRET")
 

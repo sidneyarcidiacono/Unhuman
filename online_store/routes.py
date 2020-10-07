@@ -28,7 +28,7 @@ from online_store.forms import (
 from flask_mail import Message
 from online_store import mail
 from functools import wraps
-from online_store.send_email import SendMail
+from online_store.send_email import SendMail, send_email_trustifi
 
 ########################################################################
 #                   #Helper functions                                  #
@@ -71,10 +71,11 @@ def send_reset_email(user):
 
 def send_contact_email(message, email):
     """Send email to my address when someone submits the contact form."""
-    send_mail = SendMail()
-    admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
-    msg = message + f"Sender email: {email}"
-    send_mail.send(admin.email, msg, "Contact form submission")
+    # send_mail = SendMail()
+    # admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
+    # msg = message + f"Sender email: {email}"
+    # send_mail.send(admin.email, msg, "Contact form submission")
+    send_email_trustifi()
 
 
 # Create decorator for routes that require admin role

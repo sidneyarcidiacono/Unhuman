@@ -1,5 +1,7 @@
 import os
 import smtplib
+import http.client
+import mimetypes
 
 username = os.environ["MAIL_USERNAME"]
 password = os.environ["MAIL_PASSWORD"]
@@ -49,3 +51,24 @@ class SendMail:
             is_fail = True
 
         return is_fail
+
+
+# Send email using Trustifi for use with Heroku deployment
+
+
+def send_email_trustifi():
+
+    url = os.getenv("TRUSTIFI_URL") + "/api/i/v1/email"
+    conn = http.client.HTTPSConnection("be.trustifi.com")
+
+    payload = '{\n  "template": {\n  \t"name": "my_template",\n  \t"fields": {\n  \t\t"first_field": "hello",\n  \t\t"second_field": "world"\n  \t}\n  },\n  "recipients": [{"email": "test@trustificorp.org", "name": "test", "phone":{"country_code":"+1","phone_number":"1111111111"}}],\n  "lists": [],\n  "contacts": [],\n  "methods": { \n    "postmark": false,\n    "secureSend": false,\n    "encryptContent": false,\n    "secureReply": false \n  }\n}'
+    headers = {
+        "x-trustifi-key": os.getenv("TRUSTIFI_KEY"),
+        "x-trustifi-secret": os.getenv("TRUSTIFI_SECRET"),
+        "Content-Type": "application/json",
+    }
+
+    conn.request("POST", "/api/i/v1/email", payload, headers)
+    res = conn.getresponse()
+    data = res.read()
+    print(data.decode("utf-8"))
