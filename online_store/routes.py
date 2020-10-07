@@ -57,25 +57,23 @@ def save_image(form_image, size, folder):
 
 def send_reset_email(user):
     """Send password reset email."""
-    send_mail = SendMail()
     token = user.get_reset_token()
     msg = f"""
                 To reset your password, please click the following link:
                 {url_for('reset_token', token=token, _external=True)}
                 If you did not make this request, please ignore this email."""
-    send_mail.send(user.email, msg, "Password Reset")
+    send_email_trustifi(user.email, msg, "Password Reset")
 
 
 # Define function that sends email to admin from contact form
 
 
-def send_contact_email(message, email):
+def send_contact_email(message, email, name):
     """Send email to my address when someone submits the contact form."""
-    # send_mail = SendMail()
-    # admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
-    # msg = message + f"Sender email: {email}"
-    # send_mail.send(admin.email, msg, "Contact form submission")
-    send_email_trustifi()
+    admin = User.query.filter_by(email="unhumanartist@gmail.com").first()
+    recipient_email = admin.email
+    msg = message + f"Sender email: {email}"
+    send_email_trustifi(recipient_email, msg, name)
 
 
 # Create decorator for routes that require admin role
@@ -209,7 +207,8 @@ def contact_results():
     if form.validate_on_submit():
         message = form.message.data
         email = form.email.data
-        send_contact_email(message, email)
+        name = form.name.data
+        send_contact_email(message, email, name)
     return render_template("contact_results.html")
 
 
