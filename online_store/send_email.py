@@ -6,51 +6,58 @@ import mimetypes
 username = os.environ["MAIL_USERNAME"]
 password = os.environ["MAIL_PASSWORD"]
 
-print(f"Username: {username}")
-print(f"Password: {password}")
+
+# class SendMail:
+#     """Sends email to admin or user."""
+#
+#     def __init__(self):
+#         """Initialize username and password for gmail account."""
 
 
-class SendMail:
-    """Sends email to admin or user."""
+def send_mail(subject, message, receiver="unhumanartist@gmail.com"):
 
-    def __init__(self):
-        """Initialize username and password for gmail account."""
-        self.username = username
-        self.password = password
+    try:
+        s = smtplib.SMTP("smtp.gmail.com", 587)
 
-        try:
-            self.s = smtplib.SMTP("smtp.gmail.com", 587)
+        # s.ehlo()
 
-            self.s.ehlo()
+        # Start tls for security
+        s.starttls()
 
-            # Start tls for security
-            self.s.starttls()
+        s.login(username, password)
+    except Exception as e:
+        print("FAILED TO LOGIN, CHECK YOUR CREDENTIALS")
 
-            self.s.login(self.username, self.password)
-        except Exception as e:
-            print("FAILED TO LOGIN, CHECK YOUR CREDENTIALS")
+    # def send(self, receiver, message, subject=""):
+    """Send email in the format
 
-    def send(self, receiver, message, subject=""):
-        """Send email in the format
+    {subject}
+    Hi {receiver},
+    {message}
+    Returns False if any mail raises error"""
 
-        {subject}
-        Hi {receiver},
-        {message}
-        Returns False if any mail raises error"""
+    is_fail = False
 
-        is_fail = False
+    # message = f"""\
+    # Subject: {subject}
+    #
+    # Hi {receiver},
+    #
+    # {message}
+    # """
 
-        message = f"""\
-        Subject: {subject}
+    s.sendmail(
+        username,
+        receiver,
+        message,
+    )
+    s.quit()
 
-        Hi {receiver},
+    return is_fail
 
-        {message}
-        """
-        if self.s.sendmail(self.username, receiver, message) != {}:
-            is_fail = True
 
-        return is_fail
+if __name__ == "__main__":
+    send_mail("Test", "Test", "unhumanartist@gmail.com")
 
 
 # Send email using Trustifi for use with Heroku deployment
