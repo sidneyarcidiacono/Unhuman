@@ -56,20 +56,20 @@ class SendMail:
 # Send email using Trustifi for use with Heroku deployment
 
 
-def send_email_trustifi(recipient_email, message, name, title):
-
-    url = os.getenv("TRUSTIFI_URL") + "/api/i/v1/email"
-    conn = http.client.HTTPSConnection("be.trustifi.com")
-
-    payload = '{\n"from": {"email": "unhumanartist@gmail.com"},\n  "recipients": [{"email": "{{recipient_email}}", "name": "{{name}}"}}],\n  "lists": [],\n  "contacts": [],\n  "attachments": [],\n  "title": "{{title}}",\n  "html": "{{ message }}",\n  "methods": { \n    "postmark": false,\n    "secureSend": false,\n    "encryptContent": false,\n    "secureReply": false \n  }\n}'
-    headers = {
-        "x-trustifi-key": os.getenv("TRUSTIFI_KEY"),
-        "x-trustifi-secret": os.getenv("TRUSTIFI_SECRET"),
-        "Content-Type": "application/json",
-    }
-
-    conn.request("POST", "/api/i/v1/email", payload, headers)
-    res = conn.getresponse()
-    data = res.read()
-    print(res)
-    print(data.decode("utf-8"))
+# def send_email_trustifi(recipient_email, message, name, title):
+#
+#     url = os.getenv("TRUSTIFI_URL") + "/api/i/v1/email"
+#     conn = http.client.HTTPSConnection("be.trustifi.com")
+#
+#     payload = '{\n"from": {"email": "unhumanartist@gmail.com"},\n  "recipients": [{"email": "{{recipient_email}}", "name": "{{name}}"}}],\n  "lists": [],\n  "contacts": [],\n  "attachments": [],\n  "title": "{{title}}",\n  "html": "{{ message }}",\n  "methods": { \n    "postmark": false,\n    "secureSend": false,\n    "encryptContent": false,\n    "secureReply": false \n  }\n}'
+#     headers = {
+#         "x-trustifi-key": os.getenv("TRUSTIFI_KEY"),
+#         "x-trustifi-secret": os.getenv("TRUSTIFI_SECRET"),
+#         "Content-Type": "application/json",
+#     }
+#
+#     conn.request("POST", "/api/i/v1/email", payload, headers)
+#     res = conn.getresponse()
+#     data = res.read()
+#     print(res)
+#     print(data.decode("utf-8"))
