@@ -6,6 +6,9 @@ import mimetypes
 username = os.environ["MAIL_USERNAME"]
 password = os.environ["MAIL_PASSWORD"]
 
+print(f"Username: {username}")
+print("_________________________________________________")
+
 
 def send_mail(subject, message, receiver="unhumanartist@gmail.com"):
 
