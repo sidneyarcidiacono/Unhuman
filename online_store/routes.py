@@ -312,8 +312,8 @@ def create_checkout_session():
                 },
             ],
             mode="payment",
-            success_url="http://localhost:5000/checkout_success",
-            cancel_url="http://localhost:5000/checkout_cancel",
+            success_url="http://unhumanart.com/checkout_success",
+            cancel_url="http://unhumanart.com/checkout_cancel",
         )
         clear_cart_helper(cart)
         db.session.commit()
