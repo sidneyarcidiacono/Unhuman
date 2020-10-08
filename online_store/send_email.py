@@ -7,13 +7,6 @@ username = os.environ["MAIL_USERNAME"]
 password = os.environ["MAIL_PASSWORD"]
 
 
-# class SendMail:
-#     """Sends email to admin or user."""
-#
-#     def __init__(self):
-#         """Initialize username and password for gmail account."""
-
-
 def send_mail(subject, message, receiver="unhumanartist@gmail.com"):
 
     try:
@@ -37,14 +30,6 @@ def send_mail(subject, message, receiver="unhumanartist@gmail.com"):
     Returns False if any mail raises error"""
 
     is_fail = False
-
-    # message = f"""\
-    # Subject: {subject}
-    #
-    # Hi {receiver},
-    #
-    # {message}
-    # """
 
     s.sendmail(
         username,
