@@ -71,4 +71,5 @@ def send_email_trustifi(recipient_email, message, name, title):
     conn.request("POST", "/api/i/v1/email", payload, headers)
     res = conn.getresponse()
     data = res.read()
+    print(res)
     print(data.decode("utf-8"))
