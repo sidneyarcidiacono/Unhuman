@@ -16,17 +16,17 @@
   <header>
     <nav>
       <div class="left-nav">
-        <a href="{{ url_for('homepage') }}">HOME</a>
-        <a href="{{ url_for('shop_paintings') }}">ART</a>
-        <a href="{{ url_for('about') }}">ABOUT</a>
-        <a href="{{ url_for('contact_me') }}">CONTACT</a>
-        <a href="{{ url_for('user_cart') }}">CART</a>
+        <a href="{{ url_for('main.homepage') }}">HOME</a>
+        <a href="{{ url_for('main.shop_paintings') }}">ART</a>
+        <a href="{{ url_for('main.about') }}">ABOUT</a>
+        <a href="{{ url_for('main.contact_me') }}">CONTACT</a>
+        <a href="{{ url_for('cart.user_cart') }}">CART</a>
       </div>
       <div class="right-nav">
         {% if current_user.is_authenticated %}
-          <a href="{{ url_for('user') }}">ACCOUNT</a>
+          <a href="{{ url_for('users.user') }}">ACCOUNT</a>
         {% else %}
-          <a href="{{ url_for('user') }}">LOG IN</a>
+          <a href="{{ url_for('users.login') }}">LOG IN</a>
         {% endif %}
       </div>
     </nav>

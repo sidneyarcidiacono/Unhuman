@@ -15,15 +15,15 @@
     <div class="flex-row">
       <div class="blur-text">
         <h2>About</h2>
-        <a href="{{ url_for('about') }}"><img src="{{ url_for('static', filename='assets/sid_blue.jpg') }}"/></a>
+        <a href="{{ url_for('main.about') }}"><img src="{{ url_for('static', filename='assets/sid_blue.jpg') }}"/></a>
       </div>
       <div class="blur-text">
         <h2>Contact</h2>
-        <a href="{{ url_for('contact_me')}}"><img src="{{ url_for('static', filename='assets/skylight.jpg') }}"/></a>
+        <a href="{{ url_for('main.contact_me')}}"><img src="{{ url_for('static', filename='assets/skylight.jpg') }}"/></a>
       </div>
       <div class="blur-text">
         <h2>See Artwork</h2>
-        <a href="{{ url_for('shop_paintings') }}"><img src="{{ url_for('static', filename='assets/blue.jpg' )}}"/></a>
+        <a href="{{ url_for('main.shop_paintings') }}"><img src="{{ url_for('static', filename='assets/blue.jpg' )}}"/></a>
     </div>
     </div>
   </div>

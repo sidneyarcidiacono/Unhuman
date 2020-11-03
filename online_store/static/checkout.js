@@ -4,7 +4,7 @@ const clearCartBtn = document.getElementById('remove-all-items')
 
 clearCartBtn.addEventListener('click', () => {
   console.log('Clicked')
-  window.location.href = '/clear-cart'
+  window.location.href = "/cart/clear-cart"
 })
 
 checkoutBtn.addEventListener('click', () => {

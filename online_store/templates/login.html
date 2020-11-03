@@ -35,11 +35,11 @@
   <div>
     {{ form.submit }}
   </div>
-  <small class="flex-container"><a href="{{ url_for('reset_request') }}">Forgot Password?</a></small>
+  <small class="flex-container"><a href="{{ url_for('users.reset_request') }}">Forgot Password?</a></small>
 </form>
 <div>
   <small>
-    Don't have an account yet? <a href="{{ url_for('register') }}">Sign Up</a>
+    Don't have an account yet? <a href="{{ url_for('users.register') }}">Sign Up</a>
   </small>
 </div>
 
