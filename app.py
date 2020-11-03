@@ -6,16 +6,14 @@ from online_store import app
 #                   #TODO:                                             #
 ########################################################################
 
-# Webhooks
 # Enable editing product in admin route.
 # Automation email when someone purchases an item (later)
 # Look into "url_is_safe" functionality for security
 # Potentially improve redirect on 404 page to be server-side or JS
 # Design custom icon to display when logged in, nav link title for when not ?
+# Custom checkout page with Stripe (future)
 
 # Production todos:
-# Change Stripe to live API keys
-# Webpack static assets
 # Blueprints for python files
 
 ########################################################################

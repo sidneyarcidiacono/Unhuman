@@ -18,7 +18,7 @@ mail = Mail(app)
 stripe.api_key = os.getenv("STRIPE_SECRET")
 
 # Define flask-login config variables & instantiate LoginManager
-login_manager = LoginManager(app)
+login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 

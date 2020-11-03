@@ -24,7 +24,7 @@ def send_mail(subject, message, receiver="unhumanartist@gmail.com"):
     {subject}
     Hi {receiver},
     {message}
-    Returns False if any mail raises error"""
+    """
 
     message = f"""
     Subject: {subject}
