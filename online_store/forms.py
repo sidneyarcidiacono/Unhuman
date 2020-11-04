@@ -126,12 +126,18 @@ class ResetPasswordForm(FlaskForm):
 class AddProductForm(FlaskForm):
     """Create add product form."""
 
+    def __init__(self, editing=False):
+        """Inherit from FlaskForm init, add additional property."""
+        super().__init__(editing=False)
+        """Define init with additional optional parameter."""
+        self.editing = editing
+
     title = StringField(
         "Title", validators=[DataRequired(), Length(min=2, max=30)]
     )
     price = DecimalField("Price", places=2, validators=[DataRequired()])
     description = TextAreaField(
-        "Description", validators=[DataRequired(), Length(max=140)]
+        "Description", validators=[DataRequired(), Length(max=200)]
     )
     media = StringField(
         "Media", validators=[DataRequired(), Length(min=4, max=30)]
@@ -141,7 +147,7 @@ class AddProductForm(FlaskForm):
     )
     quantity = IntegerField("Quantity", validators=[NumberRange(max=150)])
     image = FileField("Image", validators=[FileAllowed(["jpg", "png"])])
-    submit = SubmitField("Add Product")
+    submit = SubmitField("Submit")
 
 
 class AddToCartForm(FlaskForm):

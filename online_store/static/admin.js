@@ -1,5 +1,6 @@
 const addProductModal = document.querySelector('.modal')
 const startAddProductBtn = document.getElementById('start-add-product')
+const startEditProductBtn = document.getElementById('start-edit-product')
 const cancelAddProdBtn = document.getElementById('cancel-product')
 const backdrop = document.getElementById('backdrop')
 const removeProductBtn = document.getElementById('remove-button')
@@ -30,5 +31,6 @@ const backdropClickHandler = () => {
 }
 
 startAddProductBtn.addEventListener('click', showAddProdForm)
+startEditProductBtn.addEventListener('click', showEditProdForm)
 cancelAddProdBtn.addEventListener('click', prodCancelBtnHandler)
 backdrop.addEventListener('click', backdropClickHandler)

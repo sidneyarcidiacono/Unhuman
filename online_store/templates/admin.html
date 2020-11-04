@@ -1,111 +1,126 @@
 {% extends "base.html" %}
 
 {% block head %}
-<script type="text/javascript" src="static/admin.js" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='/admin.js') }}" defer></script>
 {% endblock %}
 
 {% block content %}
-<section class="product-manager">
-  <h2>Product Manager</h2>
-  <div id="product-list" class="wrap-row">
-    {% for product in products %}
-    <div class="product-item" class="flex-container">
-      <img src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }} class="admin-prod-image">
-      <p>{{ product.title }}</p>
-      <p>${{ product.price }}</p>
-      <p>{{ product.media }}</p>
-      <p>{{ product.size }}</p>
-      <!-- <button id="edit-button" onclick="window.location.href='admin-edit/{{ product.id }}'">Edit Product</button> -->
-      <button id="remove-button" onclick="window.location.href='admin-delete/{{ product.id }}'">Remove Product</button>
+
+{% if not editing %}
+  <section class="product-manager">
+    <h2>Product Manager</h2>
+    <div id="product-list" class="wrap-row">
+      {% for product in products %}
+      <div class="product-item" class="flex-container">
+        <img src="{{ url_for('static', filename='assets/' + product.image) }}" alt={{ product.title }} class="admin-prod-image">
+        <p>{{ product.title }}</p>
+        <p>${{ product.price }}</p>
+        <p>{{ product.media }}</p>
+        <p>{{ product.size }}</p>
+        <!-- <button id="edit-button" onclick="window.location.href='admin-edit/{{ product.id }}'">Edit Product</button> -->
+        <button id="remove-button" onclick="window.location.href='admin-delete/{{ product.id }}'">Remove Product</button>
+        <form action="/admin-edit/{{ product.id }}" method="POST">
+          <input type="submit" name="start-edit-product" value="Edit Product" id="start-edit-product">
+        </form>
+      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
-  </div>
-  <button id="start-add-product">Add Product</button>
-</section>
+    <button id="start-add-product">Add Product</button>
+  </section>
+{% endif %}
 
 <div id="backdrop"></div>
-<div class="modal">
+{% if not editing %}
+  <div class="modal">
+{% else %}
+  <div class="modal visible">
+{% endif %}
 
-  <form method="POST" enctype="multipart/form-data">
+  <form action="{{ form_action }}" method="POST" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
     <fieldset>
-      <legend>Add New Product</legend>
+      {% if not editing %}
+        <legend>Add New Product</legend>
+      {% else %}
+        <legend>Edit Product</legend>
+      {% endif %}
         {{ form.title.label }}
         {% if form.title.errors %}
-          {{ form.title(class="is-invalid") }}
+          {{ form.title(class="is-invalid", value=product.title if product) }}
           <div class="invalid-feedback">
             {% for error in form.title.errors %}
               {{ error }}
             {% endfor %}
           </div>
         {% else %}
-          {{ form.title }}
+          {{ form.title(value=product.title if product) }}
         {% endif %}
         {{ form.price.label }}
         {% if form.price.errors %}
-          {{ form.price(class="is-invalid", step=0.01, min=0.00) }}
+          {{ form.price(class="is-invalid", step=0.01, min=0.00, value=product.price if product) }}
           <div class="invalid-feedback">
             {% for error in form.price.errors %}
               {{ error }}
             {% endfor %}
           </div>
         {% else %}
-          {{ form.price(step=0.01, min=0.00) }}
+          {{ form.price(step=0.01, min=0.00, value=product.price if product) }}
         {% endif %}
         {{ form.description.label }}
         {% if form.description.errors %}
-          {{ form.description(class="is-invalid") }}
+          {{ form.description(class="is-invalid", value=product.description if product) }}
           <div class="invalid-feedback">
             {% for error in form.description.errors %}
               {{ error }}
             {% endfor %}
           </div>
         {% else %}
-          {{ form.description }}
+          {{ form.description(value=product.description if product) }}
         {% endif %}
         {{ form.media.label }}
         {% if form.media.errors %}
-          {{ form.media(class="is-invalid") }}
+          {{ form.media(class="is-invalid", value=product.media if product) }}
           <div class="invalid-feedback">
             {% for error in form.media.errors %}
               {{ error }}
             {% endfor %}
           </div>
         {% else %}
-          {{ form.media }}
+          {{ form.media(value=product.media if product) }}
         {% endif %}
         {{ form.size.label }}
         {% if form.size.errors %}
-          {{ form.size(class="is-invalid") }}
+          {{ form.size(class="is-invalid", value=product.size if product) }}
           <div class="invalid-feedback">
             {% for error in form.size.errors %}
               {{ error }}
             {% endfor %}
           </div>
         {% else %}
-          {{ form.size }}
+          {{ form.size(value=product.size if product) }}
         {% endif %}
         {{ form.quantity.label }}
         {% if form.quantity.errors %}
-          {{ form.quantity(class="is-invalid") }}
+          {{ form.quantity(class="is-invalid", value=product.quantity if product) }}
           <div class="invalid-feedback">
             {% for error in form.quantity.errors %}
               {{ error }}
             {% endfor %}
           </div>
         {% else %}
-          {{ form.quantity }}
+          {{ form.quantity(value=product.quantity if product) }}
         {% endif %}
         {{ form.image.label }}
-        {{ form.image }}
         {% if form.image.errors %}
-          {{ form.image(class="is-invalid") }}
+          {{ form.image(class="is-invalid", value=product.image if product) }}
           <div class="invalid-feedback">
             {% for error in form.image.errors %}
               {{ error }}
             {% endfor %}
           </div>
-        {% endif %}
+          {% else %}
+            {{ form.image(value=product.image if product) }}
+          {% endif %})
     </fieldset>
       {{ form.submit }}
       <button id="cancel-product">Cancel</button>
