@@ -2,9 +2,9 @@
 {% block content %}
 
 <section>
-  <h1 class="alien-font">Unhuman</h1>
-  <h1>UNHUMAN</h1>
-  <img class="banner-img" src="{{ url_for('static', filename='assets/altar.jpg') }}" alt="Altar with bones, tarot cards and sigil.">
+  <!-- <h1 class="alien-font">Unhuman</h1> -->
+  <!-- <h1>UNHUMAN</h1> -->
+  <img class="banner-img" src="{{ url_for('static', filename='assets/chained.jpg') }}" alt="Person wearing chains.">
   <div class="spacer"></div>
   <h2>Unhuman is Subversion</h2>
   <h3>Sid Arcidiacono</h3>
@@ -19,12 +19,13 @@
       </div>
       <div class="blur-text">
         <h2>Contact</h2>
-        <a href="{{ url_for('main.contact_me')}}"><img src="{{ url_for('static', filename='assets/skylight.jpg') }}"/></a>
+        <a href="{{ url_for('main.contact_me')}}"><img src="{{ url_for('static', filename='assets/blue.jpg') }}"/></a>
       </div>
-      <div class="blur-text">
+      <!-- We're going to make this a CTA button over the main image -->
+      <!-- <div class="blur-text">
         <h2>See Artwork</h2>
         <a href="{{ url_for('main.shop_paintings') }}"><img src="{{ url_for('static', filename='assets/blue.jpg' )}}"/></a>
-    </div>
+    </div> -->
     </div>
   </div>
 </section>

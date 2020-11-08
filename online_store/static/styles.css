@@ -1,3 +1,12 @@
+:root {
+  --background: #B7C5F2;
+  --dark: #041336;
+  --primary: #2C467B;
+  --accent-light: #6AAFFA;
+  --accent-medium: #5793E4;
+  --white: #fff;
+}
+
 @font-face {
   font-family: "SawarabiGothic";
   src: url('./assets/fonts/sawarabigothic-regular.otf');
@@ -26,11 +35,11 @@ a {
 }
 
 a:hover {
-  color: #E31919;
+  color: var(--dark);
 }
 
 nav {
-  height: 50px;
+  height: 35px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -39,6 +48,7 @@ nav {
   font-size: 1rem;
   padding: 10px;
   width: 100%;
+  margin: 0;
 }
 
 
@@ -49,7 +59,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #E31919;
+  color: var(--dark);
   font-family: "SawarabiGothic";
 }
 
@@ -58,13 +68,14 @@ body {
   align-items: center;
   flex-wrap: nowrap;
   flex-direction: column;
-  background-color: #000;
+  background-color: var(--background);
 }
 
 header {
-  height: 100px;
+  margin: 0 0 25px 0;
+  height: 55px;
   width: 100%;
-  margin: 15px;
+
 }
 
 h1 {
@@ -227,6 +238,7 @@ footer img {
 .banner-img {
   width: 100vw;
   height: auto;
+  margin: 0;
 }
 
 .portrait-img {
@@ -238,6 +250,26 @@ footer img {
 .cart-img {
   width: 175px;
   height: auto;
+}
+
+.home-icon {
+  width: 65px;
+  height: auto;
+  margin: auto;
+}
+
+.cart-icon {
+  width: 40px;
+  height: auto;
+}
+
+.center-nav {
+  display: flex;
+  width: 55px;
+  height: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .flex-container {
