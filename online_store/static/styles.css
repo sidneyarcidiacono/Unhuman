@@ -80,19 +80,19 @@ header {
 
 h1 {
   font-size: 3rem;
-  color: #fff;
+  color: var(--white);
   text-align: center;
 }
 
 h2 {
   font-size: 2rem;
-  color: #fff;
+  color: var(--white);
   text-align: center;
 }
 
 h3 {
   text-align: center;
-  color: #fff;
+  color: var(--white);
   margin: 15px;
 }
 
@@ -109,18 +109,18 @@ img {
 }
 
 p {
-  color: #fff;
+  color: var(--white);
   text-align: center;
   margin: 10px;
 }
 
 label {
-  color: #fff;
+  color: var(--white);
 }
 
 form {
   width: 400px;
-  background-color: #000;
+  background-color: var(--background);
   padding: 1rem;
   display: flex;
   flex-direction: column;
